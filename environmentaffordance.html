@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Theme before first paint: a saved choice wins; the English register reads
+   dark by default; otherwise the system preference decides. Runs this early
+   so a reload never flashes the other theme. */
+(function(){var t=null;try{t=localStorage.getItem('mn-theme');}catch(e){}
+if(t!=='dark'&&t!=='light'){var en=(document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en')===0;
+t=en?'dark':((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');}
+document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<title>Environment Affordance™ — 部署前的独立验证 | microNature</title>
+<meta name="description" content="Environment Affordance™ 按机器人本体参数把真实场地标注成可为性地图，构造感知欺骗场景做红蓝对抗验证，交付标注文件、标准化验证报告与场景库。私有化部署，兼容国产 CPU 全架构。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="alternate" hreflang="zh-Hans" href="environmentaffordance.html">
+<link rel="alternate" hreflang="en" href="en/environmentaffordance.html">
+<link rel="alternate" hreflang="x-default" href="environmentaffordance.html">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="站点导航">
+  <div class="nav-in">
+    <a class="nav-mark" href="index.html">microNature<span>物理智能基础设施</span></a>
+    <span class="nav-here" aria-hidden="true"></span>
+    <div class="nav-links">
+      <a href="index.html">架构</a>
+      <span class="cur" aria-current="page">环境可为™</span>
+      <a href="map.html">地图样例</a>
+      <a href="atlas.html">场景图鉴</a>
+      <a href="insight.html">思考</a>
+      <a href="about.html">我们</a>
+    </div>
+  <div class="nav-lang">
+    <span class="cur" aria-current="true">中</span>
+    <a href="en/environmentaffordance.html" hreflang="en" lang="en">EN</a>
+  </div>
+  <button class="nav-theme" type="button" aria-pressed="false"></button>
+  </div>
+</nav>
+
+<main class="doc">
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <div class="tblock">
+      <div class="tblock-cell"><span class="tblock-k">Sheet</span><span class="tblock-v">EA-01</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Title</span><span class="tblock-v">Environment Affordance™</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Issue</span><span class="tblock-v">2026.08</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Scope</span><span class="tblock-v">标注 → 对抗 → 报告</span></div>
+    </div>
+
+    <h1 class="h1">就在这个场地，就是这台机器，能做什么，做不到什么</h1>
+
+    <p class="lede hero-lede">Environment Affordance™ 用真实的场地数据，按具体机器的尺寸、步态、抓取范围和传感器安装高度，把场地重新标注成一份可为性地图；然后在正式部署之前，把感知系统容易出错的场景先跑通，用舍由时，行藏在握。</p>
+
+    <div class="hero-spec">
+      <span>部署前的<b>独立验证</b></span>
+      <span>私有化部署 · 国产 CPU 全架构</span>
+      <span>十余年 GIS 与三维仿真交付</span>
+    </div>
+
+    <div class="statement">
+      <span class="mono">Affordance</span>
+      环境的意义是观察者赋予的。身体尺寸、感知方式、运动能力不同，同一片空间呈现出「可行」和「不行」可能完全不同。对人来说如此，对机器来说亦如此。
+    </div>
+
+    <a class="uplink" href="index.html">← Environment Affordance™ 是 microNature · 物理智能基础设施的核心组件</a>
+  </header>
+
+  <!-- ═══ CONTENTS ═══ -->
+  <section class="band" id="toc">
+    <div class="rail"><span class="rail-num">00</span><span class="rail-en">Contents</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <nav class="toc" aria-label="目录">
+        <ol class="toc-list">
+          <li><a href="#positioning"><span class="toc-n">01</span><span class="toc-t">Environment Affordance™ 是什么</span><span class="toc-d">Definition</span></a></li>
+          <li><a href="#foundation"><span class="toc-n">02</span><span class="toc-t">技术底座 · 十余年 GIS 与环境仿真的技术累积</span><span class="toc-d">Foundation</span></a></li>
+          <li><a href="#deployment"><span class="toc-n">03</span><span class="toc-t">部署 · 国产化私有部署</span><span class="toc-d">Deployment</span></a></li>
+          <li><a href="#concept"><span class="toc-n">04</span><span class="toc-t">核心概念 · 什么是环境可为性</span><span class="toc-d">Affordance</span></a></li>
+          <li><a href="#scenarios"><span class="toc-n">05</span><span class="toc-t">适用场景</span><span class="toc-d">Scenarios</span></a></li>
+          <li><a href="#architecture"><span class="toc-n">06</span><span class="toc-t">系统架构 · 产品架构与执行路径</span><span class="toc-d">Architecture</span></a></li>
+          <li><a href="#validation"><span class="toc-n">07</span><span class="toc-t">验证 · 感知欺骗场景库与红蓝对抗</span><span class="toc-d">Validation</span></a></li>
+          <li><a href="#execution"><span class="toc-n">08</span><span class="toc-t">执行路径 · 从客户数据到交付报告</span><span class="toc-d">Execution</span></a></li>
+          <li><a href="#comparison"><span class="toc-n">09</span><span class="toc-t">对比 · 与通用仿真平台的区别</span><span class="toc-d">Comparison</span></a></li>
+          <li><a href="#customers"><span class="toc-n">10</span><span class="toc-t">探索合作</span><span class="toc-d">Co-build</span></a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ═══ 01 POSITIONING ═══ -->
+  <section class="band" id="positioning">
+    <div class="rail"><span class="rail-num">01</span><span class="rail-en">Definition</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">Environment Affordance™ 是什么</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">两层之分</span>
+          <b>环境层</b>随场地物理结构变化，与当下任务无关；<b>策略层</b>随任务目标变化。EA 只做前者。
+        </aside>
+        <p class="p">具身智能落地涉及两层性质不同的工作。一层关乎环境本身：这片场地能不能立得住、能不能通过、能不能抓取、哪里是隐蔽和暴露的边界。这些属性跟随场地和物体的物理结构变化，跟当下执行什么任务关系不大。另一层关乎策略：这一刻走哪条路、要不要抓这个物体、要不要靠近。这个判断随任务目标变化，是策略层的事。</p>
+      </div>
+
+      <div class="statement">
+        <span class="mono">聚焦层</span>
+        现阶段，Environment Affordance™ 聚焦在前一层：<strong>把场地标注清楚、把感知容易出错的地方做成可复现的测试场景、把结果整理成可以带去部署现场的报告。</strong>
+      </div>
+
+      <div class="col">
+        <p class="p">Environment Affordance™ 不需要客户长期集成、持续调用。比起传统的仿真引擎，它更接近智能设备部署前的<strong>独立验证方</strong>。像岩土工程勘察在施工前对场地出具一份勘察报告，像渗透测试在系统上线前对安全性出具一份漏洞报告，Environment Affordance™ 在机器人正式部署前，对「这台机器人在这片场地能不能安全落地」这个问题，给出一份可审计、可复现的验证结论。</p>
+        <p class="p">交付物包括标注文件、测试报告和场景库，不绑定客户的技术栈。真正决定价值的，是什么样的标注算合格、构造哪些失败场景才算测得全面，而不是数据网络效应或调用规模：我们致力于把这套标准耐心做扎实。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 02 FOUNDATION ═══ -->
+  <section class="band" id="foundation">
+    <div class="rail"><span class="rail-num">02</span><span class="rail-en">Foundation</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">十余年 GIS 技术累积与环境仿真工程累积</h2>
+      <div class="col">
+        <aside class="mnote">
+          <span class="mnote-k">范围界定</span>
+          属计算几何与空间分析，<b>不含</b>视觉或深度学习感知模型的训练与部署。
+        </aside>
+        <p class="p">技术能力和部署能力如齿轮般相互挑战、启迪和促进，过去十年我们正是这样过来的：完整交付过多源数据融合大场景建库（<span class="term" data-t="oblique">倾斜摄影</span>、<span class="term" data-t="pointcloud">点云</span>、<span class="term" data-t="bim">BIM</span>、卫星影像），TB 级三维数据的快速承载与流畅可视化，<span class="term" data-t="domesticcpu">国产 CPU 全架构</span>兼容与私有化部署，特种工业级红蓝对抗场景自动生成与标准化裁评，以及可视域分析、阴影体、开敞度分析等地信算法。计算几何与空间分析是我们的舒适区。</p>
+        <p class="p">面对层出不穷的新需求，是否时刻需要发明新技术？我们的选择是，未必「全换工具」，而是优先「更换提问方式」。在面向具身智能时，我们没有另起炉灶，却<strong>把观察者从「人」换成「机器」</strong>，即从「解析场地」到「面向机器，解析场地」。</p>
+        <p class="p">也基于重构的提问方式，我们把已有能力做出如下转化：三维环境仿真与空间分析，代入机器人的本体参数，成为面向客户的环境<span class="term" data-t="affordance">可为性</span>标注服务；红蓝对抗场景生成与标准化裁评，把攻防对象从场地换成机器人的感知系统，构建感知欺骗场景库；<span class="term" data-t="viewshed">可视域</span>、阴影体、开敞度这类经典地信算法，把观察者从人换成机器本体，于是有了按本体参数自动计算可为性的工具链。我们将在下方逐一展开。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 03 DEPLOYMENT ═══ -->
+  <section class="band" id="deployment">
+    <div class="rail"><span class="rail-num">03</span><span class="rail-en">Deployment</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">国产化私有部署</h2>
+      <div class="grid grid-3">
+        <div class="cell">
+          <span class="cell-code">全架构兼容</span>
+          <p>ARM 麒麟鲲鹏、MIPS 龙芯、SW-64 申威、x86 四种 CPU 架构，操作系统覆盖统信 UOS、麒麟 OS，兼容鸿蒙。</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">数据主权</span>
+          <p>私有化本地部署，场地数据、标注结果和测试报告全程留在客户自己的服务器和内网环境中，不依赖外部云服务。</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">成熟交付</span>
+          <p>这套架构在矿山、能源、特种工业等对数据主权和国产化合规有明确要求的场景中已有十余年交付记录。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 04 AFFORDANCE ═══ -->
+  <section class="band" id="concept">
+    <div class="rail"><span class="rail-num">04</span><span class="rail-en">Affordance</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">什么是环境可为性</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">关系属性</span>
+          既不是环境的绝对属性，也不是观察者的主观感受，而是两者之间受双方参数约束的关系。
+        </aside>
+        <p class="p">「可为性」（affordance）是生态心理学和设计科学的概念，指的是环境与某个特定身体之间，哪些动作是可能的。比如一个坡道对山羊来说意味着可以攀爬，对一条鱼来说什么都不是。一扇门的高度对成年人意味着可以通过，对一个大型机器人来说可能意味着必须绕行。可为性并非环境的绝对属性，也不依赖观察者的主观感受：作为环境和本体之间的一种关系属性，它受双方的具体参数限制，也跟随这两者的变化而变化。</p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="cell">
+          <span class="cell-code">相对性<small>Relativity</small></span>
+          <p>即便同一场地的可为性地图，换一台参数不同的机器人，结果也不一样。</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">稳定性<small>Stability</small></span>
+          <p>场地本身的物理结构不变，可为性就不会变，和当下执行什么任务无关。</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">可标注性<small>Annotatability</small></span>
+          <p>支撑面、可通行间隙、可抓取物、危险边界，这些都可以被计算、被标记、被交付成一份文件。</p>
+        </div>
+      </div>
+
+      <div class="col">
+        <p class="p">在具身智能领域，现有的部署验证思路多为任务导向：先确定执行什么任务，再围绕这个任务设计测试场景、验证策略。如果这条路从「要做什么」出发，那么场地和本体就成为任务的背景和服务的条件。任务导向的验证，测的是「这台机器人在这个任务里表现好不好」，场地里那些和当前任务无关、但换个任务就会踩的坑却不容易被发现。我们发现，机器人实地部署失败，很大程度上在于这样的错位，即场地的「允许」和边界，与机器人解读出来的「行与不行」之间出现偏差：地面看起来能踩其实不能，通道看起来能过其实不能。这种错位往往和具体任务无关，是<span class="term" data-t="embodiment">本体</span>和场地之间与生俱来的关系，不会因为换一个任务就消失。</p>
+        <p class="p">Environment Affordance™ 选择从机器人出发：先确定这台机器人的尺寸、步态、抓取范围、传感器安装高度，再问这片场地对这台具体的机器人来说，哪里能站、哪里能过、哪里能抓、哪里必须绕开。任务是什么、这一刻要不要执行，不在这一步的考虑范围内。</p>
+      </div>
+
+      <div class="statement">
+        <span class="mono">意义</span>
+        部署之前，先把这片场地对这台机器人来说哪些地方能做、哪些地方不能做标注清楚，把感知系统容易出错的场景先跑一遍。这些坑也许与具体任务无关，却会反复出现；如果能在执行具体任务之前就把它们排除掉，后续验证策略时需要处理的变量就能减少一个维度。
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 05 SCENARIOS ═══ -->
+  <section class="band" id="scenarios">
+    <div class="rail"><span class="rail-num">05</span><span class="rail-en">Scenarios</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">适用场景</h2>
+      <div class="col">
+        <aside class="mnote">
+          <span class="mnote-k">适用范围</span>
+          越是被默认「干净可控」的场地，越容易漏掉需要验证的地方。
+        </aside>
+        <p class="p">可为性是环境与本体之间的关系属性，所以适用范围比想象中的更宽广：除了复杂场地，很多看上去简单可控的场景也适用。</p>
+      </div>
+
+      <div class="scn-grid">
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">矿山</span>
+            <h4 class="h4">通行与支撑面</h4>
+            <p>同一片矿区巷道，四足机器人走过去是坦途，轮式机器人可能卡在碎石堆前面。地面看起来能踩，不代表机器人踩得实。</p>
+            <div class="scn-flag">通行 · 支撑面 · 可抓取物</div>
+          </div>
+        </article>
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">新能源场站</span>
+            <h4 class="h4">感知陷阱最集中的场地</h4>
+            <p>检修间隙逐条实测、组件玻璃的镜面反射、沉淀池的静水反光、镀锌格栅平台的回波跳变，一片场地里同时集齐了感知系统最容易出错的几类陷阱。</p>
+            <div class="scn-flag">光伏方阵 · 储能舱区 · 风电塔筒</div>
+          </div>
+        </article>
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">数据中心 / 智算中心</span>
+            <h4 class="h4">最「干净」的场景也不例外</h4>
+            <p>冷热通道的玻璃隔断门、抛光的防静电地板、架空地板下的检修口，外观越均质规整，越容易骗过依赖深度相机的感知系统。</p>
+            <div class="scn-flag">冷热通道 · 架空地板 · 机柜巡检</div>
+          </div>
+        </article>
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">电网 / 变电站</span>
+            <h4 class="h4">净空与禁入判定</h4>
+            <p>带电区域对所有本体都是全域禁入；但构架净空高度对不同本体是不同的约束，传感器安装位置越高，越早触及那道看不见的边界。</p>
+            <div class="scn-flag">带电禁入 · 构架净空 · 传感器高度</div>
+          </div>
+        </article>
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">港口 / 仓储堆场</span>
+            <h4 class="h4">巷道通行与反光地面</h4>
+            <p>集装箱堆场之间的窄巷道，宽度固定，但不同本体对同一条巷道的判断并不相同；打磨地面或雨后积水，也可能被读成完全相反的两种结论。</p>
+            <div class="scn-flag">堆场巷道 · 打磨地面 · 雨后积水</div>
+          </div>
+        </article>
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">冷链仓储</span>
+            <h4 class="h4">结霜与凝露反光</h4>
+            <p>低温环境里镜头进出会起雾，地面和货架表面会结一层薄霜，今天是均匀漫反射，湿度稍变就可能变成局部镜面反光。</p>
+            <div class="scn-flag">镜头起雾 · 地面结霜 · 货架凝露</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 06 ARCHITECTURE ═══ -->
+  <section class="band" id="architecture">
+    <div class="rail"><span class="rail-num">06</span><span class="rail-en">Architecture</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">产品架构与执行路径</h2>
+      <div class="col">
+        <p class="p"><a class="xref" href="#fig05">FIG.05</a> 是 Environment Affordance™ 的整体框架：自上而下的场地本体与自下而上的传感尺度在中间层汇合，本体参数在 L3 汇入，产出标注、场景与报告，再由部署反馈回流。</p>
+      </div>
+
+      <figure class="plate plate-lg bleed rise" id="fig05">
+        <div class="plate-body"><svg role="img" viewBox="0 0 1800 1150" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+            <path d="M 70,50 L 880,50" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 920,50 L 1730,50" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="900" y="56" text-anchor="middle" fill="var(--ink)" style="font-size:17px;font-weight:normal;">←</text><path d="M 70,50 L 70.0,120.0 Q 70.0,190.0 136.8,210.9 L 266.6,251.5 Q 300.0,262.0 335.0,262.0 L 370,262" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 1730,50 L 1730.0,120.0 Q 1730.0,190.0 1663.2,210.9 L 1533.4,251.5 Q 1500.0,262.0 1465.0,262.0 L 1430,262" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="45" y="160" text-anchor="middle" fill="var(--ink)" style="font-size:11.5px;font-weight:normal;letter-spacing:2px;" transform="rotate(-90,45,160)">FEEDBACK LOOP</text><text x="1755" y="160" text-anchor="middle" fill="var(--ink)" style="font-size:11.5px;font-weight:normal;letter-spacing:2px;" transform="rotate(90,1755,160)">FEEDBACK LOOP</text><text x="900" y="30" text-anchor="middle" fill="var(--ink-2)" style="font-size:12px;font-weight:normal;letter-spacing:2px;">SIM2REAL · DEPLOYMENT FEEDBACK</text><rect x="240" y="215" width="1320" height="247" rx="46" ry="46" fill="none" stroke="var(--ink-2)" stroke-width="1" stroke-dasharray="1,4.5"/><text x="900" y="245" text-anchor="middle" fill="var(--ink-2)" style="font-size:12.5px;font-weight:normal;letter-spacing:1.6px;">INTEGRATION OF SITE · ONTOLOGY · AFFORDANCE</text><text x="580" y="288" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:normal;letter-spacing:1.2px;">TB-SCALE</text><text x="735" y="288" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:normal;letter-spacing:1.2px;">TOP-DOWN</text><text x="900" y="288" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:1.2px;">AFFORDANCE</text><text x="1065" y="288" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:normal;letter-spacing:1.2px;">BOTTOM-UP</text><text x="1220" y="288" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:normal;letter-spacing:1.2px;">SENSOR-SCALE</text><path d="M 440,312 L 440.0,300.0 Q 440.0,290.0 450.0,290.0 L 740.0,290.0 Q 750.0,290.0 750.0,300.0 L 750,312" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 1050,312 L 1050.0,300.0 Q 1050.0,290.0 1060.0,290.0 L 1350.0,290.0 Q 1360.0,290.0 1360.0,300.0 L 1360,312" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="370" y="350" text-anchor="middle" fill="var(--ink)" style="font-size:27px;font-weight:bold;letter-spacing:0.5px;">ENVIRONMENT</text><text x="900" y="353" text-anchor="middle" fill="var(--ink)" style="font-size:32px;font-weight:bold;letter-spacing:0.5px;">ARCHITECTURE</text><text x="1430" y="350" text-anchor="middle" fill="var(--ink)" style="font-size:27px;font-weight:bold;letter-spacing:0.5px;">BODY+MIND</text><text x="900" y="372" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;font-style:italic;">Independent Verification</text><text x="370" y="372" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11.5px;font-weight:normal;font-style:italic;">场地数据</text><text x="1430" y="372" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11.5px;font-weight:normal;font-style:italic;">机器人本体</text><path d="M 278,425 L 300,425" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="1,4.5" stroke-linejoin="round" stroke-linecap="round"/><text x="270" y="430" text-anchor="middle" fill="var(--ink)" style="font-size:14px;font-weight:normal;">←</text><path d="M 1500,425 L 1522,425" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="1,4.5" stroke-linejoin="round" stroke-linecap="round"/><text x="1530" y="430" text-anchor="middle" fill="var(--ink)" style="font-size:14px;font-weight:normal;">→</text><path d="M 300,425 L 1500,425" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="1,4.5" stroke-linejoin="round" stroke-linecap="round"/><text x="900" y="409" text-anchor="middle" fill="var(--ink-2)" style="font-size:11.5px;font-weight:normal;letter-spacing:1.5px;">EXECUTION PATH · 执行路径</text><text x="290" y="465" text-anchor="start" fill="var(--ink)" style="font-size:12px;font-weight:bold;">客户输入</text><text x="290" y="480" text-anchor="start" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;">raw site data</text><text x="1510" y="465" text-anchor="end" fill="var(--ink)" style="font-size:12px;font-weight:bold;">私有化部署</text><text x="1510" y="480" text-anchor="end" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;">private deployment</text><rect x="403.0" y="414.2" width="34.0" height="15.0" fill="var(--paper)"/><text x="420.0" y="429" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">L1</text><text x="420.0" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10px;font-weight:normal;font-style:italic;">数据摄入</text><rect x="643.0" y="414.2" width="34.0" height="15.0" fill="var(--paper)"/><text x="660.0" y="429" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">L2</text><text x="660.0" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10px;font-weight:normal;font-style:italic;">三维建图</text><line x1="540.0" y1="419" x2="540.0" y2="431" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><rect x="883.0" y="414.2" width="34.0" height="15.0" fill="var(--paper)"/><text x="900.0" y="429" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">L3</text><circle cx="918.0" cy="422.0" r="2.4" fill="var(--ink)"/><text x="900.0" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10px;font-weight:normal;font-style:italic;">可为性标注</text><line x1="780.0" y1="419" x2="780.0" y2="431" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round"/><line x1="780.0" y1="431" x2="780.0" y2="457" stroke="var(--ink)" stroke-width="0.9" stroke-dasharray="1,3.5" stroke-linecap="round"/><circle cx="780.0" cy="457" r="1.8" fill="var(--ink)"/><text x="780.0" y="470" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:8.5px;font-weight:normal;font-style:italic;">本体参数汇入点</text><rect x="1123.0" y="414.2" width="34.0" height="15.0" fill="var(--paper)"/><text x="1140.0" y="429" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">L4</text><text x="1140.0" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10px;font-weight:normal;font-style:italic;">感知验证</text><line x1="1020.0" y1="419" x2="1020.0" y2="431" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><rect x="1363.0" y="414.2" width="34.0" height="15.0" fill="var(--paper)"/><text x="1380.0" y="429" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">L5</text><text x="1380.0" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10px;font-weight:normal;font-style:italic;">私有化交付</text><line x1="1260.0" y1="419" x2="1260.0" y2="431" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><path d="M 370,462 L 370.0,490.0 Q 370.0,500.0 360.0,500.0 L 287.0,500.0 Q 280.0,500.0 280.0,507.0 L 280,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 370,462 L 370.0,490.0 Q 370.0,500.0 380.0,500.0 L 453.0,500.0 Q 460.0,500.0 460.0,507.0 L 460,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="280" y="520" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px;font-weight:bold;">ENVIRONMENT</text><text x="280" y="536" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">原始点云数据</text><text x="460" y="520" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">ENVIRONMENT</text><text x="460" y="536" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">三维数字孪生</text><path d="M 900,462 L 900.0,490.0 Q 900.0,500.0 890.0,500.0 L 817.0,500.0 Q 810.0,500.0 810.0,507.0 L 810,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 900,462 L 900.0,490.0 Q 900.0,500.0 910.0,500.0 L 983.0,500.0 Q 990.0,500.0 990.0,507.0 L 990,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="900" y="496" text-anchor="middle" fill="var(--ink-2)" style="font-size:11.5px;font-weight:normal;letter-spacing:1px;">AFFORDANCE MAPPING</text><text x="810" y="520" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px;font-weight:bold;">SPACE</text><text x="810" y="536" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">本体无关几何</text><text x="990" y="520" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">SPACE</text><text x="990" y="536" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">可为性地图</text><path d="M 1430,462 L 1430.0,490.0 Q 1430.0,500.0 1420.0,500.0 L 1347.0,500.0 Q 1340.0,500.0 1340.0,507.0 L 1340,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 1430,462 L 1430.0,490.0 Q 1430.0,500.0 1440.0,500.0 L 1513.0,500.0 Q 1520.0,500.0 1520.0,507.0 L 1520,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="1340" y="520" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">BODY+MIND</text><text x="1340" y="536" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">本体参数输入</text><text x="1520" y="520" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px;font-weight:bold;">BODY+MIND</text><text x="1520" y="536" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">部署决策输出</text><line x1="635.0" y1="510" x2="635.0" y2="600" stroke="var(--ink)" stroke-width="0.9" stroke-linecap="round"/><line x1="1165.0" y1="510" x2="1165.0" y2="600" stroke="var(--ink)" stroke-width="0.9" stroke-linecap="round"/><text x="635.0" y="559.0" text-anchor="middle" fill="var(--ink-2)" style="font-size:10.5px;font-weight:normal;letter-spacing:0.5px;" transform="rotate(-90,635.0,559.0)">标注引擎 · ANNOTATION (L3)</text><text x="1165.0" y="559.0" text-anchor="middle" fill="var(--ink-2)" style="font-size:10.5px;font-weight:normal;letter-spacing:0.5px;" transform="rotate(-90,1165.0,559.0)">验证引擎 · VALIDATION (L4)</text><path d="M 460,542 L 460.0,568.0 Q 460.0,582.0 474.0,582.0 L 621.0,582.0 Q 635.0,582.0 635.0,596.0 L 635.0,631" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 810,542 L 810.0,568.0 Q 810.0,582.0 796.0,582.0 L 649.0,582.0 Q 635.0,582.0 635.0,596.0 L 635.0,631" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 990,542 L 990.0,568.0 Q 990.0,582.0 1004.0,582.0 L 1151.0,582.0 Q 1165.0,582.0 1165.0,596.0 L 1165.0,631" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 1340,542 L 1340.0,568.0 Q 1340.0,582.0 1326.0,582.0 L 1179.0,582.0 Q 1165.0,582.0 1165.0,596.0 L 1165.0,631" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="635.0" y="655" text-anchor="middle" fill="var(--ink)" style="font-size:19px;font-weight:bold;letter-spacing:0.3px;">AFFORDANCE ANNOTATION</text><text x="635.0" y="673" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;font-style:italic;">可为性标注 · L3</text><text x="1165.0" y="655" text-anchor="middle" fill="var(--ink)" style="font-size:19px;font-weight:bold;letter-spacing:0.3px;">PERCEPTION VALIDATION</text><text x="1165.0" y="673" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;font-style:italic;">感知欺骗验证 · L4</text><line x1="635.0" y1="695" x2="635.0" y2="705" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="425.0" y1="723" x2="845.0" y2="723" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="425.0" y1="723" x2="425.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="565.0" y1="723" x2="565.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="705.0" y1="723" x2="705.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="845.0" y1="723" x2="845.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><text x="425.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">SUPPORT SURFACE</text><text x="425.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">支撑面</text><text x="425.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="425.0" dy="0">可直接站立</tspan><tspan x="425.0" dy="13">踩实的地面</tspan></text><text x="565.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">PASSAGE</text><text x="565.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">通路</text><text x="565.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="565.0" dy="0">可通行的</tspan><tspan x="565.0" dy="13">间隙与通道</tspan></text><text x="705.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">GRASPABLE</text><text x="705.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">可抓取物</text><text x="705.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="705.0" dy="0">位置与朝向</tspan><tspan x="705.0" dy="13">已标注</tspan></text><text x="845.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">HAZARD EDGE</text><text x="845.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">危险边界</text><text x="845.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="845.0" dy="0">需绕行的</tspan><tspan x="845.0" dy="13">障碍与遮蔽</tspan></text><line x1="1165.0" y1="695" x2="1165.0" y2="705" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="955.0" y1="723" x2="1375.0" y2="723" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="955.0" y1="723" x2="955.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="1095.0" y1="723" x2="1095.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="1235.0" y1="723" x2="1235.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="1375.0" y1="723" x2="1375.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><text x="955.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">REFLECTION</text><text x="955.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">反光地面</text><text x="955.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="955.0" dy="0">被误判</tspan><tspan x="955.0" dy="13">为水面</tspan></text><text x="1095.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">TRANSLUCENCE</text><text x="1095.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">半透明隔断</text><text x="1095.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="1095.0" dy="0">被误判</tspan><tspan x="1095.0" dy="13">为通路</tspan></text><text x="1235.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">OCCLUSION</text><text x="1235.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">遮蔽与暴露</text><text x="1235.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="1235.0" dy="0">可视域与</tspan><tspan x="1235.0" dy="13">阴影体计算</tspan></text><text x="1375.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">BACKLIGHT</text><text x="1375.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">逆光边缘</text><text x="1375.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="1375.0" dy="0">被误判为</tspan><tspan x="1375.0" dy="13">开放区域</tspan></text><path d="M 635.0,817 L 635.0,872.0 Q 635.0,927.0 689.4,935.2 L 900.0,967.0 Q 900.0,967.0 900.0,967.0 L 900,967" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 1165.0,817 L 1165.0,872.0 Q 1165.0,927.0 1110.6,935.2 L 900.0,967.0 Q 900.0,967.0 900.0,967.0 L 900,967" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><line x1="635.0" y1="687" x2="635.0" y2="817" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="1165.0" y1="687" x2="1165.0" y2="817" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><text x="900" y="1017" text-anchor="middle" fill="var(--ink)" style="font-size:42px;font-weight:bold;letter-spacing:1px;">Environment Affordance</text><text x="900" y="1045" text-anchor="middle" fill="var(--ink-2)" style="font-size:12px;font-weight:normal;letter-spacing:0.5px;">环境与本体之间的关系 · PRIVATE, SOVEREIGN DEPLOYMENT · L5</text><text x="900" y="1065" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">ARM 麒麟鲲鹏  ·  MIPS 龙芯  ·  SW-64 申威  ·  x86</text><text x="900" y="1122" text-anchor="middle" fill="var(--ink-3)" style="font-size:11px;font-weight:normal;letter-spacing:0.5px;">MicroNature · 系统架构与执行路径 —— 特种场景环境数字化与部署前验证基础设施</text>
+            </svg></div>
+        <figcaption class="plate-cap">
+          <b>FIG.05</b>
+          <span>Environment Affordance™ 系统架构 · L1–L5 执行路径<button class="plate-zoom" type="button" data-zoom="fig05" data-zoom-label="FIG.05 — Environment Affordance™ 系统架构">放大查看 ⤢</button></span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═══ 07 VALIDATION ═══ -->
+  <section class="band" id="validation">
+    <div class="rail"><span class="rail-num">07</span><span class="rail-en">Validation</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">感知欺骗场景库与红蓝对抗验证场</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">红蓝对抗</span>
+          「红队」传统：主动构造攻击场景而非被动防御，方法框架可参照 NIST SP 800-115。
+        </aside>
+        <p class="p">这里的「<span class="term" data-t="redblue">红蓝对抗</span>」，借的是特种工业安全测试的思路：提前把容易让感知系统「看走眼」的场景系统性地找出来、构造成一份清单，逐一验证机器人自身的判断。</p>
+        <p class="p">测试场里构造的是场地信息和感知判断出现分歧的场景。同一个地方，机器人感知系统的判断和场地的真实情况不一样：</p>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr><th>场地特征</th><th>感知系统判断</th><th>场地真实情况</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>反光地面</td><td class="is-wrong">水面</td><td class="is-true">可踩实地面</td></tr>
+            <tr><td>湿滑金属网格</td><td class="is-wrong">可踩实地</td><td class="is-true">湿滑、支撑不可靠</td></tr>
+            <tr><td>半透明隔断</td><td class="is-wrong">通路</td><td class="is-true">不可通行的固体隔断</td></tr>
+            <tr><td>伪装遮蔽的凹陷</td><td class="is-wrong">平地</td><td class="is-true">有落差的凹陷</td></tr>
+            <tr><td>逆光条件下的边缘</td><td class="is-wrong">开放区域</td><td class="is-true">存在落差或边界，有风险</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col">
+        <p class="p">流程见 <a class="xref" href="#fig06">FIG.06</a>。每个场景都会记录机器人感知系统给出的判断，和场地真实属性做比对，生成一份标准化验证报告，列出哪些场景判断正确、哪些出现偏差、偏差发生在哪个环节。</p>
+        <p class="p">上表五行是这份清单的缩略。完整场景库按成因分类，每一条都记录物理成因、误判方向、触发条件与构造方法，样例见 <a class="link" href="atlas.html" target="_blank" rel="noopener">EA-03 感知欺骗场景库 · 场景图鉴</a>。</p>
+      </div>
+
+      <figure class="plate rise" id="fig06">
+        <div class="plate-body"><svg role="img" viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+            <title>红蓝对抗验证流程示意图</title>
+            <defs><marker id="arrowRB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/></marker></defs>
+            
+
+            <text x="450" y="28" text-anchor="middle" fill="var(--ink-3)" style="font-size:11px;font-weight:bold;letter-spacing:1px;">AFFORDANCE VALIDATION &amp; CORRECTION LAYER · 可为性验证与修正层</text>
+
+            <rect x="250" y="55" width="400" height="85" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+            <text x="450" y="88" text-anchor="middle" fill="var(--ink)" style="font-size:14px;font-weight:bold;letter-spacing:0.3px;">PERCEPTION DECEPTION SCENARIO LIBRARY</text>
+            <text x="450" y="107" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:12.5px;">感知欺骗场景库</text>
+            <text x="450" y="126" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">五类陷阱场景的清单，见上表</text>
+
+            <line x1="450" y1="140" x2="450" y2="176" stroke="var(--ink)" stroke-width="1.1" marker-end="url(#arrowRB)"/>
+            <circle cx="450" cy="178" r="3" fill="var(--ink)"/>
+            <line x1="450" y1="178" x2="228" y2="222" stroke="var(--ink)" stroke-width="1" marker-end="url(#arrowRB)"/>
+            <line x1="450" y1="178" x2="672" y2="222" stroke="var(--ink)" stroke-width="1" marker-end="url(#arrowRB)"/>
+
+            <rect x="70" y="225" width="310" height="120" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+            <text x="225" y="258" text-anchor="middle" fill="var(--ink)" style="font-size:13.5px;font-weight:bold;letter-spacing:0.3px;">RED · ENVIRONMENT SIDE</text>
+            <text x="225" y="277" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:12px;">红方 · 环境侧</text>
+            <text x="225" y="299" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">按清单把陷阱场景布置进测试场</text>
+            <text x="225" y="316" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">场地的真实属性是已知的</text>
+
+            <rect x="520" y="225" width="310" height="120" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+            <text x="675" y="258" text-anchor="middle" fill="var(--ink)" style="font-size:13.5px;font-weight:bold;letter-spacing:0.3px;">BLUE · PERCEPTION SIDE</text>
+            <text x="675" y="277" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:12px;">蓝方 · 感知系统</text>
+            <text x="675" y="299" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">机器人只依赖自身传感器判断</text>
+            <text x="675" y="316" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">不知道测试者布置了什么</text>
+
+            <line x1="450" y1="225" x2="450" y2="345" stroke="var(--rule)" stroke-width="1" stroke-dasharray="3,3"/>
+            <rect x="432" y="277" width="36" height="22" fill="var(--paper)"/>
+            <text x="450" y="294" text-anchor="middle" fill="var(--ink-3)" style="font-size:18px;font-weight:bold;">VS</text>
+
+            <line x1="225" y1="345" x2="450" y2="393" stroke="var(--ink)" stroke-width="1" marker-end="url(#arrowRB)"/>
+            <line x1="675" y1="345" x2="450" y2="393" stroke="var(--ink)" stroke-width="1" marker-end="url(#arrowRB)"/>
+
+            <rect x="225" y="395" width="450" height="95" fill="var(--wash)" stroke="var(--ink)" stroke-width="1.1"/>
+            <text x="450" y="428" text-anchor="middle" fill="var(--ink)" style="font-size:14px;font-weight:bold;letter-spacing:0.3px;">PERCEPTION CLASH &amp; VERIFICATION</text>
+            <text x="450" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:12.5px;">感知冲突与比对</text>
+            <text x="450" y="467" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">蓝方的判断，逐条对照红方已知的真实属性</text>
+
+            <line x1="450" y1="490" x2="450" y2="526" stroke="var(--ink)" stroke-width="1.1" marker-end="url(#arrowRB)"/>
+
+            <rect x="150" y="528" width="600" height="115" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.3"/>
+            <text x="450" y="562" text-anchor="middle" fill="var(--ink)" style="font-size:15px;font-weight:bold;letter-spacing:0.3px;">VALIDATED OUTPUT · 标准化验证报告</text>
+            <text x="450" y="584" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-style:italic;">列出哪些判断正确、哪些出现偏差、偏差发生在哪个环节</text>
+            <text x="450" y="603" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-style:italic;">→ 修正后的可为性地图</text>
+
+            <text x="450" y="675" text-anchor="middle" fill="var(--ink-3)" style="font-size:10.5px;letter-spacing:0.5px;">Environment Affordance · 环境可为</text>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.06</b><span>红蓝对抗验证流程示意</span></figcaption>
+      </figure>
+
+      <div class="col">
+        <p class="p">遮蔽与暴露关系的计算，用的是在特种工业领域已经交付过的<span class="term" data-t="viewshed">可视域分析</span>、阴影体和开敞度分析算法。这套算法现在被重新用来验证机器人在场地中的感知边界：机器人自身处于隐蔽还是暴露状态，能否发现处于遮蔽位置的目标。</p>
+        <p class="p">场景库按任务类型组织，覆盖巡检、搬运、协作作业和安防巡逻，场景清单持续更新。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 08 EXECUTION ═══ -->
+  <section class="band" id="execution">
+    <div class="rail"><span class="rail-num">08</span><span class="rail-en">Execution</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">从客户数据到交付报告</h2>
+      <div class="col">
+        <aside class="mnote">
+          <span class="mnote-k">参见</span>
+          L3 标注的成品样例见 <a href="map.html" target="_blank" rel="noopener">EA-02 可为性地图</a>
+        </aside>
+        <p class="p">前面 <a class="xref" href="#fig05">架构图 FIG.05</a> 给出的是 L1–L5 的整体框架，下面逐阶段说明每一步具体的输入、方法和交付物。</p>
+      </div>
+
+      <div class="steps">
+        <div class="step" id="step-l1">
+          <div class="step-n">L1<small>阶段一</small></div>
+          <div>
+            <h4 class="h4">场地数据采集</h4>
+            <p>客户提供真实部署场地的多源数据：倾斜摄影、激光点云、BIM 模型、现场传感器记录。数据格式不限，系统负责统一坐标对齐和融合。</p>
+          </div>
+        </div>
+        <div class="step" id="step-l2">
+          <div class="step-n">L2<small>阶段二</small></div>
+          <div>
+            <h4 class="h4">三维底图生成</h4>
+            <p>多源数据融合进同一套坐标系统，生成场地的三维数字孪生底图。TB 级数据量下仍保持流畅承载与可视化。这一步的产出不涉及机器人本体参数，是可独立保存、可供多台不同本体重复调用的基础数据。</p>
+          </div>
+        </div>
+        <div class="step" id="step-l3">
+          <div class="step-n">L3<small>阶段三</small></div>
+          <div>
+            <h4 class="h4">可为性标注</h4>
+            <p>输入客户机器人的本体参数（尺寸、步态范围、抓取跨度、传感器高度），在三维底图上标注支撑面、可通行通道、可抓取物、障碍与危险边界。可基于同一场地，为不同参数的本体提供不同标注。</p>
+            <span class="step-out"><b>交付物</b>场地标注图。随本体参数变化可重算，复用 L2 底图、无需重新采集</span>
+          </div>
+        </div>
+        <div class="step" id="step-l4">
+          <div class="step-n">L4<small>阶段四</small></div>
+          <div>
+            <h4 class="h4">感知欺骗测试</h4>
+            <p>基于标注结果，自动生成感知系统容易出错的测试场景：反光地面、湿滑网格、半透明隔断、伪装遮蔽、逆光边缘。机器人感知系统的判断与场地真实属性逐项比对，遮蔽与暴露关系通过可视域分析和开敞度算法独立验证。参与比对的感知判断来自客户机器人自身的感知系统，Environment Affordance™ 不提供或替代这套感知能力。</p>
+            <span class="step-out"><b>交付物</b>标准化验证报告</span>
+          </div>
+        </div>
+        <div class="step" id="step-l5">
+          <div class="step-n">L5<small>阶段五</small></div>
+          <div>
+            <h4 class="h4">报告与交付</h4>
+            <p>输出标准化验证报告：哪些场景判断正确、哪些出现偏差、偏差发生在哪个环节。标注文件、场景库和报告一并私有化部署到客户内网。本体参数调整后，只需重新执行 <a class="xref" href="#step-l3">L3</a> 和 <a class="xref" href="#step-l4">L4</a>，<a class="xref" href="#step-l1">L1</a>、<a class="xref" href="#step-l2">L2</a> 的产出可直接复用。</p>
+          </div>
+        </div>
+      </div>
+
+      <a class="cta" href="map.html" target="_blank" rel="noopener">
+        <span class="eyebrow">Sheet EA-02 · 样例交付物</span>
+        <h3 class="h3">可为性地图 · Affordance Map 交互样例</h3>
+        <p>可为性地图是 L3 的标准交付物。这里附一份可交互的演示样例：同一片示例光储电站场地，按四型本体分别标注。切换本体，全图判定、矩阵与数据表现场重算，L2 底图复用、只重算 L3 标注。</p>
+        <span class="cta-go">打开样例 →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ 09 COMPARISON ═══ -->
+  <section class="band" id="comparison">
+    <div class="rail"><span class="rail-num">09</span><span class="rail-en">Comparison</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">与通用仿真平台的区别</h2>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr><th>维度</th><th>通用仿真平台</th><th class="own">Environment Affordance™</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>商业本质</td><td>工具 / 引擎，客户自己用来做验证</td><td class="own">独立验证机构，交付验证结论本身</td></tr>
+            <tr><td>核心交付物</td><td>物理引擎 / 渲染环境</td><td class="own">按本体标注的可为性地图与验证报告</td></tr>
+            <tr><td>场景来源</td><td>客户自行建模或通用场景库</td><td class="own">客户真实部署场地数据直接转化</td></tr>
+            <tr><td>精度维度</td><td>物理引擎数值精度</td><td class="own">可为性完整度</td></tr>
+            <tr><td>测试方法</td><td>通用 benchmark</td><td class="own">按客户本体和任务定制的感知欺骗场景</td></tr>
+            <tr><td>部署方式</td><td>SaaS / 云端为主</td><td class="own">私有化本地部署，全国产化合规</td></tr>
+            <tr><td>场地数据主权</td><td>取决于服务商</td><td class="own">全程留在客户自己的服务器</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col">
+        <p class="p">物理引擎精度和渲染帧率这两个维度上，通用仿真平台有先发优势，这本来就不是同一门生意。仿真平台卖的是客户自己拿去用的计算能力；Environment Affordance™ 卖的是用客户自己的真实场地数据、按具体机器人本体参数得出的一份独立判断，直接可用于部署决策。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 10 CO-BUILD ═══ -->
+  <section class="band" id="customers">
+    <div class="rail"><span class="rail-num">10</span><span class="rail-en">Co-build</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">探索合作</h2>
+
+      <div class="grid grid-3">
+        <div class="cell">
+          <span class="cell-code">具身机器人本体公司</span>
+          <p>需要在真实场地部署之前完成仿真环境中的策略验证。Environment Affordance™ 提供基于其真实部署场地的可为性地图和压测场景，让策略迭代在上线前有据可循。</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">策略训练与大模型公司</span>
+          <p>需要大量高保真场景做 sim2real 迁移和自动化评测。Environment Affordance™ 提供按本体参数定制的场景生成和感知欺骗测试，补充通用 benchmark 覆盖不到的长尾工况。</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">特种行业运营方</span>
+          <p>矿山、能源等特种行业的运营方，希望在机器人正式部署前拿到一份第三方的场地安全验证报告。Environment Affordance™ 提供基于场地实测数据的可为性评估和感知风险清单。</p>
+        </div>
+      </div>
+
+      <div class="col">
+        <p class="p">邀请您和我们聊聊您所在的行业，正在负责的场地，以及遇到的问题。我们很乐意倾听您的观察、和您分享我们的理解，也可以提供有针对性的报告样例。</p>
+      </div>
+      <p class="small" style="margin-top:18px; color:var(--ink-3)">邮箱、微信等联系方式列在 <a class="link" href="about.html#contact" target="_blank" rel="noopener">microNature · 我们</a>。</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="doc">
+    <div class="foot-line">
+      <span>microNature — Environment Affordance™</span>
+      <span>特种场景环境数字化与部署前验证基础设施</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js" defer></script>
+
+</body>
+</html>
