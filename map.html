@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Theme before first paint: a saved choice wins; the English register reads
+   dark by default; otherwise the system preference decides. Runs this early
+   so a reload never flashes the other theme. */
+(function(){var t=null;try{t=localStorage.getItem('mn-theme');}catch(e){}
+if(t!=='dark'&&t!=='light'){var en=(document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en')===0;
+t=en?'dark':((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');}
+document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<title>可为性地图 · Affordance Map — 新能源光储电站样例 | Environment Affordance™</title>
+<meta name="description" content="Environment Affordance™ 交付物样例：示例光储电站 520×340 m，15 处标注要素 × 4 型本体 = 60 格判定，切换本体全图现场重算，L2 底图复用、只重算 L3 标注。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="alternate" hreflang="zh-Hans" href="map.html">
+<link rel="alternate" hreflang="en" href="en/map.html">
+<link rel="alternate" hreflang="x-default" href="map.html">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body class="blueprint">
+
+<nav class="nav" aria-label="站点导航">
+  <div class="nav-in">
+    <a class="nav-mark" href="index.html">microNature<span>物理智能基础设施</span></a>
+    <div class="nav-links">
+      <a href="index.html">架构</a>
+      <a href="environmentaffordance.html">环境可为™</a>
+      <span class="cur" aria-current="page">地图样例</span>
+      <a href="atlas.html">场景图鉴</a>
+      <a href="insight.html">思考</a>
+      <a href="about.html">我们</a>
+    </div>
+  <div class="nav-lang">
+    <span class="cur" aria-current="true">中</span>
+    <a href="en/map.html" hreflang="en" lang="en">EN</a>
+  </div>
+  <button class="nav-theme" type="button" aria-pressed="false"></button>
+  </div>
+</nav>
+
+<div class="sheet">
+<div class="stamp">Sample · 演示样例</div>
+
+<nav class="crumbs" aria-label="上级页面">
+  <a class="crumb" href="environmentaffordance.html">← 产品 · Environment Affordance™</a>
+  <a class="crumb parent" href="index.html">架构 · microNature</a>
+</nav>
+
+<header class="hd">
+  <div class="mono" style="margin-bottom:20px">Sheet EA-02 · 交付物样例 01 / 02 · Deliverable Sample</div>
+  <h1>可为性地图</h1>
+  <p class="sub">Affordance Map — 新能源光储电站样例 · 同一片场地，按四型本体分别计算的通行、可达与禁入判定</p>
+  <div class="meta">
+    <div><span class="k">场站类型</span><span class="v">光伏 + 储能一体化电站<br>（场景示例）</span></div>
+    <div><span class="k">场区范围</span><span class="v">520 × 340 m<br>／ 17.68 万 ㎡</span></div>
+    <div><span class="k">标注要素</span><span class="v">①–⑮ 共 15 处<br>／ 7 个类别</span></div>
+    <div><span class="k">标注本体</span><span class="v">4 型（可切换）</span></div>
+    <div><span class="k">图纸编号</span><span class="v" id="hd-dwg">EA-DEMO-PV-2026</span></div>
+  </div>
+</header>
+
+
+<!-- ══ 使用说明 ══════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no">使用说明 · <b>HOW TO USE</b></span>
+  <h2 class="t">这台机器、在这片场地里，能做什么，不能做什么。</h2>
+  <p class="p" style="margin-top:16px"><span class="term" data-t="affordance">可为性</span>是环境与<span class="term" data-t="embodiment">本体</span>之间的<strong>关系属性</strong>，不是场地的绝对属性。所以这份图纸没有一张「通用版」，它必须绑定一台具体的机器才成立。下方的本体切换栏就是这个绑定动作：<strong>切换本体，同一张底图上的判定会全部重算</strong>，图形、矩阵、数据表、统计、图签栏一起变。请至少切换一次再往下读。</p>
+  <p class="p">重算时，L2 三维底图（场地几何）完全不动，只有 L3 标注层被重新计算。控制栏右侧会显示 L2 几何校验值在切换前后保持不变，以及本次 L3 重算的耗时与要素数，这两个读数就是「复用底图、只重算标注」这句话的现场证据。</p>
+  <div class="note">
+    <div class="h">本样例的体例约定</div>
+    <ul>
+      <li><strong>编号</strong>：全篇统一使用 ①–⑮，每个编号在全篇只指一个要素；同类要素共用一个编号，图上可出现多处（如 ⑦ 逆变器室 3 座）。</li>
+      <li><strong>双通道编码</strong>：要素的<strong>外框线型</strong>表示可为性类别（7 类，固定不变）；要素的<strong>填充纹理与判定符号</strong>表示当前本体的判定结果（4 值，随本体变化）。除危险边界固定使用警示红外，全部信息在黑白打印下不丢失。</li>
+      <li><strong>数字</strong>：每一项关键数据都带取数方式代码 <span class="src M1">M1</span>–<span class="src M5">M5</span>，含义见附表 TAB.03。没有代码的数字不存在。</li>
+      <li><strong>判定</strong>：所有通行结论由本体参数与实测几何现场计算得出，不是人工填写；判定依据（含具体余量）逐条列在附表 TAB.01。</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ 本体 ══════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no">输入 · <b>TARGET EMBODIMENTS</b> · L3 本体参数汇入点</span>
+  <h2 class="t">四型标注本体</h2>
+  <p class="p">下方表格是判定引擎的全部输入。<strong>最小通行净宽</strong>与<strong>需求净高</strong>是派生量，由车体尺寸加安全余量算出，决定能不能钻过缝隙的是<strong>车体最大宽度</strong>与两侧安全余量，而非轮距。</p>
+  <div class="scroll-x"><table class="t" id="tbl-bodies"></table></div>
+  <p class="cap" id="cap-bodies"></p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ 图例 ══════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no">图例 · <b>LEGEND</b></span>
+  <h2 class="t">两条编码通道</h2>
+  <h3 class="t">通道 A｜外框线型 ＝ 可为性类别（不随本体变化）</h3>
+  <div class="lg" id="lg-cat"></div>
+  <h3 class="t">通道 B｜填充与符号 ＝ 当前本体的判定（随本体重算）</h3>
+  <div class="lg" id="lg-verdict"></div>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ 控制条 ════════════════════════════════════════════════════ -->
+
+<div class="ctrl" id="ctrl">
+  <div class="ctrl-row">
+    <div class="ctrl-lab">本体<b>EMBODIMENT</b></div>
+    <div class="bodies" id="body-switch" role="group" aria-label="选择标注本体"></div>
+  </div>
+  <div class="ctrl-row">
+    <div class="ctrl-lab">图层<b>LAYERS</b></div>
+    <div class="layers" id="layer-switch"></div>
+  </div>
+  <div class="ctrl-row">
+    <div class="ctrl-lab">重算<b>RECOMPUTE</b></div>
+    <div class="readout" id="readout"></div>
+  </div>
+</div>
+
+
+<!-- ══ FIG.01 ════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no">图 <b>FIG.01</b> · 主图 · SITE AFFORDANCE MAP</span>
+  <h2 class="t">场地可为性标注图</h2>
+  <p class="p">1:2000 出图。①–⑮ 与附表 <a class="xref" href="#tab01">TAB.01</a> 逐号对应。请注意：<strong>在本图比例下，0.50 m 的检修间隙宽度不足 0.3 mm</strong>，无法按真实宽度绘制，因此以引出标注加详图索引表达，实际几何见 <a class="xref" href="#fig03sec">FIG.03 剖面详图</a>。这是比例尺决定的表达限制，不是标注精度的缺失。</p>
+  <div class="fig fig-b"><div id="fig01"></div></div>
+  <p class="cap" id="cap-fig01"></p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ FIG.02 ════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no">图 <b>FIG.02</b> · 可为性矩阵 · AFFORDANCE MATRIX</span>
+  <h2 class="t">15 处要素 × 4 型本体，60 格判定</h2>
+  <p class="p">把四型本体并排放在一起看，才能看清可为性的关系属性：<strong>没有哪一列是另一列的子集</strong>。当前本体列已加深显示。</p>
+  <div class="scroll-x"><div class="fig" id="fig02"></div></div>
+  <p class="cap" id="cap-fig02"></p>
+  <div class="stats" id="stats"></div>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ TAB.01 ════════════════════════════════════════════════════ -->
+
+<section class="sec" id="tab01">
+  <span class="sec-no">附表 <b>TAB.01</b> · 分区数据表 · ZONE REGISTER</span>
+  <h2 class="t">逐号核对：数据、来源、判定依据</h2>
+  <p class="p">「判定依据」一列随本体重算，括号内的余量是引擎实际算出的差值，不是描述性说法。</p>
+  <div class="scroll-x"><table class="t" id="tbl-zones"></table></div>
+  <p class="cap">取数方式代码含义见 <a class="xref" href="#tab03">TAB.03</a>。判定依据由 <span class="tag">rule(本体)</span> 现算，本体切换后全表刷新。</p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ FIG.03 ════════════════════════════════════════════════════ -->
+
+<section class="sec" id="fig03sec">
+  <span class="sec-no">图 <b>FIG.03</b> · 详图 · SECTION DETAIL 1:20</span>
+  <h2 class="t">③ 号间隙剖面详图：0.50 m 到底卡在哪里</h2>
+  <p class="p">主图看不见的 0.50 m，在 1:20 剖面上是这个样子。灰色虚线框是当前本体的<strong>通行包络</strong>（车体尺寸 + 两侧安全余量 + 顶部余量），与实测净空叠合后，卡在哪一维一目了然。切换本体，包络框随之改变。</p>
+  <div class="fig fig-b"><div id="fig03"></div></div>
+  <p class="cap" id="cap-fig03"></p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ FIG.04 ════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no">图 <b>FIG.04</b> · 可视域 · VIEWSHED ANALYSIS</span>
+  <h2 class="t">固定云台 PTZ-01 的可视域与盲区</h2>
+  <p class="p">场区固定云台不是「装上去就能看见」。下图对 12.0 m 立杆云台做二维阴影体计算：对每个遮挡物，按 <span class="tag">k = (H<sub>云台</sub> − h<sub>目标</sub>) / (H<sub>云台</sub> − h<sub>遮挡物</sub>)</span> 将其轮廓沿视线方向投影，取原轮廓与投影轮廓的凸包作为阴影区，再从有效识别距离圆内扣除。</p>
+  <p class="p"><strong>目标高度取当前本体的高度</strong>，所以可视域也是本体相关的：组件支架上沿 +2.20 m 会遮住 0.60 m 高的四足机器人，却完全遮不住飞行高度 3.00 m 的无人机。覆盖率由 3 m 网格逐点求交实算，不是估计值。</p>
+  <div class="fig fig-b"><div id="fig04"></div></div>
+  <p class="cap" id="cap-fig04"></p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ 本体差异 ══════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no">说明 · <b>WHY EMBODIMENT MATTERS</b></span>
+  <h2 class="t">三处间隙，三个不同的答案</h2>
+  <p class="p">③④⑤ 是三条<strong>逐一实测</strong>的组内检修间隙，不是一个统一值。把它们并排看，就能看出为什么可为性地图不能用「典型值」标注。</p>
+  <div class="scroll-x"><table class="t" id="tbl-gaps"></table></div>
+  <div class="cmp" id="cmp-gap"></div>
+  <p class="cap" id="cap-gap"></p>
+
+  <h3 class="t">同一处要素，判定完全相反</h3>
+  <p class="p">最能说明问题的不是间隙，是 ⑭ 光伏组件表面。对轮式、四足、无人机三型本体，它是全场最明确的<strong>禁踩面</strong>；而对 CL-P2 轨道清洁机器人，它是全场<strong>唯一的作业面</strong>。同一块玻璃，同一份几何，两个相反的结论，差别全部来自本体。</p>
+  <p class="p">CL-P2 那一列的 13 个「不适用」也不是数据缺失，而是一个真实结论：<strong>这台机器的世界里只有轨道和板面，场区绝大多数要素对它根本不构成可为性对象。</strong>换一台本体，需要重算的不只是判定值，还有「哪些要素值得标注」。</p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ TAB.02 ════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no">附表 <b>TAB.02</b> · 感知风险登记表 · PERCEPTION RISK REGISTER</span>
+  <h2 class="t">P1–P5：五处已识别的感知风险</h2>
+  <p class="p">本表只登记<strong>物理成因</strong>与<strong>预期误判方向</strong>，全部状态为「待验证」。如需具体感知系统的判定结论，请参考 L4《感知验证报告》（开发中）。两份文档功能互补：<strong>可为性地图显示「这里能否通过」，感知验证报告回答「机器是否知道这里能／不能通过」。</strong></p>
+  <div class="scroll-x"><table class="t" id="tbl-risks"></table></div>
+  <p class="cap">「触发条件」用于在 L4 测试中复现该风险场景；「验证项目」为感知欺骗场景库中的对应编号。</p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ TAB.03 ════════════════════════════════════════════════════ -->
+
+<section class="sec" id="tab03">
+  <span class="sec-no">附表 <b>TAB.03</b> · 数据来源与置信度 · DATA PROVENANCE</span>
+  <h2 class="t">实测 vs. 推测</h2>
+  <p class="p">本图不把所有数字摆成同样的权威度。取数方式决定精度与有效期，也决定这个数字能不能用来支撑一个「可通行」的结论。</p>
+  <div class="scroll-x"><table class="t" id="tbl-methods"></table></div>
+  <h3 class="t">本图数据项分布</h3>
+  <div class="stats" id="stats-src"></div>
+  <p class="cap" id="cap-src"></p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ TAB.04 ════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no">附表 <b>TAB.04</b> · 复算触发条件 · RECOMPUTE TRIGGERS</span>
+  <h2 class="t">什么情况下，可为性地图会失效</h2>
+  <p class="p">可为性地图有有效期，也有失效条件。下列任一条件成立时，本图判定即不再有效，须按对应范围重算并重新签发版本号。注意 T1–T5 全部只影响 L3 标注层，<strong>L2 三维底图在绝大多数情况下可直接复用</strong>，不需要重新采集场地。</p>
+  <div class="scroll-x"><table class="t" id="tbl-triggers"></table></div>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ 约束条件 ══════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no">约束条件 · <b>LIMITATIONS</b></span>
+  <h2 class="t">特殊说明</h2>
+  <div class="note warn">
+    <div class="h">约束条件 · 与本图配套使用，不可单独引用图形部分</div>
+    <ol id="list-limits"></ol>
+  </div>
+  <div class="note">
+    <div class="h">与《感知验证报告》的关系</div>
+    <p>本图标记为感知风险区的 ⑫ 围网北段与 ⑬ 排水沉淀池，以及 P1–P5 全部条目，只说明<strong>此处存在可能导致感知系统误判的物理条件</strong>，不包含「某台具体机器人在这里判断对不对」的结论。该结论由下一份样例《感知验证报告》给出：按 P1–P5 构造对抗场景，让客户机器人的感知系统实跑，与本图标注的真实属性逐项比对，输出偏差清单与修正后的可为性地图。P1–P5 这类物理成因分成哪些类、各自怎么构造，见 <a class="xref" href="atlas.html">EA-03 感知欺骗场景库 · 场景图鉴</a>。</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-line">
+    <span>microNature — Environment Affordance™</span>
+    <span>特种场景环境数字化与部署前验证基础设施</span>
+    <span>© 2026</span>
+  </div>
+  <div class="foot-sheet">
+    <span class="mono" id="ft-dwg">交付物样例 01/02 · 可为性地图</span>
+    <span>场景示例场站，数据仅用于演示标注方法 · 感知验证报告样例另行提供</span>
+  </div>
+</footer>
+
+</div>
+
+<script>
+
+/* ==========================================================================
+   [1] 数据层 · DATA LAYER
+   本文件是这份图纸的唯一事实来源。图、图例、矩阵、数据表、统计、图签栏
+   全部由此生成 —— 编号、判定、数字在任何一处出现时都取自这里。
+   ========================================================================== */
+
+/* --- 1.1 取数方式与置信度 ------------------------------------------------ */
+const METHODS = {
+  M1: { code:'M1', name:'现场实测',   tool:'手持激光测距仪，同点 3 次取中值', tol:'±3 mm',   conf:'高',   ttl:'12 个月' },
+  M2: { code:'M2', name:'点云量测',   tool:'地面 LiDAR 配准后量测',           tol:'±25 mm',  conf:'中高', ttl:'12 个月' },
+  M3: { code:'M3', name:'图纸推算',   tool:'竣工图/厂家标称值，未现场复核',   tol:'图纸标称', conf:'中',   ttl:'6 个月' },
+  M4: { code:'M4', name:'运维记录',   tool:'场站提供，未独立核实',             tol:'—',       conf:'低',   ttl:'6 个月' },
+  M5: { code:'M5', name:'待复测',     tool:'本轮未取得有效数据',               tol:'—',       conf:'不计入', ttl:'—' }
+};
+
+/* --- 1.2 可为性类别（7 类，决定要素外框线型） --------------------------- */
+const CATS = {
+  support:  { key:'support',  name:'可通行支撑面',      en:'SUPPORT SURFACE',  desc:'可直接承重通行的硬化面。' },
+  passage:  { key:'passage',  name:'受限通路',          en:'RESTRICTED PASSAGE', desc:'几何上存在，是否可用取决于本体尺寸与越障能力。' },
+  fragile:  { key:'fragile',  name:'不可通行·表面易损', en:'FRAGILE SURFACE',  desc:'视觉平坦但不可承重踩踏。' },
+  hazard:   { key:'hazard',   name:'危险边界',          en:'HAZARD EDGE',      desc:'电气、跌落或受限空间风险，全本体禁入，人工授权除外。' },
+  operable: { key:'operable', name:'可操作点',          en:'OPERABLE POINT',   desc:'需抵近到达的检修门、门禁、闸阀等具体位置。' },
+  nofly:    { key:'nofly',    name:'无人机限飞区',      en:'UAV RESTRICTED',   desc:'带电体净空要求，空域本体限高或禁入。' },
+  percept:  { key:'percept',  name:'感知风险区',        en:'PERCEPTION RISK',  desc:'物理材质易致感知误判，本图只标物理成因，不含判定结论。' }
+};
+
+/* --- 1.3 判定符号（决定要素填充；与类别正交，两条编码通道） ------------- */
+const VERDICTS = {
+  pass: { key:'pass', glyph:'●', label:'可用',     en:'AFFORDED',     desc:'满足全部几何与能力约束，余量充足。' },
+  cond: { key:'cond', glyph:'◐', label:'有条件',   en:'CONDITIONAL',  desc:'余量不足、依赖环境状态或需降速/授权。' },
+  fail: { key:'fail', glyph:'✕', label:'不可用',   en:'NOT AFFORDED', desc:'不满足约束，或属禁入区。' },
+  na:   { key:'na',   glyph:'—', label:'不适用',   en:'N/A',          desc:'该要素对此本体不构成可为性对象。' }
+};
+const P = (r) => ({ v:'pass', r }); const C = (r) => ({ v:'cond', r });
+const F = (r) => ({ v:'fail', r }); const N = (r) => ({ v:'na',   r });
+const MARGIN = 0.05;            // 通行净宽余量阈值 m，低于此值判为「有条件」
+const fx = (x, d=2) => Number(x).toFixed(d);
+
+/* --- 1.4 标注本体（可切换的输入） --------------------------------------- */
+const BODIES = [
+  {
+    id:'WR',  model:'WR-220', name:'轮式巡检机器人', en:'WHEELED INSPECTION ROBOT',
+    domain:'ground', short:'轮式',
+    dims:'0.82 × 0.58 × 0.75 m（长×宽×高）',
+    sensorH:0.90, bodyW:0.58, bodyH:0.75, sideClear:0.05, topClear:0.10,
+    stepMax:0.08, slopeMax:15, ditchMax:0.00,
+    mob:'台阶 ≤0.08 m · 坡度 ≤15° · 无跨沟能力',
+    task:'组件热斑巡检、道路巡查',
+    key:'车体最大宽度 0.58 m（非轮距）—— 决定最小通行净宽',
+    tgtH:0.75
+  },
+  {
+    id:'QR',  model:'QR-X4', name:'四足机器人', en:'QUADRUPED ROBOT',
+    domain:'ground', short:'四足',
+    dims:'0.90 × 0.40 × 0.60 m（站立）',
+    sensorH:0.65, bodyW:0.38, bodyH:0.60, sideClear:0.05, topClear:0.10,
+    stepMax:0.20, slopeMax:25, ditchMax:0.40,
+    mob:'台阶 ≤0.20 m · 坡度 ≤25° · 跨沟 ≤0.40 m',
+    task:'组内狭窄通道巡检',
+    key:'收窄步态横向包络 0.38 m —— 决定最小通行净宽',
+    tgtH:0.60
+  },
+  {
+    id:'UAV', model:'UAV-M6', name:'巡检无人机', en:'INSPECTION UAV',
+    domain:'air', short:'无人机',
+    dims:'轴距 0.45 m · 含桨最大外径 0.62 m',
+    sensorH:null, bodyW:0.62, bodyH:null, sideClear:0, topClear:0,
+    minAGL:3.00, workClear:0.80, stepMax:null, slopeMax:null, ditchMax:null,
+    mob:'最低安全飞行高度 3.00 m · 作业净空 ≥0.80 m',
+    task:'组件红外航拍、边界与线路走廊巡视',
+    key:'最低安全飞行高度 3.00 m —— 决定与带电体、构筑物的净空关系',
+    tgtH:3.00
+  },
+  {
+    id:'CL',  model:'CL-P2', name:'轨道清洁机器人', en:'RAIL CLEANING ROBOT',
+    domain:'rail', short:'轨道',
+    dims:'限定组件支架专用轨道运行',
+    sensorH:null, bodyW:null, bodyH:0.22, sideClear:0, topClear:0,
+    stepMax:null, slopeMax:null, ditchMax:null,
+    mob:'无离轨越障能力，仅在专属轨道范围内移动',
+    task:'组件表面清洁',
+    key:'无离轨能力 —— 场区绝大多数要素对其不构成可为性对象',
+    tgtH:2.30
+  }
+];
+BODIES.forEach(b => {
+  b.minPassW = (b.domain === 'ground') ? +(b.bodyW + 2*b.sideClear).toFixed(2) : null;
+  b.minVertH = (b.domain === 'ground') ? +(b.bodyH + b.topClear).toFixed(2) : null;
+});
+const BODY = id => BODIES.find(b => b.id === id);
+
+/* --- 1.5 十五处标注要素 ①–⑮ -------------------------------------------
+   n        编号（全篇唯一，图上同类要素共用一号）
+   data[]   关键数据项 + 取数方式代码 m —— 数据来源表由此汇总
+   rule(e)  判定函数：输入本体参数，输出判定与依据。所有结论由此现算。
+   ---------------------------------------------------------------------- */
+const ELEMENTS = [
+{ n:1, code:'GATE-01', name:'主入口大门', en:'MAIN GATE', cat:'support',
+  data:[{k:'门洞净宽', v:'4.20 m', m:'M2'}, {k:'门架限高', v:'2.80 m', m:'M3'}, {k:'门前平台纵坡', v:'1.8 %', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('场区道路非其运行轨道');
+    if(e.domain==='air')  return N('地面门禁不构成空域约束；起降点另设于 ⑧ 硬化场地');
+    if(2.80 < e.minVertH) return F(`门架限高 2.80 m ＜ 需求净高 ${fx(e.minVertH)} m`);
+    if(1.8 > e.slopeMax)  return F('门前纵坡超限');
+    return P(`净宽 4.20 m ≥ 最小通行净宽 ${fx(e.minPassW)} m（余量 ${fx(4.20-e.minPassW)} m）`);
+  }},
+
+{ n:2, code:'ROAD-01', name:'主干运维道路（北环／南环／连接段）', en:'MAIN SERVICE ROAD', cat:'support',
+  data:[{k:'路面净宽', v:'4.00 m', m:'M2'}, {k:'纵坡最大值', v:'2.6 %', m:'M2'}, {k:'路面承载', v:'≥3.5 t', m:'M4'}],
+  rule(e){
+    if(e.domain==='rail') return N('场区道路非其运行轨道');
+    if(e.domain==='air')  return P('可作为低空航线走廊，飞行高度 ≥3.00 m，两侧无高出构筑物');
+    if(2.6 > e.slopeMax)  return F('纵坡超限');
+    return P(`净宽 4.00 m ≥ 需求 ${fx(e.minPassW)} m；纵坡 2.6 % ≤ ${e.slopeMax}°`);
+  }},
+
+{ n:3, code:'GAP-B05', name:'组内检修间隙 B-05', en:'INTER-TABLE GAP B-05', cat:'passage',
+  gapW:0.50, clearH:0.85,
+  data:[{k:'实测净宽', v:'0.50 m', m:'M1'}, {k:'组件下沿净高', v:'0.85 m', m:'M1'}, {k:'地面平整度', v:'±18 mm', m:'M2'}],
+  rule(e){ return gapRule(e, 0.50, 0.85, '绕行至 ② 南环路，单程增加约 180 m'); }},
+
+{ n:4, code:'GAP-C08', name:'组内检修间隙 C-08', en:'INTER-TABLE GAP C-08', cat:'passage',
+  gapW:0.78, clearH:0.88,
+  data:[{k:'实测净宽', v:'0.78 m', m:'M1'}, {k:'组件下沿净高', v:'0.88 m', m:'M1'}],
+  rule(e){ return gapRule(e, 0.78, 0.88, '绕行至 ② 北环路'); }},
+
+{ n:5, code:'GAP-A11', name:'组内检修间隙 A-11', en:'INTER-TABLE GAP A-11', cat:'passage',
+  gapW:0.44, clearH:0.85,
+  data:[{k:'实测净宽', v:'0.44 m', m:'M1'}, {k:'组件下沿净高', v:'0.85 m', m:'M1'}],
+  rule(e){ return gapRule(e, 0.44, 0.85, '绕行至 ② 西侧连接段'); }},
+
+{ n:6, code:'DTCH-01', name:'排水明沟穿越点（南环路）', en:'OPEN DRAIN CROSSING', cat:'passage',
+  data:[{k:'明沟净宽', v:'0.35 m', m:'M1'}, {k:'沟深', v:'0.28 m', m:'M2'}, {k:'盖板', v:'无', m:'M1'}],
+  rule(e){
+    if(e.domain==='rail') return N('不在轨道范围内');
+    if(e.domain==='air')  return N('地面沟渠不构成空域约束');
+    if(e.ditchMax >= 0.35) return P(`跨沟能力 ${fx(e.ditchMax)} m ≥ 沟宽 0.35 m（余量 ${fx(e.ditchMax-0.35)} m）`);
+    return F(`跨沟能力 ${fx(e.ditchMax)} m ＜ 沟宽 0.35 m；需绕行至 E150 涵管过路点，单程增加约 210 m`);
+  }},
+
+{ n:7, code:'INV-01/02/03', name:'逆变器室（3 座，同类共号）', en:'INVERTER ROOM ×3', cat:'operable',
+  data:[{k:'检修门净宽', v:'0.90 m', m:'M1'}, {k:'门槛高', v:'0.05 m', m:'M1'}, {k:'门前净空', v:'1.50 m', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('不在轨道范围内');
+    if(e.domain==='air')  return N('室内空间，旋翼本体不进入');
+    if(0.90 < e.minPassW) return F(`门净宽 0.90 m ＜ 需求 ${fx(e.minPassW)} m`);
+    if(0.05 > e.stepMax)  return F(`门槛 0.05 m ＞ 越障能力 ${fx(e.stepMax)} m`);
+    return P(`门净宽 0.90 m ≥ ${fx(e.minPassW)} m；门槛 0.05 m ≤ 越障 ${fx(e.stepMax)} m`);
+  }},
+
+{ n:8, code:'BESS-01', name:'储能舱区（舱前硬化检修场地）', en:'BESS YARD', cat:'support',
+  data:[{k:'场地平整度', v:'±22 mm', m:'M2'}, {k:'舱顶标高', v:'+2.90 m', m:'M3'}, {k:'场地纵坡', v:'0.8 %', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('不在轨道范围内');
+    if(e.domain==='air')  return C('舱顶可悬停巡检；须距舱顶 ≥0.80 m 且飞行高度 ≥3.00 m（舱顶 +2.90 m，实际作业高度 ≥3.70 m）');
+    return P(`硬化平整场地，纵坡 0.8 % ≤ ${e.slopeMax}°，平整度偏差 ±22 mm ≤ 越障 ${fx(e.stepMax)} m`);
+  }},
+
+{ n:9, code:'BESS-AISLE', name:'储能舱间检修通道', en:'BESS INTER-BAY AISLE', cat:'passage',
+  data:[{k:'净宽（舱门全闭）', v:'1.20 m', m:'M1'}, {k:'净宽（舱门开启）', v:'0.62 m', m:'M3'}, {k:'通道长度', v:'129 m', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('不在轨道范围内');
+    if(e.domain==='air')  return N('通道净宽 1.20 m ＜ 含桨外径 0.62 m 的双侧安全包络，不作为空域通路');
+    const closed = 1.20, open = 0.62;
+    if(closed < e.minPassW) return F(`舱门全闭净宽 ${fx(closed)} m ＜ 需求 ${fx(e.minPassW)} m`);
+    if(open   < e.minPassW) return C(`仅舱门全闭状态可通行（${fx(closed)} m）；任一舱门开启即缩至 ${fx(open)} m ＜ 需求 ${fx(e.minPassW)} m —— 属环境状态依赖，触发 T3 复算`);
+    return P(`两种舱门状态均满足：全闭 ${fx(closed)} m / 开启 ${fx(open)} m ≥ 需求 ${fx(e.minPassW)} m`);
+  }},
+
+{ n:10, code:'SUB-01', name:'升压站 / 开关站', en:'STEP-UP SUBSTATION', cat:'hazard',
+  data:[{k:'带电区围栏边界', v:'按设计图', m:'M3'}, {k:'构架最高点', v:'+6.50 m', m:'M3'}, {k:'安全距离要求', v:'按电压等级', m:'M3'}],
+  rule(e){
+    if(e.domain==='rail') return N('不在轨道范围内');
+    return F('带电区，全本体禁入（含上空），人工授权与停电作业票除外');
+  }},
+
+{ n:11, code:'OHL-COR', name:'送出线路净空区', en:'OVERHEAD LINE CLEARANCE', cat:'nofly',
+  data:[{k:'走廊带宽', v:'40 m', m:'M3'}, {k:'导线对地最小距离', v:'6.50 m', m:'M5'}, {k:'走廊长度（场内）', v:'264 m', m:'M2'}],
+  rule(e){
+    if(e.domain==='air')  return F('带电体净空区，禁入。走廊边界外水平避让 ≥20 m');
+    if(e.domain==='rail') return P('轨道运行高度 ≤1.60 m，远低于导线对地 6.50 m，净空满足');
+    return P('走廊内地面无附加障碍，可正常通行；禁止在走廊内进行任何举升、吊装或天线展开作业');
+  }},
+
+{ n:12, code:'FENCE-N', name:'场区围网 · 北段（菱形网）', en:'PERIMETER MESH FENCE, NORTH', cat:'percept',
+  data:[{k:'网孔尺寸', v:'50 mm', m:'M1'}, {k:'围网高度', v:'2.50 m', m:'M2'}, {k:'标注段长度', v:'230 m', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('不在轨道范围内');
+    if(e.domain==='air')  return P('围网高 2.50 m ＜ 最低安全飞行高度 3.00 m，可越过；越界飞行须另行授权');
+    return F('实体边界，不可穿越；内侧 2.00 m 巡逻带可通行 —— 该段同时列为感知风险 P2');
+  }},
+
+{ n:13, code:'POND-01', name:'排水沉淀池', en:'RETENTION POND', cat:'hazard',
+  data:[{k:'水面面积', v:'约 1 850 ㎡', m:'M2'}, {k:'边坡坡比', v:'1 : 1.5', m:'M3'}, {k:'常水位', v:'-1.20 m', m:'M4'}, {k:'防护栏', v:'无', m:'M1'}],
+  rule(e){
+    if(e.domain==='rail') return N('不在轨道范围内');
+    if(e.domain==='air')  return C('可俯拍；水面上方飞行高度 ≥5.00 m，规避下洗流扰动与镜面过曝 —— 该区同时列为感知风险 P1');
+    return F('无护栏临水边坡 1:1.5，跌落风险；池岸外扩 3.00 m 缓冲带一并禁入');
+  }},
+
+{ n:14, code:'PV-SURF', name:'光伏组件表面（阵列 A–D）', en:'PV MODULE SURFACE', cat:'fragile',
+  data:[{k:'组件下沿标高', v:'+0.85 m', m:'M1'}, {k:'组件上沿标高', v:'+2.20 m', m:'M1'}, {k:'盖板均布承压', v:'≤2 400 Pa', m:'M3'}, {k:'倾角', v:'25°', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return P('专用轨道沿支架敷设，组件表面是 CL-P2 的唯一作业面 —— 同一要素，对其余三型本体均为禁踩面');
+    if(e.domain==='air')  return C('仅悬停不接触，须距板面 ≥0.80 m；晴天正午镜面反射列为感知风险 P3');
+    return F('钢化玻璃盖板仅承受均布荷载 ≤2 400 Pa，禁止集中荷载踩踏（专用轨道机型除外）');
+  }},
+
+{ n:15, code:'CTRL-01', name:'控制室', en:'CONTROL ROOM', cat:'operable',
+  data:[{k:'门禁门净宽', v:'0.95 m', m:'M1'}, {k:'门槛高', v:'0.03 m', m:'M1'}, {k:'门前净空', v:'2.40 m', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('不在轨道范围内');
+    if(e.domain==='air')  return N('室内空间，旋翼本体不进入');
+    if(0.95 < e.minPassW) return F(`门净宽 0.95 m ＜ 需求 ${fx(e.minPassW)} m`);
+    return P(`门净宽 0.95 m ≥ ${fx(e.minPassW)} m；门槛 0.03 m ≤ 越障 ${fx(e.stepMax)} m。门禁需刷卡授权`);
+  }}
+];
+
+/* 三处组内间隙共用一套判定逻辑 —— 只有实测数字不同，结论由数字算出 */
+function gapRule(e, w, h, detour){
+  if(e.domain==='rail') return N('间隙位于支架下方，非轨道范围');
+  if(e.domain==='air')  return N(`不以地面间隙为通路，自阵列上方通过（飞行高度 ≥3.00 m，距板面 ≥0.80 m）`);
+  const need = e.minPassW, m = +(w - need).toFixed(2);
+  if(m < 0)  return F(`净宽 ${fx(w)} m ＜ 最小通行净宽 ${fx(need)} m，差 ${fx(Math.abs(m))} m；${detour}`);
+  if(h < e.minVertH) return F(`净宽满足，但组件下沿净高 ${fx(h)} m ＜ 需求净高 ${fx(e.minVertH)} m，差 ${fx(e.minVertH-h)} m`);
+  const vm = +(h - e.minVertH).toFixed(2);
+  if(m < MARGIN)  return C(`净宽 ${fx(w)} m ≥ 需求 ${fx(need)} m，但余量仅 ${fx(m)} m ＜ 阈值 ${fx(MARGIN)} m：须收窄步态、降速至 0.3 m/s 并开启贴边引导`);
+  if(vm < MARGIN) return C(`净宽余量 ${fx(m)} m 充足，制约项是竖向：组件下沿净高 ${fx(h)} m 对需求净高 ${fx(e.minVertH)} m 仅余 ${fx(vm)} m ＜ 阈值 ${fx(MARGIN)} m，判为临界，须现场复核`);
+  return P(`净宽 ${fx(w)} m ≥ 需求 ${fx(need)} m（余量 ${fx(m)} m）；净高 ${fx(h)} m ≥ ${fx(e.minVertH)} m（余量 ${fx(vm)} m）`);
+}
+
+/* --- 1.6 感知风险登记表 P1–P5 ------------------------------------------- */
+const RISKS = [
+  { id:'P1', at:[13], name:'静水面镜面反射', cause:'沉淀池常水位静水面，风速 <1 m/s 时形成近乎完整的镜面',
+    err:'深度相机／结构光在镜面上无有效回波 → 判为空洞或无限远；亦可能将岸边反射像判为可通行地面',
+    bodies:'WR · QR · UAV', trig:'风速 <1 m/s；太阳高度角 40°–70°；晴天 10:00–15:00',
+    test:'L4-REF-01 反光地面场景 · 三型本体各 20 次趋近', st:'待验证' },
+  { id:'P2', at:[12], name:'半透明菱形围网', cause:'网孔 50 mm，实体率约 12 %，激光与视觉均有大比例穿透',
+    err:'点云稀疏 → 判为可穿越空隙；立体视觉在逆光下将围网判为通路',
+    bodies:'WR · QR', trig:'背景为空旷场地；网面照度差 >3 EV',
+    test:'L4-TRA-02 半透明隔断场景 · 含逆光与顺光两组', st:'待验证' },
+  { id:'P3', at:[14], name:'组件玻璃盖板镜面反射', cause:'钢化玻璃盖板，倾角 25°，正午入射角接近镜面反射条件',
+    err:'反射天空 → 判为水面或开阔空域；红外测温受反射干扰产生伪热斑',
+    bodies:'UAV · CL', trig:'晴天 11:00–14:00；太阳方位与组件法线夹角 <20°',
+    test:'L4-REF-03 组件镜面场景 · 含红外通道比对', st:'待验证' },
+  { id:'P4', at:[3,4,5,14], name:'逆光条件下的阵列端缝', cause:'日出后 1 h／日落前 1 h，阵列端部与背景亮度差极大',
+    err:'边缘过曝 → 间隙宽度估计偏大，可能对 0.44 m 的 ⑤ 号间隙给出「可通行」的错误判断',
+    bodies:'WR · QR', trig:'太阳高度角 <15°，视线方向与太阳方位夹角 <30°',
+    test:'L4-BLK-04 逆光边缘场景 · 覆盖 ③④⑤ 三处实测间隙', st:'待验证' },
+  { id:'P5', at:[8,9], name:'镀锌钢格栅检修平台', cause:'储能舱前钢格栅平台，格栅开孔率约 65 %',
+    err:'LiDAR 回波稀疏且高程跳变 → 判为空洞或落差；亦可能反向判为连续实地而忽略下方沟槽',
+    bodies:'WR · QR', trig:'全天候；雨后积水时误判概率上升',
+    test:'L4-GRD-05 格栅平台场景 · 含干燥与湿滑两种工况', st:'待验证' }
+];
+
+/* --- 1.7 复算触发条件 ---------------------------------------------------- */
+const TRIGGERS = [
+  { id:'T1', name:'本体更换或本体参数变更', ex:'更换机型；车体宽度、步态包络、越障能力、传感器安装高度中任一项变化',
+    scope:'仅重算 L3 标注层', reuse:'L1 原始数据、L2 三维底图直接复用，不需重新采集' },
+  { id:'T2', name:'场地几何变化', ex:'新增／拆除设备；支架改造；道路封闭或改线；围网改造',
+    scope:'局部重采 L2 + 重算受影响要素的 L3', reuse:'未变更区域的 L2 底图复用' },
+  { id:'T3', name:'环境状态变化', ex:'⑨ 储能舱门开启；检修围挡设置；积雪、积水、结冰；临时堆放',
+    scope:'重算受影响要素的 L3；状态依赖型要素须标注状态前提', reuse:'L2 底图复用' },
+  { id:'T4', name:'标注数据超出有效期', ex:'M1／M2 实测数据满 12 个月；M3／M4 推算与记录满 6 个月；M5 项目始终待复测',
+    scope:'对应数据项重新取数后重算 L3', reuse:'L2 底图复用' },
+  { id:'T5', name:'L4 感知验证发现标注与实况不符', ex:'红蓝对抗中发现某处真实属性与本图标注不一致',
+    scope:'回改 L3 标注并重新签发图纸版本', reuse:'L2 底图复用' }
+];
+
+/* --- 1.8 约束条件 -------------------------------------------------------- */
+const LIMITS = [
+  '本图为演示样例，场站为示例构建，所有坐标、尺寸与编号仅用于说明标注方法，不对应任何真实场站。',
+  '本图为静态几何标注，不包含车辆、人员、临时堆放等动态障碍，也不包含随时间变化的作业面状态。',
+  '本轮未取得地面承载力与摩擦系数的实测数据，支撑面判定仅基于几何平整度与设计承载标称值。',
+  '可为性判定基于本体的几何尺寸与标称越障能力，不代表其控制系统在现场的实际执行能力；余量小于阈值的「有条件」判定必须经实机验证后方可采用。',
+  '感知风险区仅标记可能致误判的物理成因，不含任何具体感知系统的判定结论 —— 该结论由 L4《感知验证报告》给出。',
+  '本图不是工程测绘成果，不具备法定测绘效力，不可用于施工放线、征地界定或安全间距的合规性论证。'
+];
+
+/* ==========================================================================
+   [2] 底图几何 · L2 GEOMETRY  +  主图生成器 · FIG.01
+   L2 几何与本体无关，切换本体时本对象一字不改（由校验值证明）。
+   ========================================================================== */
+
+const SITE_W = 520, SITE_H = 340;                 // 场区尺寸 m
+const S = 2;                                       // 图上单位 / 米 → 1:2000 @A3
+const OX = 76, OY = 60;                            // 图廓内地图原点
+const MX = m => OX + m * S, MY = m => OY + m * S;
+
+/* --- 2.1 L2 底图几何（本体无关） ---------------------------------------- */
+function tablesOf(x0, x1, gapNom){
+  const w = x1 - x0, n = Math.max(2, Math.round(w / 26));
+  const tw = (w - (n - 1) * gapNom) / n, out = [];
+  for(let i = 0, x = x0; i < n; i++, x += tw + gapNom) out.push([x, x + tw]);
+  return { seg: out, tw, n };
+}
+const L2 = {
+  site: [[6,6],[514,6],[514,334],[6,334]],
+  fenceN: { y:6, x0:150, x1:380 },
+  roads: [ [20,88,480,4], [20,300,480,4], [20,92,4,208], [496,92,4,208],
+           [148,92,4,208], [288,92,4,208], [428,92,4,208],
+           [242,304,4,30], [218,52,4,36], [96,64,4,24] ],
+  gate:  { x0:238, x1:254, y:334 },
+  arrays:[ {id:'A',x0:26,x1:148}, {id:'B',x0:152,x1:288}, {id:'C',x0:292,x1:428}, {id:'D',x0:432,x1:494} ],
+  rows:  { y0:104, pitch:17, depth:5, n:11 },
+  gapNom:1.0,
+  gaps:  [ {n:3,arr:'B',row:3,gi:1}, {n:4,arr:'C',row:6,gi:2}, {n:5,arr:'A',row:9,gi:1} ],
+  ditch: { y:306, x0:145, x1:470, cross:[244,306] },
+  inv:   [ [100,74,16,12], [250,74,16,12], [380,74,16,12] ],
+  bess:  { zone:[26,16,144,48], cw:12.2, ch:2.5, x0:34, pitch:15.2, n:8, r1y:30, r2y:33.7 },
+  sub:   [300,14,200,56],
+  ohl:   [444,70,40,264],
+  pond:  [[32,310],[110,308],[138,316],[120,327],[54,329],[26,320]],
+  ctrl:  [196,18,52,34],
+  ptz:   { x:150, y:196, h:12.0, range:120, id:'PTZ-01' }
+};
+L2.arrays.forEach(a => Object.assign(a, tablesOf(a.x0, a.x1, L2.gapNom)));
+L2.gaps.forEach(g => {
+  const a = L2.arrays.find(x => x.id === g.arr);
+  g.x = a.x0 + (g.gi + 1) * a.tw + g.gi * L2.gapNom + L2.gapNom / 2;
+  g.y = L2.rows.y0 + L2.rows.pitch * g.row + L2.rows.depth / 2;
+});
+
+/* L2 几何校验值 —— 切换本体时应保持不变 */
+function fnv1a(s){ let h = 0x811c9dc5; for(let i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h>>>0).toString(16).toUpperCase().padStart(8,'0'); }
+const L2SUM = fnv1a(JSON.stringify(L2));
+
+/* --- 2.2 编号气泡与引出点（米） ----------------------------------------- */
+const MARKS = {
+  1:[[268,322],[246,334]], 2:[[58,294],[58,302]], 6:[[206,320],[244,306]],
+  7:[[108,66],[108,74]],  8:[[180,26],[160,30]],  9:[[180,44],[152,33.1]],
+  10:[[508,22],[500,28]], 11:[[508,150],[484,150]], 12:[[262,12],[262,6]],
+  13:[[158,316],[138,318]], 14:[[330,296],[300,288]], 15:[[264,42],[248,42]]
+};
+const INV_EXTRA = [[258,66,258,74],[388,66,388,74]];
+
+/* --- 2.3 类别 → 外框线型（通道 A）／ 判定 → 填充（通道 B） -------------- */
+const CAT_STROKE = {
+  support: { w:1.3, d:null,          c:'#15181B' },
+  passage: { w:1.1, d:'5,2',         c:'#15181B' },
+  fragile: { w:0.8, d:'1,2',         c:'#8E949B' },
+  hazard:  { w:1.8, d:null,          c:'#A8322D' },
+  operable:{ w:1.3, d:null,          c:'#15181B' },
+  nofly:   { w:1.7, d:'13,3,2,3',    c:'#4B5157' },
+  percept: { w:1.2, d:'2,2',         c:'#4B5157' }
+};
+const CAT_LAYER = { support:'road', passage:'pass', fragile:'pv', hazard:'haz', operable:'ops', nofly:'uav', percept:'per' };
+const vFill = (v, cat) => v === 'pass' ? 'none'
+  : v === 'cond' ? 'url(#fCond)'
+  : v === 'fail' ? (cat === 'hazard' || cat === 'nofly' ? 'url(#fFailH)' : 'url(#fFail)')
+  : 'url(#fNA)';
+
+const LAYERS = [
+  { id:'grid', name:'坐标网',   on:true },
+  { id:'road', name:'支撑面',   on:true },
+  { id:'pv',   name:'组件阵列', on:true },
+  { id:'pass', name:'受限通路', on:true },
+  { id:'ops',  name:'可操作点', on:true },
+  { id:'haz',  name:'危险边界', on:true },
+  { id:'uav',  name:'限飞区',   on:true },
+  { id:'per',  name:'感知风险', on:true },
+  { id:'tag',  name:'编号标注', on:true }
+];
+
+/* --- 2.4 SVG 基元 -------------------------------------------------------- */
+const E = (t, a = {}, kids = '') => {
+  let s = '<' + t;
+  for(const k in a) if(a[k] !== null && a[k] !== undefined) s += ` ${k}="${a[k]}"`;
+  return s + (kids ? `>${kids}</${t}>` : '/>');
+};
+const TXT = (x, y, s, o = {}) => E('text', {
+  x, y, 'text-anchor': o.a || 'start', fill: o.c || '#15181B',
+  style:`font-family:'JetBrains Mono',monospace;font-size:${o.s||8}px;font-weight:${o.w||400};letter-spacing:${o.ls||.2}px;${o.st||''}`,
+  transform:o.tr, class:o.cls
+}, s);
+const CIRC = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮';
+
+function marker(n, verdict, bx, by, tx, ty){
+  const X = MX(bx), Y = MY(by), TX = MX(tx), TY = MY(ty), r = 11;
+  const dx = TX - X, dy = TY - Y, L = Math.hypot(dx, dy) || 1;
+  let s = '';
+  if(L > r + 2) s += E('line', { x1:X + dx/L*r, y1:Y + dy/L*r, x2:TX, y2:TY, stroke:'#15181B', 'stroke-width':0.6 })
+                  + E('circle', { cx:TX, cy:TY, r:1.6, fill:'#15181B' });
+  s += E('circle', { cx:X, cy:Y, r, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1.2 });
+  s += TXT(X, Y + 4, CIRC[n-1], { a:'middle', s:12, w:700 });
+  const V = VERDICTS[verdict], vc = { pass:'#1E4A38', cond:'#8A6A12', fail:'#A8322D', na:'#656B71' }[verdict];
+  s += E('rect', { x:X + r + 1, y:Y - 7, width:14, height:14, fill:'#FBFAF7', stroke:vc, 'stroke-width':1 });
+  s += TXT(X + r + 8, Y + 4, V.glyph, { a:'middle', s:10, w:700, c:vc });
+  return s;
+}
+
+/* --- 2.5 主图 ------------------------------------------------------------ */
+function drawMap(b){
+  const V = {}; ELEMENTS.forEach(e => V[e.n] = e.rule(b).v);
+  const st = n => { const e = ELEMENTS.find(x => x.n === n), c = CAT_STROKE[e.cat];
+    return { fill: vFill(V[n], e.cat), stroke:c.c, 'stroke-width':c.w, 'stroke-dasharray':c.d }; };
+  const G = {}; LAYERS.forEach(l => G[l.id] = '');
+
+  /* 坐标网 */
+  for(let e = 0; e <= 500; e += 50){
+    G.grid += E('line', { x1:MX(e), y1:MY(0), x2:MX(e), y2:MY(SITE_H), stroke:'#EAE6DE', 'stroke-width':.5 });
+    G.grid += TXT(MX(e), MY(SITE_H) + 14, 'E' + e, { a:'middle', s:7.5, c:'#656B71' });
+  }
+  for(let n = 0; n <= 300; n += 50){
+    const y = MY(SITE_H - n);
+    G.grid += E('line', { x1:MX(0), y1:y, x2:MX(SITE_W), y2:y, stroke:'#EAE6DE', 'stroke-width':.5 });
+    G.grid += TXT(MX(0) - 7, y + 3, 'N' + n, { a:'end', s:7.5, c:'#656B71' });
+  }
+  for(let e = 0; e <= 500; e += 50) for(let n = 0; n <= 300; n += 50){
+    const x = MX(e), y = MY(SITE_H - n);
+    G.grid += E('line', { x1:x-5, y1:y, x2:x+5, y2:y, stroke:'#C4C0B6', 'stroke-width':.7 })
+            + E('line', { x1:x, y1:y-5, x2:x, y2:y+5, stroke:'#C4C0B6', 'stroke-width':.7 });
+  }
+
+  /* 围界（②所在层之外，归入 road 底层） */
+  G.road += E('polygon', { points:L2.site.map(p => `${MX(p[0])},${MY(p[1])}`).join(' '), fill:'none', stroke:'#15181B', 'stroke-width':1.4 });
+  G.road += TXT(MX(10), MY(0) - 6, '围界 · SITE PERIMETER', { s:8, c:'#656B71' });
+
+  /* ② 道路 + ① 大门 */
+  L2.roads.forEach(r => G.road += E('rect', Object.assign({ x:MX(r[0]), y:MY(r[1]), width:r[2]*S, height:r[3]*S }, st(2))));
+  G.road += TXT(MX(160), MY(297.5), '主干运维道路 · MAIN SERVICE ROAD  净宽 4.00 m', { a:'middle', s:7.6, c:'#4B5157' });
+  const g = L2.gate;
+  G.road += E('rect', Object.assign({ x:MX(g.x0), y:MY(g.y) - 5, width:(g.x1-g.x0)*S, height:10 }, st(1)));
+  G.road += E('line', { x1:MX(g.x0+2), y1:MY(g.y)-9, x2:MX(g.x1-2), y2:MY(g.y)+3, stroke:'#15181B', 'stroke-width':1.4 });
+
+  /* ⑭ 组件阵列 */
+  const R = L2.rows;
+  L2.arrays.forEach(a => {
+    for(let k = 0; k < R.n; k++){
+      const y = R.y0 + k * R.pitch;
+      a.seg.forEach(sg => G.pv += E('rect', Object.assign({ x:MX(sg[0]), y:MY(y), width:(sg[1]-sg[0])*S, height:R.depth*S }, st(14))));
+    }
+    G.pv += E('rect', { x:MX(a.x0)-3, y:MY(R.y0)-3, width:(a.x1-a.x0)*S+6, height:((R.n-1)*R.pitch+R.depth)*S+6, fill:'none', stroke:'#C4C0B6', 'stroke-width':.6, 'stroke-dasharray':'6,4' });
+    G.pv += TXT(MX((a.x0+a.x1)/2), MY(R.y0) - 8, '光伏组件阵列 ' + a.id, { a:'middle', s:8, c:'#4B5157', ls:.6 });
+  });
+
+  /* ③④⑤ 组内间隙：详图索引圈 + 局部放大 */
+  L2.gaps.forEach(gp => {
+    const cx = MX(gp.x), cy = MY(gp.y);
+    G.pass += E('circle', Object.assign({ cx, cy, r:16 }, st(gp.n), { fill:vFill(V[gp.n], 'passage') }));
+    G.pass += E('circle', { cx, cy, r:2.4, fill:'#15181B' });
+    G.pass += E('line', { x1:cx, y1:cy-16, x2:cx, y2:cy-24, stroke:'#15181B', 'stroke-width':.6 });
+    const el = ELEMENTS.find(x => x.n === gp.n);
+    G.pass += TXT(cx, cy - 27, el.code + ' ' + el.gapW.toFixed(2) + 'm', { a:'middle', s:7, c:'#15181B', w:700 });
+  });
+
+  /* ⑥ 排水明沟 */
+  const d = L2.ditch;
+  G.pass += E('line', { x1:MX(d.x0), y1:MY(d.y)-1.4, x2:MX(d.x1), y2:MY(d.y)-1.4, stroke:'#4B5157', 'stroke-width':.7 });
+  G.pass += E('line', { x1:MX(d.x0), y1:MY(d.y)+1.4, x2:MX(d.x1), y2:MY(d.y)+1.4, stroke:'#4B5157', 'stroke-width':.7 });
+  for(let x = d.x0; x < d.x1; x += 8) G.pass += E('line', { x1:MX(x), y1:MY(d.y)-1.4, x2:MX(x+2), y2:MY(d.y)+1.4, stroke:'#C4C0B6', 'stroke-width':.4 });
+  G.pass += E('rect', Object.assign({ x:MX(d.cross[0])-7, y:MY(d.cross[1])-5, width:14, height:10 }, st(6)));
+  G.pass += TXT(MX(d.x1)+4, MY(d.y)+3, '排水明沟 0.35m', { s:7, c:'#656B71' });
+
+  /* ⑦ 逆变器室 */
+  L2.inv.forEach(r => {
+    G.ops += E('rect', Object.assign({ x:MX(r[0]), y:MY(r[1]), width:r[2]*S, height:r[3]*S }, st(7)));
+    const dx = MX(r[0] + r[2]/2), dy = MY(r[1] + r[3]);
+    G.ops += E('line', { x1:dx-5, y1:dy, x2:dx+5, y2:dy, stroke:'#FBFAF7', 'stroke-width':2.4 });
+    G.ops += E('path', { d:`M${dx-5},${dy} A10,10 0 0 1 ${dx+5},${dy}`, fill:'none', stroke:'#15181B', 'stroke-width':.6 });
+    G.ops += E('circle', { cx:dx, cy:dy, r:2, fill:'#15181B' });
+  });
+  G.ops += TXT(MX(134), MY(69), '逆变器室 INV-01/02/03 · 门净宽 0.90m', { s:7.2, c:'#4B5157' });
+
+  /* ⑧⑨ 储能舱区 */
+  const B = L2.bess;
+  G.road += E('rect', Object.assign({ x:MX(B.zone[0]), y:MY(B.zone[1]), width:B.zone[2]*S, height:B.zone[3]*S }, st(8), { 'stroke-dasharray':'2,3', 'stroke-width':.9 }));
+  for(let i = 0; i < B.n; i++){
+    const x = B.x0 + i * B.pitch;
+    [B.r1y, B.r2y].forEach(y => G.road += E('rect', { x:MX(x), y:MY(y), width:B.cw*S, height:B.ch*S, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':.8 }));
+  }
+  G.pass += E('rect', Object.assign({ x:MX(B.x0), y:MY(B.r1y+B.ch), width:(B.n*B.pitch-B.pitch+B.cw)*S, height:(B.r2y-B.r1y-B.ch)*S }, st(9)));
+  const ax = B.x0 + B.pitch*2.5, ay = (B.r1y + B.ch + B.r2y)/2;
+  G.pass += E('circle', { cx:MX(ax), cy:MY(ay), r:15, fill:'none', stroke:'#15181B', 'stroke-width':1.1, 'stroke-dasharray':'5,2' })
+          + E('circle', { cx:MX(ax), cy:MY(ay), r:2.2, fill:'#15181B' })
+          + E('line', { x1:MX(ax), y1:MY(ay)+15, x2:MX(ax), y2:MY(ay)+24, stroke:'#15181B', 'stroke-width':.6 })
+          + TXT(MX(ax), MY(ay)+33, '舱间通道 1.20m（舱门开启 0.62m）', { a:'middle', s:7, w:700 });
+  G.road += TXT(MX(B.zone[0]+2), MY(B.zone[1])+9, '储能舱区 · BESS ARRAY  16 舱', { s:8, c:'#4B5157' });
+
+  /* ⑩ 升压站 */
+  const sb = L2.sub;
+  G.haz += E('rect', Object.assign({ x:MX(sb[0]), y:MY(sb[1]), width:sb[2]*S, height:sb[3]*S }, st(10)));
+  [0,1,2].forEach(i => { const cx = MX(sb[0]+42+i*58), cy = MY(sb[1]+30);
+    G.haz += E('circle', { cx, cy:cy-6, r:11, fill:'none', stroke:'#A8322D', 'stroke-width':.9 })
+           + E('circle', { cx, cy:cy+6, r:11, fill:'none', stroke:'#A8322D', 'stroke-width':.9 }); });
+  G.haz += TXT(MX(sb[0]+sb[2]/2), MY(sb[1])-4, '升压站 / 开关站 · SUBSTATION — 全本体禁入', { a:'middle', s:8, c:'#A8322D' });
+
+  /* ⑪ 送出线路净空区 */
+  const o = L2.ohl;
+  G.uav += E('rect', Object.assign({ x:MX(o[0]), y:MY(o[1]), width:o[2]*S, height:o[3]*S }, st(11)));
+  G.uav += TXT(MX(o[0]+o[2]/2), MY(o[1])+22, '送出线路净空区', { a:'middle', s:7.6, c:'#4B5157', tr:`rotate(90 ${MX(o[0]+o[2]/2)} ${MY(o[1])+22})` });
+  G.uav += E('line', { x1:MX(o[0]+o[2]/2), y1:MY(o[1]), x2:MX(o[0]+o[2]/2), y2:MY(o[1]+o[3]), stroke:'#656B71', 'stroke-width':.6, 'stroke-dasharray':'14,3,2,3' });
+
+  /* ⑫ 围网北段 */
+  const f = L2.fenceN;
+  G.per += E('line', Object.assign({ x1:MX(f.x0), y1:MY(f.y), x2:MX(f.x1), y2:MY(f.y) }, { stroke:CAT_STROKE.percept.c, 'stroke-width':2.4, 'stroke-dasharray':'2,2' }));
+  for(let x = f.x0; x < f.x1; x += 6) G.per += E('path', { d:`M${MX(x)},${MY(f.y)-4} l4,8 M${MX(x)+4},${MY(f.y)-4} l-4,8`, stroke:'#656B71', 'stroke-width':.45, fill:'none' });
+  G.per += TXT(MX((f.x0+f.x1)/2), MY(f.y)-9, '围网北段 · 菱形网 网孔 50mm（感知风险 P2）', { a:'middle', s:7.4, c:'#4B5157' });
+
+  /* ⑬ 排水沉淀池 */
+  const pts = L2.pond.map(p => `${MX(p[0])},${MY(p[1])}`).join(' ');
+  const cxp = L2.pond.reduce((s,p)=>s+p[0],0)/L2.pond.length, cyp = L2.pond.reduce((s,p)=>s+p[1],0)/L2.pond.length;
+  G.haz += E('polygon', { points:L2.pond.map(p => `${MX(cxp+(p[0]-cxp)*1.06)},${MY(cyp+(p[1]-cyp)*1.06)}`).join(' '), fill:'none', stroke:'#A8322D', 'stroke-width':.8, 'stroke-dasharray':'3,3' });
+  G.haz += E('polygon', Object.assign({ points:pts }, st(13)));
+  G.per += E('polygon', { points:pts, fill:'url(#fPer)', stroke:'none', opacity:.85 });
+  G.haz += TXT(MX(150), MY(328), '排水沉淀池 · 静水面反光（P1）+ 无护栏边坡 1:1.5', { s:7.4, c:'#A8322D' });
+
+  /* ⑮ 控制室 */
+  const c = L2.ctrl;
+  G.ops += E('rect', Object.assign({ x:MX(c[0]), y:MY(c[1]), width:c[2]*S, height:c[3]*S }, st(15)));
+  G.ops += TXT(MX(c[0]+c[2]/2), MY(c[1]+c[3]/2)+3, '控制室', { a:'middle', s:8.5, c:'#15181B' });
+  G.ops += E('circle', { cx:MX(c[0]+c[2]/2), cy:MY(c[1]+c[3]), r:2, fill:'#15181B' });
+
+  /* 云台 PTZ-01（FIG.04 交叉索引） */
+  const pz = L2.ptz;
+  G.road += E('circle', { cx:MX(pz.x), cy:MY(pz.y), r:4.5, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1.1 })
+          + E('path', { d:`M${MX(pz.x)-3},${MY(pz.y)-3} l6,0 l-3,6 z`, fill:'#15181B' })
+          + TXT(MX(pz.x)+7, MY(pz.y)+3, 'PTZ-01 ↗FIG.04', { s:6.8, c:'#4B5157' });
+
+  /* 编号 */
+  ELEMENTS.forEach(e => { const m = MARKS[e.n];
+    if(m) G.tag += marker(e.n, V[e.n], m[0][0], m[0][1], m[1][0], m[1][1]); });
+  L2.gaps.forEach(gp => { const cx = gp.x, cy = gp.y;
+    G.tag += marker(gp.n, V[gp.n], cx - 22, cy - 24, cx, cy - 12); });
+  INV_EXTRA.forEach(p => { G.tag += E('circle', { cx:MX(p[0]), cy:MY(p[1]), r:8, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1 })
+    + TXT(MX(p[0]), MY(p[1])+3, '⑦', { a:'middle', s:9, w:700 })
+    + E('line', { x1:MX(p[0]), y1:MY(p[1])+8, x2:MX(p[2]), y2:MY(p[3]), stroke:'#15181B', 'stroke-width':.6 }); });
+
+  return { groups:G, verdicts:V };
+}
+
+/* --- 2.6 图廓、比例尺、指北针、图签栏 ----------------------------------- */
+function sheet(b, V, ms){
+  const cnt = { pass:0, cond:0, fail:0, na:0 }; ELEMENTS.forEach(e => cnt[V[e.n]]++);
+  let s = '';
+  /* 图廓 */
+  s += E('rect', { x:0, y:0, width:1200, height:900, fill:'#FBFAF7' });
+  s += E('rect', { x:12, y:12, width:1176, height:876, fill:'none', stroke:'#15181B', 'stroke-width':2.4 });
+  s += E('rect', { x:36, y:36, width:1128, height:828, fill:'none', stroke:'#15181B', 'stroke-width':.8 });
+  /* 指北针 */
+  const nx = 1094, ny = 108;
+  s += E('circle', { cx:nx, cy:ny, r:19, fill:'none', stroke:'#15181B', 'stroke-width':.8 })
+     + E('path', { d:`M${nx},${ny-15} l6,22 l-6,-6 l-6,6 z`, fill:'#15181B' })
+     + TXT(nx, ny + 32, 'N', { a:'middle', s:11, w:700 });
+  /* 比例尺 */
+  const sx = 60, sy = 776, seg = 25 * S;
+  for(let i = 0; i < 4; i++) s += E('rect', { x:sx + i*seg, y:sy, width:seg, height:9, fill:i%2 ? '#FBFAF7' : '#15181B', stroke:'#15181B', 'stroke-width':.7 });
+  for(let i = 0; i <= 4; i++) s += TXT(sx + i*seg, sy - 4, String(i*25), { a:'middle', s:7.5, c:'#4B5157' });
+  s += TXT(sx + 4*seg + 6, sy + 8, 'm', { s:7.5, c:'#4B5157' });
+  s += TXT(sx, sy + 26, '比例 1:2000（按 A3 幅面出图；屏幕显示比例随视口缩放）', { s:7.6, c:'#656B71' });
+  /* 附注 */
+  const notes = [
+    '注 1  外框线型 = 可为性类别（7 类，本体无关）；填充与右侧符号 = 当前本体判定（4 值，随本体重算）。',
+    '注 2  本图比例下 0.44–0.78 m 检修间隙不足 0.4 mm，以详图索引圈表达，真实几何见 FIG.03。',
+    '注 3  ⑦ 为同类要素共号，图上出现 3 处；其余编号各出现 1 处。',
+    '注 4  坐标为场区独立坐标（示例），非真实测量坐标；本图非工程测绘成果。'
+  ];
+  notes.forEach((t, i) => s += TXT(60, 812 + i*13, t, { s:7.4, c:'#4B5157' }));
+  /* 图签栏 */
+  const TB = { x:700, y:764, w:464, h:100 };
+  s += E('rect', { x:TB.x, y:TB.y, width:TB.w, height:TB.h, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1.4 });
+  const cell = (x, y, w, h, k, v, hi) => {
+    let o = E('rect', { x, y, width:w, height:h, fill:hi ? '#EDF0EC' : 'none', stroke:'#15181B', 'stroke-width':.5 });
+    o += TXT(x + 5, y + 9, k, { s:6.4, c:'#656B71', ls:.6 });
+    o += TXT(x + 5, y + 20, v, { s:8.2, w:700, c:hi ? '#A8322D' : '#15181B' });
+    return o;
+  };
+  const r1 = TB.y, r2 = TB.y + 25, r3 = TB.y + 50, r4 = TB.y + 75;
+  s += cell(TB.x, r1, 200, 25, '项目 PROJECT', '光储电站 · 示例场站');
+  s += cell(TB.x + 200, r1, 264, 25, '图名 TITLE', '可为性地图 · L3 标注层 AFFORDANCE MAP');
+  s += cell(TB.x, r2, 200, 25, '标注本体 EMBODIMENT', b.model + ' ' + b.name, true);
+  s += cell(TB.x + 200, r2, 264, 25, '图号 DWG NO', 'EA-DEMO-PV-2026 / FIG.01 / L3-' + b.id, true);
+  s += cell(TB.x, r3, 100, 25, '比例 SCALE', '1:2000 A3');
+  s += cell(TB.x + 100, r3, 130, 25, '坐标系 CRS', '场区独立（示例）');
+  s += cell(TB.x + 230, r3, 120, 25, '版本 REV', 'L2 v1.0 · L3 ' + b.id, true);
+  s += cell(TB.x + 350, r3, 114, 25, '日期 DATE', '2026-07-31');
+  s += cell(TB.x, r4, 200, 25, 'L2 几何校验 CHECKSUM', L2SUM + ' · 未变更');
+  s += cell(TB.x + 200, r4, 150, 25, 'L3 重算 RECOMPUTE', `15 要素 / ${ms} ms`, true);
+  s += cell(TB.x + 350, r4, 114, 25, '状态 STATUS', '样例 SAMPLE');
+  /* 判定统计条 */
+  s += TXT(330, 782, `本体判定统计：可用 ${cnt.pass} · 有条件 ${cnt.cond} · 不可用 ${cnt.fail} · 不适用 ${cnt.na}　（合计 15）`, { s:8, c:'#4B5157' });
+  return s;
+}
+
+const DEFS = `<defs>
+<pattern id="fCond" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="8" stroke="#C4A64E" stroke-width=".85"/></pattern>
+<pattern id="fFail" width="9" height="9" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="9" y2="9" stroke="#AFABA2" stroke-width=".6"/><line x1="9" y1="0" x2="0" y2="9" stroke="#AFABA2" stroke-width=".6"/></pattern>
+<pattern id="fFailH" width="9" height="9" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="9" y2="9" stroke="#C98A87" stroke-width=".7"/><line x1="9" y1="0" x2="0" y2="9" stroke="#C98A87" stroke-width=".7"/></pattern>
+<pattern id="fNA" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".8" fill="#C9C5BC"/><circle cx="6" cy="6" r=".8" fill="#C9C5BC"/></pattern>
+<pattern id="fPer" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#656B71"/><circle cx="6.5" cy="6.5" r="1" fill="#656B71"/></pattern>
+</defs>`;
+
+function renderFig01(b){
+  const t0 = performance.now();
+  const { groups, verdicts } = drawMap(b);
+  const ms = Math.max(1, Math.round((performance.now() - t0) * 10) / 10);
+  const body = LAYERS.map(l => E('g', { id:'L-' + l.id, style:l.on ? '' : 'display:none' }, groups[l.id])).join('');
+  document.getElementById('fig01').innerHTML =
+    `<svg viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="可为性地图主图">${DEFS}${sheet(b, verdicts, ms)}${body}</svg>`;
+  LAYERS.forEach(l => { const g = document.getElementById('L-' + l.id); if(g) g.style.display = l.on ? '' : 'none'; });
+  return { ms, verdicts };
+}
+
+/* ==========================================================================
+   [3] FIG.02 可为性矩阵 · FIG.03 剖面详图 1:20 · FIG.04 可视域（实算遮挡）
+   ========================================================================== */
+const VC = { pass:'#1E4A38', cond:'#8A6A12', fail:'#A8322D', na:'#656B71' };
+
+/* --- 3.1 FIG.02 可为性矩阵 ---------------------------------------------- */
+function renderFig02(act){
+  const W = 1080, rowH = 30, top = 74, H = top + ELEMENTS.length*rowH + 62;
+  const C0 = 38, C1 = 300, C2 = 424, CW = (W - C2 - 14)/4;
+  let s = E('rect', { x:0, y:0, width:W, height:H, fill:'#FBFAF7' });
+
+  BODIES.forEach((b, i) => { if(b.id === act.id)
+    s += E('rect', { x:C2 + i*CW, y:34, width:CW, height:H - 34 - 46, fill:'#EDF0EC' }); });
+
+  s += TXT(14, 16, '要素 ELEMENT', { s:8, c:'#656B71', ls:.8 });
+  s += TXT(C2, 16, '本体 EMBODIMENT — 同一份几何，四种结论', { s:8, c:'#656B71', ls:.8 });
+  BODIES.forEach((b, i) => {
+    const x = C2 + i*CW + CW/2, on = b.id === act.id;
+    s += TXT(x, 50, b.model, { a:'middle', s:10.5, w:700, c:on ? '#15181B' : '#4B5157' });
+    s += TXT(x, 64, b.name, { a:'middle', s:8, c:'#656B71' });
+    if(on) s += TXT(x, 30, '◀ 当前本体 ▶', { a:'middle', s:7, c:'#A8322D', ls:1 });
+  });
+  s += E('line', { x1:0, y1:top - 4, x2:W, y2:top - 4, stroke:'#15181B', 'stroke-width':1.3 });
+
+  ELEMENTS.forEach((el, r) => {
+    const y = top + r*rowH;
+    if(r % 2) s += E('rect', { x:0, y, width:C2 - 6, height:rowH, fill:'#F4F1EB' });
+    s += TXT(14, y + 19, CIRC[el.n-1], { a:'middle', s:12, w:700 });
+    s += TXT(C0, y + 19, el.name.length > 20 ? el.name.slice(0,19) + '…' : el.name, { s:10.5, c:'#15181B', ls:.1, st:"font-family:'Noto Sans SC',sans-serif;" });
+    s += TXT(C1, y + 19, CATS[el.cat].name, { s:8.4, c:'#656B71' });
+    BODIES.forEach((b, i) => {
+      const v = el.rule(b).v, V = VERDICTS[v], x = C2 + i*CW + CW/2, on = b.id === act.id;
+      s += TXT(x - 24, y + 20, V.glyph, { a:'middle', s:13, w:700, c:VC[v] });
+      s += TXT(x - 12, y + 19, V.label, { a:'start', s:9, w:on ? 700 : 400, c:v === 'na' ? '#656B71' : '#4B5157', st:"font-family:'Noto Sans SC',sans-serif;" });
+    });
+    s += E('line', { x1:0, y1:y + rowH, x2:W, y2:y + rowH, stroke:'#EAE6DE', 'stroke-width':.6 });
+  });
+
+  const yb = top + ELEMENTS.length*rowH;
+  s += E('line', { x1:0, y1:yb, x2:W, y2:yb, stroke:'#15181B', 'stroke-width':1.3 });
+  s += TXT(C0, yb + 22, '合计（15 处要素）', { s:9.5, c:'#15181B', w:700, st:"font-family:'Noto Sans SC',sans-serif;" });
+  BODIES.forEach((b, i) => {
+    const c = { pass:0, cond:0, fail:0, na:0 }; ELEMENTS.forEach(e => c[e.rule(b).v]++);
+    const x = C2 + i*CW + CW/2;
+    s += TXT(x - 24, yb + 22, `${c.pass} / ${c.cond} / ${c.fail} / ${c.na}`, { s:10, w:700, c:'#15181B' });
+    s += TXT(x - 24, yb + 34, '可用/有条件/不可用/不适用', { s:6.6, c:'#656B71' });
+  });
+  document.getElementById('fig02').innerHTML =
+    `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="min-width:860px" role="img" aria-label="可为性矩阵">${s}</svg>`;
+}
+
+/* --- 3.2 FIG.03 剖面详图 1:20 ------------------------------------------- */
+function renderFig03(b){
+  const el = ELEMENTS.find(e => e.n === 3), gw = el.gapW, ch = el.clearH;
+  const K = 180, GX = 500, GY = 505;                       // 1 m = 180 单位；±0.00 基线
+  const px = m => GX + m*K, py = h => GY - h*K;
+  const W = 1040, H = 706;
+  let s = E('rect', { x:0, y:0, width:W, height:H, fill:'#FBFAF7' });
+
+  /* 地面线与地基剖面线 */
+  s += E('line', { x1:40, y1:GY, x2:W - 40, y2:GY, stroke:'#15181B', 'stroke-width':1.6 });
+  for(let x = 40; x < W - 40; x += 9) s += E('line', { x1:x, y1:GY, x2:x - 7, y2:GY + 9, stroke:'#C4C0B6', 'stroke-width':.6 });
+  s += TXT(46, GY - 5, '±0.00 场地设计标高', { s:7.6, c:'#656B71' });
+
+  /* 两侧组件端部（立面，视向正北） */
+  const tab = (x0, x1) => {
+    let o = E('rect', { x:px(x0), y:py(2.20), width:(x1-x0)*K, height:(2.20-0.85)*K, fill:'url(#fFragL)', stroke:'#15181B', 'stroke-width':1.1 });
+    o += E('line', { x1:px(x0), y1:py(0.85), x2:px(x1), y2:py(0.85), stroke:'#15181B', 'stroke-width':1.4 });
+    const cx = (x0 + x1)/2;
+    o += E('rect', { x:px(cx) - 5, y:py(1.55), width:10, height:(1.55)*K, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1 });
+    o += E('rect', { x:px(cx) - 16, y:GY - 4, width:32, height:8, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1 });
+    return o;
+  };
+  s += tab(-2.05, -gw/2) + tab(gw/2, 2.05);
+  s += TXT(px(-1.3), py(1.55), '组件支架 A-05a', { a:'middle', s:7.6, c:'#4B5157' });
+  s += TXT(px(1.3), py(1.55), '组件支架 A-05b', { a:'middle', s:7.6, c:'#4B5157' });
+
+  /* 尺寸线（45° 短斜线起止符） */
+  const dimH = (x0, x1, y, t, col) => {
+    const c = col || '#15181B';
+    let o = E('line', { x1:px(x0), y1:y, x2:px(x1), y2:y, stroke:c, 'stroke-width':.8 });
+    [x0, x1].forEach(x => { o += E('line', { x1:px(x)-4, y1:y+4, x2:px(x)+4, y2:y-4, stroke:c, 'stroke-width':1.1 });
+                            o += E('line', { x1:px(x), y1:y-9, x2:px(x), y2:y+9, stroke:c, 'stroke-width':.5 }); });
+    o += TXT(px((x0+x1)/2), y - 6, t, { a:'middle', s:9, w:700, c });
+    return o;
+  };
+  const dimV = (x, h0, h1, t, col) => {
+    const c = col || '#15181B';
+    let o = E('line', { x1:x, y1:py(h0), x2:x, y2:py(h1), stroke:c, 'stroke-width':.8 });
+    [h0, h1].forEach(h => { o += E('line', { x1:x-4, y1:py(h)+4, x2:x+4, y2:py(h)-4, stroke:c, 'stroke-width':1.1 }); });
+    o += TXT(x - 7, py((h0+h1)/2), t, { a:'middle', s:9, w:700, c, tr:`rotate(-90 ${x-7} ${py((h0+h1)/2)})` });
+    return o;
+  };
+  s += dimH(-gw/2, gw/2, GY + 46, `${(gw*1000).toFixed(0)}  实测净宽 M1`);
+  s += dimV(px(-2.05) - 34, 0, 0.85, `${(ch*1000).toFixed(0)}  组件下沿净高 M1`);
+  s += dimV(px(2.05) + 34, 0, 2.20, '2200  组件上沿');
+
+  /* 当前本体的通行包络 */
+  const isGround = b.domain === 'ground';
+  const envW = isGround ? b.minPassW : (b.domain === 'air' ? b.bodyW : null);
+  const envH = isGround ? b.minVertH : null;
+  if(isGround){
+    const fits = envW <= gw && envH <= ch;
+    const col = fits ? '#1E4A38' : '#A8322D';
+    s += E('rect', { x:px(-envW/2), y:py(envH), width:envW*K, height:envH*K, fill:fits ? 'rgba(44,85,69,.07)' : 'rgba(168,50,45,.07)',
+                     stroke:col, 'stroke-width':1.5, 'stroke-dasharray':'7,3' });
+    s += E('rect', { x:px(-b.bodyW/2), y:py(b.bodyH), width:b.bodyW*K, height:b.bodyH*K, fill:'none', stroke:col, 'stroke-width':1 });
+    s += TXT(px(0), py(envH) - 10, `${b.model} 通行包络 ${(envW*1000).toFixed(0)} × ${(envH*1000).toFixed(0)}`, { a:'middle', s:8.6, w:700, c:col });
+    s += TXT(px(0), py(b.bodyH/2), `车体 ${(b.bodyW*1000).toFixed(0)}`, { a:'middle', s:7.4, c:col });
+    s += dimH(-envW/2, envW/2, GY + 76, `${(envW*1000).toFixed(0)}  需求净宽 = 车体宽 ${(b.bodyW*1000).toFixed(0)} + 两侧余量 2×${(b.sideClear*1000).toFixed(0)}`, col);
+    const dw = +(gw - envW).toFixed(3), dh = +(ch - envH).toFixed(3);
+    const msg = dw < 0 ? `宽度不足 ${Math.abs(dw*1000).toFixed(0)} mm —— 几何上无法通过`
+              : dh < 0 ? `宽度满足（余 ${(dw*1000).toFixed(0)} mm），但净高不足 ${Math.abs(dh*1000).toFixed(0)} mm`
+              : `宽度余量 ${(dw*1000).toFixed(0)} mm ／ 净高余量 ${(dh*1000).toFixed(0)} mm`;
+    s += TXT(px(0), 44, msg, { a:'middle', s:11, w:700, c:col, st:"font-family:'Noto Sans SC',sans-serif;" });
+    if(dw < 0){
+      s += E('line', { x1:px(-envW/2), y1:py(envH*.55), x2:px(-gw/2), y2:py(envH*.55), stroke:'#A8322D', 'stroke-width':2.4 });
+      s += E('line', { x1:px(gw/2), y1:py(envH*.55), x2:px(envW/2), y2:py(envH*.55), stroke:'#A8322D', 'stroke-width':2.4 });
+      s += TXT(px(-(envW+gw)/4), py(envH*.55) - 7, '干涉', { a:'middle', s:7.6, w:700, c:'#A8322D' });
+      s += TXT(px((envW+gw)/4), py(envH*.55) - 7, '干涉', { a:'middle', s:7.6, w:700, c:'#A8322D' });
+    }
+  } else if(b.domain === 'air'){
+    s += E('line', { x1:60, y1:py(3.0), x2:W - 60, y2:py(3.0), stroke:'#1E4A38', 'stroke-width':1.4, 'stroke-dasharray':'11,3,2,3' });
+    s += TXT(70, py(3.0) - 7, `${b.model} 最低安全飞行高度 +3.00 —— 自阵列上方通过，地面间隙不构成约束`, { s:9, w:700, c:'#1E4A38' });
+    s += E('circle', { cx:px(0), cy:py(3.0), r:b.bodyW/2*K, fill:'none', stroke:'#1E4A38', 'stroke-width':1.2 });
+    s += dimV(px(0) + 20, 2.20, 3.0, '800 净空', '#1E4A38');
+    s += TXT(px(0), 44, '该要素对 UAV-M6 不适用：不以地面间隙为通路', { a:'middle', s:11, w:700, c:'#656B71', st:"font-family:'Noto Sans SC',sans-serif;" });
+  } else {
+    s += E('line', { x1:px(-2.05), y1:py(2.28), x2:px(-gw/2), y2:py(2.28), stroke:'#1E4A38', 'stroke-width':2.2 });
+    s += E('line', { x1:px(gw/2), y1:py(2.28), x2:px(2.05), y2:py(2.28), stroke:'#1E4A38', 'stroke-width':2.2 });
+    s += TXT(px(0), 44, '该要素对 CL-P2 不适用：其运行面在组件上表面，间隙位于支架下方', { a:'middle', s:11, w:700, c:'#656B71', st:"font-family:'Noto Sans SC',sans-serif;" });
+    s += TXT(px(1.3), py(2.28) - 8, '专用轨道 · CL-P2 唯一作业面', { a:'middle', s:8, w:700, c:'#1E4A38' });
+  }
+
+  /* 平面小样（索引） */
+  const kx = 74, ky = 596, kk = 26;
+  s += E('rect', { x:kx - 14, y:ky - 40, width:214, height:128, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':.7 });
+  s += TXT(kx - 8, ky - 27, '平面小样 KEY PLAN（不按比例）', { s:7, c:'#656B71' });
+  s += E('rect', { x:kx, y:ky, width:70, height:kk*1.6, fill:'url(#fFragL)', stroke:'#15181B', 'stroke-width':.9 });
+  s += E('rect', { x:kx + 78, y:ky, width:70, height:kk*1.6, fill:'url(#fFragL)', stroke:'#15181B', 'stroke-width':.9 });
+  s += E('line', { x1:kx + 74, y1:ky - 12, x2:kx + 74, y2:ky + kk*1.6 + 12, stroke:'#A8322D', 'stroke-width':1.2 });
+  s += TXT(kx + 82, ky - 8, '1—1 剖切位置', { s:7, w:700, c:'#A8322D' });
+  s += TXT(kx + 35, ky + kk*1.6 + 13, '支架 A-05a', { a:'middle', s:6.6, c:'#4B5157' });
+  s += TXT(kx + 113, ky + kk*1.6 + 13, '支架 A-05b', { a:'middle', s:6.6, c:'#4B5157' });
+  s += TXT(kx + 74, ky + kk*1.6 + 26, `端缝 ${(gw*1000).toFixed(0)} mm（实测 M1）`, { a:'middle', s:7, w:700 });
+
+  s += TXT(40, H - 12, '1—1 立面详图 · ELEVATION DETAIL 1:20（视向正北）　比例按 A3 幅面出图，屏幕显示比例随视口缩放', { s:8, c:'#656B71' });
+  s += TXT(W - 40, H - 12, `③ GAP-B05 · E${L2.gaps[0].x.toFixed(0)} N${(SITE_H - L2.gaps[0].y).toFixed(0)}`, { a:'end', s:8, c:'#656B71' });
+
+  document.getElementById('fig03').innerHTML =
+    `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="0.50 米间隙剖面详图">
+     <defs><pattern id="fFragL" width="6" height="6" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="6" y2="6" stroke="#C9C5BC" stroke-width=".7"/><line x1="6" y1="0" x2="0" y2="6" stroke="#C9C5BC" stroke-width=".7"/></pattern></defs>${s}</svg>`;
+  document.getElementById('cap-fig03').textContent =
+    `FIG.03 — ③ GAP-B05 立面详图 1:20 · 当前本体 ${b.model}。通行包络由本体参数现算：${b.domain === 'ground' ? `车体宽 ${(b.bodyW*1000).toFixed(0)} mm + 两侧安全余量 2×${(b.sideClear*1000).toFixed(0)} mm = ${(b.minPassW*1000).toFixed(0)} mm` : '非地面本体，不适用地面通行包络'}。`;
+}
+
+/* --- 3.3 FIG.04 可视域（二维阴影体实算） -------------------------------- */
+function hull(pts){
+  const p = pts.slice().sort((a,b) => a[0]-b[0] || a[1]-b[1]);
+  const cr = (o,a,b) => (a[0]-o[0])*(b[1]-o[1]) - (a[1]-o[1])*(b[0]-o[0]);
+  const lo = [], up = [];
+  for(const q of p){ while(lo.length >= 2 && cr(lo[lo.length-2], lo[lo.length-1], q) <= 0) lo.pop(); lo.push(q); }
+  for(let i = p.length-1; i >= 0; i--){ const q = p[i]; while(up.length >= 2 && cr(up[up.length-2], up[up.length-1], q) <= 0) up.pop(); up.push(q); }
+  lo.pop(); up.pop(); return lo.concat(up);
+}
+function inPoly(x, y, poly){
+  let c = false;
+  for(let i = 0, j = poly.length-1; i < poly.length; j = i++){
+    const [xi,yi] = poly[i], [xj,yj] = poly[j];
+    if(((yi > y) !== (yj > y)) && (x < (xj-xi)*(y-yi)/(yj-yi) + xi)) c = !c;
+  }
+  return c;
+}
+const bbox = p => { let a=1e9,b=1e9,c=-1e9,d=-1e9; for(const q of p){ a=Math.min(a,q[0]); b=Math.min(b,q[1]); c=Math.max(c,q[0]); d=Math.max(d,q[1]); } return [a,b,c,d]; };
+
+function occluders(){
+  const O = [], rect = (x,y,w,h,ht,nm) => O.push({ p:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]], h:ht, nm });
+  L2.inv.forEach(r => rect(r[0], r[1], r[2], r[3], 3.2, '逆变器室'));
+  const B = L2.bess;
+  for(let i = 0; i < B.n; i++){ const x = B.x0 + i*B.pitch;
+    rect(x, B.r1y, B.cw, B.ch, 2.9, '储能舱'); rect(x, B.r2y, B.cw, B.ch, 2.9, '储能舱'); }
+  rect(L2.ctrl[0], L2.ctrl[1], L2.ctrl[2], L2.ctrl[3], 4.2, '控制室');
+  rect(L2.sub[0], L2.sub[1], L2.sub[2], L2.sub[3], 6.5, '升压站构架');
+  const R = L2.rows;
+  L2.arrays.forEach(a => { for(let k = 0; k < R.n; k++){ const y = R.y0 + k*R.pitch;
+    a.seg.forEach(sg => rect(sg[0], y, sg[1]-sg[0], R.depth, 2.20, '组件支架')); } });
+  O.forEach(o => o.bb = bbox(o.p));
+  return O;
+}
+const OCC = occluders();
+
+function viewshed(t){
+  const P = L2.ptz, H = P.h, R = P.range, K = 60;
+  const inR = OCC.filter(o => o.h > t && !(o.bb[0] > P.x+R+8 || o.bb[2] < P.x-R-8 || o.bb[1] > P.y+R+8 || o.bb[3] < P.y-R-8));
+  const sh = inR.map(o => {
+    const k = o.h >= H ? K : Math.min(K, (H - t) / (H - o.h));
+    const proj = o.p.map(q => [P.x + (q[0]-P.x)*k, P.y + (q[1]-P.y)*k]);
+    const g = hull(o.p.concat(proj));
+    return { g, bb:bbox(g) };
+  });
+  let vis = 0, tot = 0;
+  for(let x = P.x - R; x <= P.x + R; x += 3) for(let y = P.y - R; y <= P.y + R; y += 3){
+    if(Math.hypot(x-P.x, y-P.y) > R) continue;
+    if(x < 6 || x > 514 || y < 6 || y > 334) continue;
+    tot++;
+    let blocked = false;
+    for(const q of sh){ if(x < q.bb[0] || x > q.bb[2] || y < q.bb[1] || y > q.bb[3]) continue; if(inPoly(x, y, q.g)){ blocked = true; break; } }
+    if(!blocked) vis++;
+  }
+  return { sh, inR, cov: tot ? vis/tot : 0, tot, vis, R, H };
+}
+
+function renderFig04(b){
+  const t0 = performance.now();
+  const t = b.tgtH, P = L2.ptz;
+  const { sh, inR, cov, tot, vis, R, H } = viewshed(t);
+  const X0 = P.x - 130, Y0 = P.y - 130, KS = 3.3, PAD = 40;
+  const vx = m => PAD + (m - X0)*KS, vy = m => PAD + (m - Y0)*KS;
+  const W = 260*KS + PAD*2, MH = 260*KS + PAD*2, HH = MH + 104;
+  let s = E('rect', { x:0, y:0, width:W, height:HH, fill:'#FBFAF7' });
+
+  const poly = p => p.map(q => `${vx(q[0]).toFixed(1)},${vy(q[1]).toFixed(1)}`).join(' ');
+  s += `<defs><mask id="vmask"><rect x="0" y="0" width="${W}" height="${HH}" fill="black"/>
+        <circle cx="${vx(P.x)}" cy="${vy(P.y)}" r="${R*KS}" fill="white"/>
+        ${sh.map(q => E('polygon', { points:poly(q.g), fill:'black' })).join('')}</mask>
+        <pattern id="fVis" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="6" stroke="#1E4A38" stroke-width=".9"/></pattern>
+        <clipPath id="vsite"><polygon points="${poly(L2.site)}"/></clipPath></defs>`;
+
+  s += E('rect', { x:PAD, y:PAD, width:260*KS, height:260*KS, fill:'none', stroke:'#15181B', 'stroke-width':1 });
+  s += E('g', { 'clip-path':'url(#vsite)' }, E('rect', { x:0, y:0, width:W, height:MH, fill:'url(#fVis)', opacity:.5, mask:'url(#vmask)' }));
+  s += E('circle', { cx:vx(P.x), cy:vy(P.y), r:R*KS, fill:'none', stroke:'#1E4A38', 'stroke-width':1.1, 'stroke-dasharray':'6,4' });
+
+  OCC.forEach(o => { const bb = o.bb;
+    if(bb[0] > X0+260 || bb[2] < X0 || bb[1] > Y0+260 || bb[3] < Y0) return;
+    s += E('polygon', { points:poly(o.p), fill:'#FBFAF7', stroke:'#4B5157', 'stroke-width':.55 }); });
+  L2.roads.forEach(r => s += E('rect', { x:vx(r[0]), y:vy(r[1]), width:r[2]*KS, height:r[3]*KS, fill:'none', stroke:'#C9C5BC', 'stroke-width':.7 }));
+
+  s += E('circle', { cx:vx(P.x), cy:vy(P.y), r:6, fill:'#15181B' });
+  s += E('circle', { cx:vx(P.x), cy:vy(P.y), r:11, fill:'none', stroke:'#15181B', 'stroke-width':1 });
+  s += TXT(vx(P.x) + 15, vy(P.y) + 4, `${P.id} 立杆 H=${H.toFixed(1)} m`, { s:9, w:700 });
+  s += TXT(vx(P.x) + 15, vy(P.y) + 16, `E${P.x} N${SITE_H - P.y}`, { s:7.4, c:'#656B71' });
+  s += TXT(vx(P.x) + R*KS - 6, vy(P.y) - 6, `有效识别距离 R=${R} m`, { a:'end', s:7.6, c:'#1E4A38' });
+
+  /* 读数条 */
+  const yb = MH + 10;
+  s += E('line', { x1:PAD, y1:yb, x2:W - PAD, y2:yb, stroke:'#15181B', 'stroke-width':1.2 });
+  const cells = [
+    ['目标高度 TARGET h', `${t.toFixed(2)} m`, b.model],
+    ['遮挡物 OCCLUDERS', `${inR.length} 个`, `h > ${t.toFixed(2)} m 者计入`],
+    ['阴影体 SHADOWS', `${sh.length} 个`, '凸包投影实算'],
+    ['可视覆盖 COVERAGE', `${(cov*100).toFixed(1)} %`, `3 m 网格 ${vis}/${tot} 点`],
+    ['盲区 BLIND', `${((1-cov)*100).toFixed(1)} %`, '需补点位或移动本体巡视']
+  ];
+  const cw = (W - PAD*2)/cells.length;
+  cells.forEach((c, i) => { const x = PAD + i*cw;
+    if(i) s += E('line', { x1:x, y1:yb, x2:x, y2:yb + 72, stroke:'#EAE6DE', 'stroke-width':.8 });
+    s += TXT(x + 10, yb + 18, c[0], { s:7, c:'#656B71', ls:.9 });
+    s += TXT(x + 10, yb + 40, c[1], { s:17, w:700, c:i === 3 ? '#1E4A38' : '#15181B' });
+    s += TXT(x + 10, yb + 56, c[2], { s:7.4, c:'#656B71' }); });
+  s += TXT(PAD, HH - 8, `阴影投影系数 k = (H − h目标) / (H − h遮挡物)；h ≥ H 时阴影延伸至识别距离外。窗口 260 × 260 m，比例 1:800。`, { s:7.4, c:'#656B71' });
+
+  document.getElementById('fig04').innerHTML =
+    `<svg viewBox="0 0 ${W} ${HH}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="固定云台可视域分析">${s}</svg>`;
+  const ms = Math.round((performance.now() - t0) * 10) / 10;
+  document.getElementById('cap-fig04').textContent =
+    `FIG.04 — PTZ-01 可视域 · 目标高度取 ${b.model} 的 ${t.toFixed(2)} m。${inR.length} 个高于目标的遮挡物参与计算，生成 ${sh.length} 个阴影体；覆盖率 ${(cov*100).toFixed(1)} % 由 3 m 网格逐点求交得出（${vis}/${tot} 点），耗时 ${ms} ms。`;
+}
+
+/* ==========================================================================
+   [4] 表格、登记表、声明，以及本体切换的接线
+   ========================================================================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const SRC = m => `<span class="src ${m}" title="${METHODS[m].name}｜${METHODS[m].tool}｜允差 ${METHODS[m].tol}｜置信度 ${METHODS[m].conf}｜有效期 ${METHODS[m].ttl}">${m}</span>`;
+const VBADGE = r => `<span class="v v-${r.v}"><span class="g">${VERDICTS[r.v].glyph}</span>${VERDICTS[r.v].label}</span>`;
+
+const LDEFS = `<defs><pattern id="lCond" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="7" stroke="#8A6A12" stroke-width="1"/></pattern><pattern id="lFail" width="6" height="6" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="6" y2="6" stroke="#656B71" stroke-width=".8"/><line x1="6" y1="0" x2="0" y2="6" stroke="#656B71" stroke-width=".8"/></pattern><pattern id="lNA" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".8" fill="#C9C5BC"/><circle cx="6" cy="6" r=".8" fill="#C9C5BC"/></pattern></defs>`;
+
+/* --- 4.1 静态表：本体、图例、风险、来源、触发、声明 --------------------- */
+function renderStatic(){
+  /* 本体表 */
+  $('tbl-bodies').innerHTML =
+    `<thead><tr><th>标注本体</th><th>域</th><th>关键尺寸</th><th>派生：最小通行净宽 / 需求净高</th><th>越障 / 通行能力</th><th>主要任务</th></tr></thead><tbody>` +
+    BODIES.map(b => `<tr>
+      <td class="nm">${b.name}<br><span class="m" style="color:var(--ink3);font-weight:400">${b.model}</span></td>
+      <td class="m nw">${{ground:'地面',air:'空域',rail:'轨道'}[b.domain]}</td>
+      <td>${b.dims}${b.sensorH ? `<br><span class="m" style="color:var(--ink3)">传感器高度 ${b.sensorH.toFixed(2)} m</span>` : ''}</td>
+      <td class="m">${b.minPassW
+          ? `<b>${b.minPassW.toFixed(2)} m</b> ＝ 车体宽 ${b.bodyW.toFixed(2)} + 2 × ${b.sideClear.toFixed(2)}<br><b>${b.minVertH.toFixed(2)} m</b> ＝ 车体高 ${b.bodyH.toFixed(2)} + ${b.topClear.toFixed(2)}`
+          : `<span style="color:var(--ink3)">不适用（${b.domain === 'air' ? '空域本体' : '轨道约束本体'}）</span>`}</td>
+      <td>${b.mob}</td><td>${b.task}</td></tr>`).join('') + '</tbody>';
+  $('cap-bodies').innerHTML = '「最小通行净宽」与「需求净高」不是录入值，由左侧尺寸现算 —— 决定能否通过缝隙的是<b>车体最大宽度</b>加两侧安全余量。';
+
+  /* 图例 A：类别 */
+  $('lg-cat').innerHTML = Object.values(CATS).map(c => {
+    const s = CAT_STROKE[c.key];
+    return `<div class="lg-i"><svg width="46" height="28" viewBox="0 0 46 28">${LDEFS}
+      <rect x="3" y="3" width="40" height="22" fill="none" stroke="${s.c}" stroke-width="${s.w}"${s.d ? ` stroke-dasharray="${s.d}"` : ''}/>
+      ${c.key === 'operable' ? '<circle cx="23" cy="14" r="3" fill="#15181B"/>' : ''}
+      ${c.key === 'percept' ? '<circle cx="14" cy="10" r="1.2" fill="#656B71"/><circle cx="26" cy="18" r="1.2" fill="#656B71"/><circle cx="32" cy="9" r="1.2" fill="#656B71"/>' : ''}
+      </svg><div><h5>${c.name}<span>${c.en}</span></h5><p>${c.desc}</p></div></div>`;
+  }).join('');
+
+  /* 图例 B：判定 */
+  $('lg-verdict').innerHTML = Object.values(VERDICTS).map(v => {
+    const f = { pass:'none', cond:'url(#lCond)', fail:'url(#lFail)', na:'url(#lNA)' }[v.key];
+    return `<div class="lg-i"><svg width="46" height="28" viewBox="0 0 46 28">${LDEFS}
+      <rect x="3" y="3" width="40" height="22" fill="${f}" stroke="#15181B" stroke-width="1"/></svg>
+      <div><h5><span class="v v-${v.key}" style="font-size:13px">${v.glyph}</span> ${v.label}<span>${v.en}</span></h5><p>${v.desc}</p></div></div>`;
+  }).join('');
+
+  /* 感知风险登记表 */
+  $('tbl-risks').innerHTML =
+    `<thead><tr><th>编号</th><th>位置</th><th>风险名称 / 物理成因</th><th>预期误判方向</th><th>受影响本体</th><th>触发条件</th><th>验证项目</th><th>状态</th></tr></thead><tbody>` +
+    RISKS.map(r => `<tr>
+      <td class="mono" style="font-weight:700">${r.id}</td>
+      <td class="mono" style="font-size:13px">${r.at.map(n => CIRC[n-1]).join('')}</td>
+      <td class="nm">${r.name}<br><span style="font-weight:300;color:var(--ink2);font-size:11.5px">${r.cause}</span></td>
+      <td style="font-size:11.5px">${r.err}</td>
+      <td class="mono" style="font-size:10.5px">${r.bodies}</td>
+      <td style="font-size:11.5px;color:var(--ink2)">${r.trig}</td>
+      <td class="mono" style="font-size:10.5px">${r.test}</td>
+      <td class="mono" style="color:var(--alarm);font-size:10.5px">${r.st}</td></tr>`).join('') + '</tbody>';
+
+  /* 取数方式 */
+  $('tbl-methods').innerHTML =
+    `<thead><tr><th>代码</th><th>取数方式</th><th>手段</th><th>允差 / 精度</th><th>置信度</th><th>数据有效期</th><th>可否单独支撑「可通行」结论</th></tr></thead><tbody>` +
+    Object.values(METHODS).map(m => `<tr>
+      <td class="mono" style="font-weight:700">${m.code}</td><td class="nm">${m.name}</td>
+      <td style="font-size:11.5px;color:var(--ink2)">${m.tool}</td><td class="mono">${m.tol}</td>
+      <td class="mono">${m.conf}</td><td class="mono">${m.ttl}</td>
+      <td style="font-size:11.5px">${{
+        M1:'可以', M2:'可以，余量小于 50 mm 时须 M1 复核',
+        M3:'不可以，仅作参考，须现场复核后方可采用',
+        M4:'不可以，须独立核实', M5:'不可以，该项判定标注为待复测'
+      }[m.code]}</td></tr>`).join('') + '</tbody>';
+
+  const cnt = {}; let tot = 0;
+  ELEMENTS.forEach(e => e.data.forEach(d => { cnt[d.m] = (cnt[d.m]||0) + 1; tot++; }));
+  $('stats-src').innerHTML = Object.values(METHODS).map(m =>
+    `<div><span class="k">${m.code} ${m.name}</span><span class="n">${cnt[m.code]||0}<span class="u">/ ${tot} 项</span></span></div>`).join('') +
+    `<div><span class="k">实测占比 M1+M2</span><span class="n">${(((cnt.M1||0)+(cnt.M2||0))/tot*100).toFixed(0)}<span class="u">%</span></span></div>`;
+  $('cap-src').innerHTML = `本图 15 处要素共登记 ${tot} 项关键数据。其中 ${cnt.M5||0} 项为待复测（⑪ 导线对地最小距离），该项涉及带电体实测，本轮未取得有效数据，相关判定已在 TAB.01 中标注来源为 ${SRC('M5')}，不得据此作出净空合规结论。`;
+
+  /* 复算触发 */
+  $('tbl-triggers').innerHTML =
+    `<thead><tr><th>编号</th><th>触发条件</th><th>典型情形</th><th>重算范围</th><th>可复用部分</th></tr></thead><tbody>` +
+    TRIGGERS.map(t => `<tr><td class="mono" style="font-weight:700">${t.id}</td><td class="nm">${t.name}</td>
+      <td style="font-size:11.5px;color:var(--ink2)">${t.ex}</td><td>${t.scope}</td>
+      <td style="font-size:11.5px;color:var(--ink2)">${t.reuse}</td></tr>`).join('') + '</tbody>';
+
+  $('list-limits').innerHTML = LIMITS.map(t => `<li>${t}</li>`).join('');
+
+  /* 控制条 */
+  $('body-switch').innerHTML = BODIES.map(b =>
+    `<button class="bbtn" type="button" data-b="${b.id}" aria-pressed="false"><span class="mk" aria-hidden="true"></span><span class="bt"><span class="m">${b.model}</span><span class="n">${b.name}</span></span></button>`).join('');
+  $('layer-switch').innerHTML = LAYERS.map(l =>
+    `<label class="lchk"><input type="checkbox" data-l="${l.id}"${l.on ? ' checked' : ''}><span>${l.name}</span></label>`).join('');
+}
+
+/* --- 4.2 随本体重算的部分 ------------------------------------------------ */
+function renderDynamic(b){
+  const t0 = performance.now();
+  const R = {}; ELEMENTS.forEach(e => R[e.n] = e.rule(b));
+
+  /* 分区数据表 */
+  $('tbl-zones').innerHTML =
+    `<thead><tr><th>№</th><th>场地要素 / 代号</th><th>可为性类别</th><th>关键数据（含取数方式）</th>
+      <th style="color:var(--ink)">${b.model} 判定</th><th style="color:var(--ink)">判定依据（现算）</th></tr></thead><tbody>` +
+    ELEMENTS.map(e => `<tr>
+      <td class="num">${CIRC[e.n-1]}</td>
+      <td class="nm">${e.name}<br><span class="m" style="color:var(--ink3);font-weight:400">${e.code}</span></td>
+      <td class="m" style="font-size:11px;${e.cat === 'hazard' ? 'color:var(--alarm);font-weight:500' : ''}">${CATS[e.cat].name}</td>
+      <td style="font-size:11.5px">${e.data.map(d => `${d.k} <b class="m">${d.v}</b>${SRC(d.m)}`).join('<br>')}</td>
+      <td class="hit">${VBADGE(R[e.n])}</td>
+      <td style="font-size:11.5px;color:var(--ink2)" class="hit">${R[e.n].r}</td></tr>`).join('') + '</tbody>';
+
+  /* 三处间隙对照 */
+  const gaps = ELEMENTS.filter(e => e.gapW);
+  $('tbl-gaps').innerHTML =
+    `<thead><tr><th>№</th><th>代号</th><th>实测净宽</th><th>组件下沿净高</th>` +
+      BODIES.map(x => `<th${x.id === b.id ? ' style="color:var(--ink)"' : ''}>${x.short}</th>`).join('') + `</tr></thead><tbody>` +
+    gaps.map(g => `<tr><td class="num">${CIRC[g.n-1]}</td><td class="m">${g.code}</td>
+      <td class="m" style="font-weight:700">${g.gapW.toFixed(2)} m ${SRC('M1')}</td>
+      <td class="m">${g.clearH.toFixed(2)} m ${SRC('M1')}</td>` +
+      BODIES.map(x => { const r = g.rule(x); return `<td${x.id === b.id ? ' class="hit"' : ''}>${VBADGE(r)}</td>`; }).join('') + '</tr>').join('') +
+    `<tr><td></td><td class="m" style="color:var(--ink3)">最小通行净宽</td><td colspan="2" class="m" style="color:var(--ink3)">该本体的几何门槛</td>` +
+      BODIES.map(x => `<td class="m"${x.id === b.id ? ' class="hit"' : ''} style="font-weight:700">${x.minPassW ? x.minPassW.toFixed(2) + ' m' : '—'}</td>`).join('') + '</tr></tbody>';
+
+  $('cmp-gap').innerHTML = gaps.map(g => { const r = g.rule(b);
+    return `<div><span class="em">${CIRC[g.n-1]} ${g.code} · 实测 ${g.gapW.toFixed(2)} m</span>
+      <div class="vd v-${r.v}">${VERDICTS[r.v].glyph} ${VERDICTS[r.v].label}</div><p>${r.r}</p></div>`; }).join('');
+  const gv = gaps.map(g => VERDICTS[g.rule(b).v].label);
+  $('cap-gap').innerHTML = `当前本体 <b>${b.model}</b> 对三处间隙的结论：${gv.join(' / ')}。三条间隙相差 0.34 m，判定结论不同 —— 这就是母文档「每条间隙逐一实测，非统一值」的含义：用一个「典型值 0.5 m」标注整片阵列，会同时产生漏判和误判。`;
+
+  /* 主图 + 统计 + 图签 */
+  const { ms } = renderFig01(b);
+  renderFig02(b); renderFig03(b); renderFig04(b);
+
+  const c = { pass:0, cond:0, fail:0, na:0 }; ELEMENTS.forEach(e => c[R[e.n].v]++);
+  $('stats').innerHTML = [
+    ['可用 AFFORDED', c.pass, 'var(--ok)'], ['有条件 CONDITIONAL', c.cond, '#8A6A12'],
+    ['不可用 NOT AFFORDED', c.fail, 'var(--alarm)'], ['不适用 N/A', c.na, 'var(--ink3)']
+  ].map(x => `<div><span class="k">${x[0]}</span><span class="n" style="color:${x[2]}">${x[1]}<span class="u">/ 15</span></span></div>`).join('') +
+    `<div><span class="k">当前本体 EMBODIMENT</span><span class="n" style="font-size:14px;line-height:1.5">${b.model}<br><span class="u" style="margin:0">${b.key}</span></span></div>`;
+
+  const total = Math.round((performance.now() - t0) * 10) / 10;
+  $('readout').innerHTML = [
+    ['L2 底图几何 GEOMETRY', L2SUM, '校验值未变更 · 直接复用', false],
+    ['L3 标注层 ANNOTATION', `${ELEMENTS.length} 要素 · ${total} ms`, '全部判定已重算', true],
+    ['主图重算 FIG.01', `${ms} ms`, '图形 · 图例 · 图签栏同步', true],
+    ['判定分布 VERDICTS', `${c.pass} / ${c.cond} / ${c.fail} / ${c.na}`, '可用 / 有条件 / 不可用 / 不适用', true],
+    ['图号 DWG NO', 'L3-' + b.id, '版本随本体签发', true]
+  ].map(x => `<div class="ro${x[3] ? ' chg' : ''}"><b>${x[0]}</b><em>${x[1]}</em>${x[2]}</div>`).join('');
+
+  $('hd-dwg').textContent = 'EA-DEMO-PV-2026 / L3-' + b.id;
+  $('ft-dwg').textContent = '交付物样例 01/02 · 可为性地图 · L3-' + b.id;
+  $('cap-fig01').innerHTML = `FIG.01 — 可为性地图，示例场站，1:2000（A3）· 标注本体 <b>${b.model} ${b.name}</b>。①–⑮ 与 TAB.01 逐号对应；⑦ 为同类共号，图上 3 处。L2 几何校验值 ${L2SUM}，本次切换未变更。`;
+  $('cap-fig02').innerHTML = `FIG.02 — 可为性矩阵，15 × 4 = 60 格，全部由 <span class="tag">rule(本体)</span> 现算。四列互不包含：${BODIES.map(x => { const cc = {}; ELEMENTS.forEach(e => cc[e.rule(x).v] = (cc[e.rule(x).v]||0)+1); return `${x.short} 可用 ${cc.pass||0}`; }).join('、')}。`;
+}
+
+/* --- 4.3 接线 ------------------------------------------------------------ */
+let CUR = BODIES[0];
+function setBody(id){
+  CUR = BODY(id);
+  document.querySelectorAll('.bbtn').forEach(el => el.setAttribute('aria-pressed', String(el.dataset.b === id)));
+  renderDynamic(CUR);
+}
+function init(){
+  renderStatic();
+  $('body-switch').addEventListener('click', e => { const btn = e.target.closest('.bbtn'); if(btn) setBody(btn.dataset.b); });
+  $('layer-switch').addEventListener('change', e => {
+    const i = e.target; if(!i.dataset.l) return;
+    const L = LAYERS.find(x => x.id === i.dataset.l); L.on = i.checked;
+    const g = document.getElementById('L-' + L.id); if(g) g.style.display = L.on ? '' : 'none';
+  });
+  setBody(BODIES[0].id);
+}
+document.addEventListener('DOMContentLoaded', init);
+
+
+</script>
+<script src="site.js"></script>
+</body>
+</html>
