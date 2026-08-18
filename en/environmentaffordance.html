@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Theme before first paint: a saved choice wins; the English-language version
+   defaults to dark; otherwise the system preference decides. Runs this early
+   so a reload never flashes the other theme. */
+(function(){var t=null;try{t=localStorage.getItem('mn-theme');}catch(e){}
+if(t!=='dark'&&t!=='light'){var en=(document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en')===0;
+t=en?'dark':((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');}
+document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<title>Environment Affordance™ — Independent Validation Before Deployment | microNature</title>
+<meta name="description" content="Environment Affordance™ annotates a real site as an affordance map against a robot's body parameters, builds sensor-deception scenes for red-team testing, and delivers annotation files, a standardised validation report and a scenario library. Deployed privately, compatible with every domestic CPU architecture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="alternate" hreflang="zh-Hans" href="../environmentaffordance.html">
+<link rel="alternate" hreflang="en" href="environmentaffordance.html">
+<link rel="alternate" hreflang="x-default" href="../environmentaffordance.html">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Site navigation">
+  <div class="nav-in">
+    <a class="nav-mark" href="index.html">microNature<span>Physical Intelligence Infrastructure</span></a>
+    <span class="nav-here" aria-hidden="true"></span>
+    <div class="nav-links">
+      <a href="index.html">Architecture</a>
+      <span class="cur" aria-current="page">Affordance™</span>
+      <a href="map.html">Map</a>
+      <a href="atlas.html">Atlas</a>
+      <a href="insight.html">Insight</a>
+      <a href="about.html">About</a>
+    </div>
+  <div class="nav-lang">
+    <a href="../environmentaffordance.html" hreflang="zh-Hans" lang="zh-CN">中</a>
+    <span class="cur" aria-current="true">EN</span>
+  </div>
+  <button class="nav-theme" type="button" aria-pressed="false"></button>
+  </div>
+</nav>
+
+<main class="doc">
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <div class="tblock">
+      <div class="tblock-cell"><span class="tblock-k">Sheet</span><span class="tblock-v">EA-01</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Title</span><span class="tblock-v">Environment Affordance™</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Issue</span><span class="tblock-v">2026.08</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Scope</span><span class="tblock-v">annotate → adversary → report</span></div>
+    </div>
+
+    <h1 class="h1">This Site. This Robot. What It Can Do Here, and What It Cannot</h1>
+
+    <p class="lede hero-lede">Environment Affordance™ takes your real site data and re-annotates it as an affordance map for one specific platform: its dimensions, its gait, its grasp range, the height its sensors sit at. Then, before anything is deployed, we run the scenes that fool perception systems. What you send in and what you hold back becomes a decision you make with the facts already in hand.</p>
+
+    <div class="hero-spec">
+      <span>Before deployment: <b>independent verification</b></span>
+      <span>Private deployment · every domestic CPU architecture</span>
+      <span>10+ years delivering GIS and 3D simulation</span>
+    </div>
+
+    <div class="statement">
+      <span class="mono">Affordance</span>
+      An environment means nothing on its own. The observer supplies the meaning. Change the size of the body, the way it senses, what it can do, and the same stretch of ground divides into can and cannot along a completely different line. True for people. True for robots.
+    </div>
+
+    <a class="uplink" href="index.html">← Environment Affordance™ is the core component of microNature, physical intelligence infrastructure</a>
+  </header>
+
+  <!-- ═══ CONTENTS ═══ -->
+  <section class="band" id="toc">
+    <div class="rail"><span class="rail-num">00</span><span class="rail-en">Contents</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <nav class="toc" aria-label="Contents">
+        <ol class="toc-list">
+          <li><a href="#positioning"><span class="toc-n">01</span><span class="toc-t">What Environment Affordance™ Is</span><span class="toc-d">Definition</span></a></li>
+          <li><a href="#foundation"><span class="toc-n">02</span><span class="toc-t">Over a Decade of GIS and Environment Simulation</span><span class="toc-d">Foundation</span></a></li>
+          <li><a href="#deployment"><span class="toc-n">03</span><span class="toc-t">Private Deployment, Domestically Compliant</span><span class="toc-d">Deployment</span></a></li>
+          <li><a href="#concept"><span class="toc-n">04</span><span class="toc-t">What Environment Affordance Is</span><span class="toc-d">Affordance</span></a></li>
+          <li><a href="#scenarios"><span class="toc-n">05</span><span class="toc-t">Where It Applies</span><span class="toc-d">Scenarios</span></a></li>
+          <li><a href="#architecture"><span class="toc-n">06</span><span class="toc-t">Product Architecture and Execution Path</span><span class="toc-d">Architecture</span></a></li>
+          <li><a href="#validation"><span class="toc-n">07</span><span class="toc-t">The Sensor Deception Library and the Red-Team Proving Ground</span><span class="toc-d">Validation</span></a></li>
+          <li><a href="#execution"><span class="toc-n">08</span><span class="toc-t">From Your Data to a Delivered Report</span><span class="toc-d">Execution</span></a></li>
+          <li><a href="#comparison"><span class="toc-n">09</span><span class="toc-t">How This Differs from a General-Purpose Simulator</span><span class="toc-d">Comparison</span></a></li>
+          <li><a href="#customers"><span class="toc-n">10</span><span class="toc-t">Working Together</span><span class="toc-d">Co-build</span></a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ═══ 01 POSITIONING ═══ -->
+  <section class="band" id="positioning">
+    <div class="rail"><span class="rail-num">01</span><span class="rail-en">Definition</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">What Environment Affordance™ Is</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">Two layers</span>
+          <b>The environment layer</b> moves with the physical structure of the site and is indifferent to the task of the moment. <b>The policy layer</b> moves with the task objective. EA works on the first of these only.
+        </aside>
+        <p class="p">Getting an embodied system into the field takes two different kinds of work. The first is about the environment. Can the robot stand here? Can it get through? Can it take hold? Where does cover end and exposure begin? Those answers follow the physical structure of the site and the things in it, and they barely depend on which task happens to be running. The second is about policy. Which route to take right now, whether to grasp this object, whether to move closer. Those answers follow the task, and they belong to the policy layer.</p>
+      </div>
+
+      <div class="statement">
+        <span class="mono">Where the focus sits</span>
+        For now, Environment Affordance™ works on the first layer. <strong>Annotate the site clearly, turn the places where perception goes wrong into reproducible test scenes, and put the results into a report that can be carried to the deployment site.</strong>
+      </div>
+
+      <div class="col">
+        <p class="p">There is no long-running integration here, and nothing to call continuously. Set beside a conventional simulation engine, we sit closer to the <strong>independent verifier</strong> that intelligent equipment has to clear before it goes in. A penetration test issues findings before a system goes live. A geotechnical survey issues a site report before anyone breaks ground. We do the same thing for robots: one question answered before deployment, whether this robot can land safely on this site, and the answer is auditable and reproducible.</p>
+        <p class="p">You get annotation files, a test report and a scenario library. None of it locks you into our stack. The hard part is judgement: what counts as a sound annotation, and which failure cases make a test complete. Not data network effects, and not call volume. Building that standard properly, and patiently, is the work.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 02 FOUNDATION ═══ -->
+  <section class="band" id="foundation">
+    <div class="rail"><span class="rail-num">02</span><span class="rail-en">Foundation</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">Over a Decade of GIS and Environment Simulation</h2>
+      <div class="col">
+        <aside class="mnote">
+          <span class="mnote-k">Scope</span>
+          This is computational geometry and spatial analysis. We do <b>not</b> train or deploy vision or deep-learning perception models.
+        </aside>
+        <p class="p">For ten years, what we could build and what we had to deliver have pushed each other forward. We have shipped large-scene databases fused from many sources (<span class="term" data-t="oblique">oblique photogrammetry</span>, <span class="term" data-t="pointcloud">point clouds</span>, <span class="term" data-t="bim">BIM</span> and satellite imagery), fast loading and smooth visualisation of terabyte-scale 3D data, private deployment across <span class="term" data-t="domesticcpu">every domestic CPU architecture</span>, automatic generation and standardised scoring of red-team scenes at industrial grade, and geospatial work including viewshed analysis, shadow volumes and openness analysis. Computational geometry and spatial analysis are home ground for us.</p>
+        <p class="p">Does every new demand call for a new technology? Our answer has been to change the question before changing the toolkit. Embodied intelligence did not send us back to the drawing board. We <strong>swapped in a robot for the human observer</strong>, which turns reading a site into reading a site for a particular robot.</p>
+        <p class="p">Reframing the question let us repurpose what we already had. Give 3D environment simulation and spatial analysis the specs of a real platform, and it becomes an environment <span class="term" data-t="affordance">affordance</span> annotation service. Red-team scene generation and standardised scoring changed its target, from a site to a robot's perception system, and became the Sensor Deception Library. <span class="term" data-t="viewshed">Viewshed</span>, shadow volume and openness analysis, all of them classical geospatial algorithms, made the same swap — a robot in place of a person — and became a toolchain that computes affordance straight from platform specs. Each is detailed below.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 03 DEPLOYMENT ═══ -->
+  <section class="band" id="deployment">
+    <div class="rail"><span class="rail-num">03</span><span class="rail-en">Deployment</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">Private Deployment, Domestically Compliant</h2>
+      <div class="grid grid-3">
+        <div class="cell">
+          <span class="cell-code">Every architecture</span>
+          <p>Four CPU architectures: ARM (Kirin, Kunpeng), MIPS (Loongson), SW-64 (Sunway) and x86. Operating systems cover UOS and Kylin OS, with HarmonyOS supported.</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">Data sovereignty</span>
+          <p>Everything runs on your own machines. Site data, annotation results and test reports stay on your servers and inside your network from start to finish. No outside cloud in the loop.</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">Proven delivery</span>
+          <p>This architecture has more than ten years of delivery behind it in mining, energy and other specialized industries, where data sovereignty and domestic compliance are contractual requirements, not preferences.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 04 AFFORDANCE ═══ -->
+  <section class="band" id="concept">
+    <div class="rail"><span class="rail-num">04</span><span class="rail-en">Affordance</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">What Environment Affordance Is</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">A relation, not a property</span>
+          Not a fixed property of the environment, and not a subjective impression in the observer. A relationship between the two, bounded by the specs of both.
+        </aside>
+        <p class="p">Affordance comes from ecological psychology and design theory, where it names the actions an environment makes possible for one particular body. A slope affords climbing to a goat and affords a fish nothing at all. A doorway affords passage to an adult and may afford a large robot only a detour. An affordance is not a fixed property of the environment, and it is not a subjective impression in the observer. It is a relationship between environment and body, bounded by the specs of both, and it moves whenever either of them moves.</p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="cell">
+          <span class="cell-code">Relativity</span>
+          <p>Same site, same map, different platform, different answer.</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">Stability</span>
+          <p>As long as the physical structure of the site stays put, so does the affordance, whatever task happens to be running.</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">Annotatability</span>
+          <p>Walkable surfaces, clear widths, graspable objects, hazard boundaries. Every one of them can be computed, marked and handed over as a file.</p>
+        </div>
+      </div>
+
+      <div class="col">
+        <p class="p">Most deployment validation in embodied intelligence is task-driven. Settle the task first, then build test scenes and validate policy around it. Start from the job to be done and the site and the robot become background conditions serving that job. What you end up measuring is how well this robot performs this task, which is exactly why the traps that do not matter for the current task, and will bite on the next one, stay hidden. Field deployments fail largely on that mismatch: the distance between what a site actually permits and what a robot reads as possible. Ground that looks walkable is not. A channel that looks passable is not. The mismatch usually has nothing to do with the task at all. It is built into the relationship between <span class="term" data-t="embodiment">body</span> and site, and changing the task will not make it go away.</p>
+        <p class="p">Environment Affordance™ starts from the robot instead. Pin down the dimensions, the gait, the grasp range and the sensor height of this platform, then ask what the site allows it. Where can it stand? Where can it pass? Where can it grasp? Where does it have to go around? What the task is, and whether to act on it now, play no part in this step.</p>
+      </div>
+
+      <div class="statement">
+        <span class="mono">Why it matters</span>
+        Before deployment, write down plainly where on this site this robot can work and where it cannot, and give the scenes that mislead perception one run-through. None of these traps belongs to any particular task, and all of them keep coming back. Clear them first and policy validation has one fewer dimension of variables to deal with.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 05 SCENARIOS ═══ -->
+  <section class="band" id="scenarios">
+    <div class="rail"><span class="rail-num">05</span><span class="rail-en">Scenarios</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">Where It Applies</h2>
+      <div class="col">
+        <aside class="mnote">
+          <span class="mnote-k">Range</span>
+          The cleaner and more controlled a site is assumed to be, the easier it is to miss what actually needs validating.
+        </aside>
+        <p class="p">Because affordance is a relationship between environment and body, the range is wider than it first looks. Complex sites qualify, and so do plenty that look simple and controlled.</p>
+      </div>
+
+      <div class="scn-grid">
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">Mining</span>
+            <h4 class="h4">Passage and support surface</h4>
+            <p>Down the same length of drift a quadruped walks straight through while a wheeled robot stalls at a pile of loose rock. Ground that looks walkable is not the same as ground a robot can put its weight on.</p>
+            <div class="scn-flag">passage · support surface · graspable objects</div>
+          </div>
+        </article>
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">Renewable energy sites</span>
+            <h4 class="h4">Where perception traps cluster</h4>
+            <p>Maintenance gaps measured one row at a time. Specular glare off module glass. Still water in a settling pond. Echo jumps across galvanised grating. A single site here holds most of the traps a perception system falls into.</p>
+            <div class="scn-flag">PV array · storage yard · turbine tower</div>
+          </div>
+        </article>
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">Data centres and AI compute centres</span>
+            <h4 class="h4">Even the cleanest site is no exception</h4>
+            <p>Glass partition doors between hot and cold aisles. Polished anti-static flooring. Access hatches under a raised floor. The more uniform and regular a place looks, the more easily it fools a perception system that leans on a depth camera.</p>
+            <div class="scn-flag">hot and cold aisles · raised floor · rack inspection</div>
+          </div>
+        </article>
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">Power grid and substations</span>
+            <h4 class="h4">Clearance and exclusion</h4>
+            <p>A live zone is off limits to every platform without exception. Structural clearance is different: it constrains each platform differently, and the higher a sensor sits, the sooner it meets that invisible line.</p>
+            <div class="scn-flag">live exclusion · structural clearance · sensor height</div>
+          </div>
+        </article>
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">Ports and storage yards</span>
+            <h4 class="h4">Lane passage and reflective ground</h4>
+            <p>The narrow lanes between container stacks are a fixed width, and yet two platforms will reach opposite conclusions about the same lane. A polished floor, or standing water after rain, can be read either way.</p>
+            <div class="scn-flag">yard lanes · polished floor · standing water</div>
+          </div>
+        </article>
+
+        <article class="scn">
+          <div class="scn-body">
+            <span class="scn-tag">Cold chain storage</span>
+            <h4 class="h4">Frost and condensation</h4>
+            <p>In a cold room a lens fogs going in and coming out, and a thin frost forms across floors and racking. Today it scatters light evenly. A small shift in humidity turns patches of it into a mirror.</p>
+            <div class="scn-flag">lens fogging · floor frost · rack condensation</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 06 ARCHITECTURE ═══ -->
+  <section class="band" id="architecture">
+    <div class="rail"><span class="rail-num">06</span><span class="rail-en">Architecture</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">Product Architecture and Execution Path</h2>
+      <div class="col">
+        <p class="p"><a class="xref" href="#fig05">FIG.05</a> lays out the whole frame. The site comes down from the top, sensor scale comes up from the bottom, and the two meet in the middle. Platform specs enter at L3. Out come annotations, scenes and reports, and what happens on site feeds back into the loop.</p>
+      </div>
+
+      <figure class="plate plate-lg bleed rise" id="fig05">
+        <div class="plate-body"><svg role="img" viewBox="0 0 1800 1150" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+            <path d="M 70,50 L 880,50" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 920,50 L 1730,50" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="900" y="56" text-anchor="middle" fill="var(--ink)" style="font-size:17px;font-weight:normal;">←</text><path d="M 70,50 L 70.0,120.0 Q 70.0,190.0 136.8,210.9 L 266.6,251.5 Q 300.0,262.0 335.0,262.0 L 370,262" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 1730,50 L 1730.0,120.0 Q 1730.0,190.0 1663.2,210.9 L 1533.4,251.5 Q 1500.0,262.0 1465.0,262.0 L 1430,262" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="45" y="160" text-anchor="middle" fill="var(--ink)" style="font-size:11.5px;font-weight:normal;letter-spacing:2px;" transform="rotate(-90,45,160)">FEEDBACK LOOP</text><text x="1755" y="160" text-anchor="middle" fill="var(--ink)" style="font-size:11.5px;font-weight:normal;letter-spacing:2px;" transform="rotate(90,1755,160)">FEEDBACK LOOP</text><text x="900" y="30" text-anchor="middle" fill="var(--ink-2)" style="font-size:12px;font-weight:normal;letter-spacing:2px;">SIM2REAL · DEPLOYMENT FEEDBACK</text><rect x="240" y="215" width="1320" height="247" rx="46" ry="46" fill="none" stroke="var(--ink-2)" stroke-width="1" stroke-dasharray="1,4.5"/><text x="900" y="245" text-anchor="middle" fill="var(--ink-2)" style="font-size:12.5px;font-weight:normal;letter-spacing:1.6px;">INTEGRATION OF SITE · ONTOLOGY · AFFORDANCE</text><text x="580" y="288" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:normal;letter-spacing:1.2px;">TB-SCALE</text><text x="735" y="288" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:normal;letter-spacing:1.2px;">TOP-DOWN</text><text x="900" y="288" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:1.2px;">AFFORDANCE</text><text x="1065" y="288" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:normal;letter-spacing:1.2px;">BOTTOM-UP</text><text x="1220" y="288" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:normal;letter-spacing:1.2px;">SENSOR-SCALE</text><path d="M 440,312 L 440.0,300.0 Q 440.0,290.0 450.0,290.0 L 740.0,290.0 Q 750.0,290.0 750.0,300.0 L 750,312" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 1050,312 L 1050.0,300.0 Q 1050.0,290.0 1060.0,290.0 L 1350.0,290.0 Q 1360.0,290.0 1360.0,300.0 L 1360,312" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="370" y="350" text-anchor="middle" fill="var(--ink)" style="font-size:27px;font-weight:bold;letter-spacing:0.5px;">ENVIRONMENT</text><text x="900" y="353" text-anchor="middle" fill="var(--ink)" style="font-size:32px;font-weight:bold;letter-spacing:0.5px;">ARCHITECTURE</text><text x="1430" y="350" text-anchor="middle" fill="var(--ink)" style="font-size:27px;font-weight:bold;letter-spacing:0.5px;">BODY+MIND</text><text x="900" y="372" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;font-style:italic;">Independent Verification</text><text x="370" y="372" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11.5px;font-weight:normal;font-style:italic;">site data</text><text x="1430" y="372" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11.5px;font-weight:normal;font-style:italic;">robot platform</text><path d="M 278,425 L 300,425" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="1,4.5" stroke-linejoin="round" stroke-linecap="round"/><text x="270" y="430" text-anchor="middle" fill="var(--ink)" style="font-size:14px;font-weight:normal;">←</text><path d="M 1500,425 L 1522,425" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="1,4.5" stroke-linejoin="round" stroke-linecap="round"/><text x="1530" y="430" text-anchor="middle" fill="var(--ink)" style="font-size:14px;font-weight:normal;">→</text><path d="M 300,425 L 1500,425" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="1,4.5" stroke-linejoin="round" stroke-linecap="round"/><text x="900" y="409" text-anchor="middle" fill="var(--ink-2)" style="font-size:11.5px;font-weight:normal;letter-spacing:1.5px;">EXECUTION PATH</text><text x="290" y="465" text-anchor="start" fill="var(--ink)" style="font-size:12px;font-weight:bold;">your data in</text><text x="290" y="480" text-anchor="start" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;">raw site data</text><text x="1510" y="465" text-anchor="end" fill="var(--ink)" style="font-size:12px;font-weight:bold;">private deployment</text><text x="1510" y="480" text-anchor="end" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;">private deployment</text><rect x="403.0" y="414.2" width="34.0" height="15.0" fill="var(--paper)"/><text x="420.0" y="429" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">L1</text><text x="420.0" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10px;font-weight:normal;font-style:italic;">Data intake</text><rect x="643.0" y="414.2" width="34.0" height="15.0" fill="var(--paper)"/><text x="660.0" y="429" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">L2</text><text x="660.0" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10px;font-weight:normal;font-style:italic;">3D mapping</text><line x1="540.0" y1="419" x2="540.0" y2="431" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><rect x="883.0" y="414.2" width="34.0" height="15.0" fill="var(--paper)"/><text x="900.0" y="429" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">L3</text><circle cx="918.0" cy="422.0" r="2.4" fill="var(--ink)"/><text x="900.0" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10px;font-weight:normal;font-style:italic;">Affordance annotation</text><line x1="780.0" y1="419" x2="780.0" y2="431" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round"/><line x1="780.0" y1="431" x2="780.0" y2="457" stroke="var(--ink)" stroke-width="0.9" stroke-dasharray="1,3.5" stroke-linecap="round"/><circle cx="780.0" cy="457" r="1.8" fill="var(--ink)"/><text x="780.0" y="470" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:8.5px;font-weight:normal;font-style:italic;">platform specs enter here</text><rect x="1123.0" y="414.2" width="34.0" height="15.0" fill="var(--paper)"/><text x="1140.0" y="429" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">L4</text><text x="1140.0" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10px;font-weight:normal;font-style:italic;">Perception validation</text><line x1="1020.0" y1="419" x2="1020.0" y2="431" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><rect x="1363.0" y="414.2" width="34.0" height="15.0" fill="var(--paper)"/><text x="1380.0" y="429" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">L5</text><text x="1380.0" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10px;font-weight:normal;font-style:italic;">Private delivery</text><line x1="1260.0" y1="419" x2="1260.0" y2="431" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><path d="M 370,462 L 370.0,490.0 Q 370.0,500.0 360.0,500.0 L 287.0,500.0 Q 280.0,500.0 280.0,507.0 L 280,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 370,462 L 370.0,490.0 Q 370.0,500.0 380.0,500.0 L 453.0,500.0 Q 460.0,500.0 460.0,507.0 L 460,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="280" y="520" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px;font-weight:bold;">ENVIRONMENT</text><text x="280" y="536" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">raw point-cloud data</text><text x="460" y="520" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">ENVIRONMENT</text><text x="460" y="536" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">3D digital twin</text><path d="M 900,462 L 900.0,490.0 Q 900.0,500.0 890.0,500.0 L 817.0,500.0 Q 810.0,500.0 810.0,507.0 L 810,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 900,462 L 900.0,490.0 Q 900.0,500.0 910.0,500.0 L 983.0,500.0 Q 990.0,500.0 990.0,507.0 L 990,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="900" y="496" text-anchor="middle" fill="var(--ink-2)" style="font-size:11.5px;font-weight:normal;letter-spacing:1px;">AFFORDANCE MAPPING</text><text x="810" y="520" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px;font-weight:bold;">SPACE</text><text x="810" y="536" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">platform-agnostic geometry</text><text x="990" y="520" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">SPACE</text><text x="990" y="536" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">affordance map</text><path d="M 1430,462 L 1430.0,490.0 Q 1430.0,500.0 1420.0,500.0 L 1347.0,500.0 Q 1340.0,500.0 1340.0,507.0 L 1340,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 1430,462 L 1430.0,490.0 Q 1430.0,500.0 1440.0,500.0 L 1513.0,500.0 Q 1520.0,500.0 1520.0,507.0 L 1520,514" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="1340" y="520" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;">BODY+MIND</text><text x="1340" y="536" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">platform specs in</text><text x="1520" y="520" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px;font-weight:bold;">BODY+MIND</text><text x="1520" y="536" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">deployment decision out</text><line x1="635.0" y1="510" x2="635.0" y2="600" stroke="var(--ink)" stroke-width="0.9" stroke-linecap="round"/><line x1="1165.0" y1="510" x2="1165.0" y2="600" stroke="var(--ink)" stroke-width="0.9" stroke-linecap="round"/><text x="635.0" y="559.0" text-anchor="middle" fill="var(--ink-2)" style="font-size:10.5px;font-weight:normal;letter-spacing:0.5px;" transform="rotate(-90,635.0,559.0)">ANNOTATION ENGINE (L3)</text><text x="1165.0" y="559.0" text-anchor="middle" fill="var(--ink-2)" style="font-size:10.5px;font-weight:normal;letter-spacing:0.5px;" transform="rotate(-90,1165.0,559.0)">VALIDATION ENGINE (L4)</text><path d="M 460,542 L 460.0,568.0 Q 460.0,582.0 474.0,582.0 L 621.0,582.0 Q 635.0,582.0 635.0,596.0 L 635.0,631" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 810,542 L 810.0,568.0 Q 810.0,582.0 796.0,582.0 L 649.0,582.0 Q 635.0,582.0 635.0,596.0 L 635.0,631" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 990,542 L 990.0,568.0 Q 990.0,582.0 1004.0,582.0 L 1151.0,582.0 Q 1165.0,582.0 1165.0,596.0 L 1165.0,631" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 1340,542 L 1340.0,568.0 Q 1340.0,582.0 1326.0,582.0 L 1179.0,582.0 Q 1165.0,582.0 1165.0,596.0 L 1165.0,631" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><text x="635.0" y="655" text-anchor="middle" fill="var(--ink)" style="font-size:19px;font-weight:bold;letter-spacing:0.3px;">AFFORDANCE ANNOTATION</text><text x="635.0" y="673" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;font-style:italic;">affordance annotation · L3</text><text x="1165.0" y="655" text-anchor="middle" fill="var(--ink)" style="font-size:19px;font-weight:bold;letter-spacing:0.3px;">PERCEPTION VALIDATION</text><text x="1165.0" y="673" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;font-style:italic;">perception validation · L4</text><line x1="635.0" y1="695" x2="635.0" y2="705" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="425.0" y1="723" x2="845.0" y2="723" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="425.0" y1="723" x2="425.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="565.0" y1="723" x2="565.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="705.0" y1="723" x2="705.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="845.0" y1="723" x2="845.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><text x="425.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">SUPPORT SURFACE</text><text x="425.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">stand on it</text><text x="425.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="425.0" dy="0">ground that carries</tspan><tspan x="425.0" dy="13">the robot's weight</tspan></text><text x="565.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">PASSAGE</text><text x="565.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">get through it</text><text x="565.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="565.0" dy="0">gaps and lanes</tspan><tspan x="565.0" dy="13">wide enough to pass</tspan></text><text x="705.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">GRASPABLE</text><text x="705.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">take hold of it</text><text x="705.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="705.0" dy="0">position and orientation</tspan><tspan x="705.0" dy="13">already annotated</tspan></text><text x="845.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">HAZARD EDGE</text><text x="845.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">go around it</text><text x="845.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="845.0" dy="0">obstacles and cover</tspan><tspan x="845.0" dy="13">that must be skirted</tspan></text><line x1="1165.0" y1="695" x2="1165.0" y2="705" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="955.0" y1="723" x2="1375.0" y2="723" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="955.0" y1="723" x2="955.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="1095.0" y1="723" x2="1095.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="1235.0" y1="723" x2="1235.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="1375.0" y1="723" x2="1375.0" y2="743" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><text x="955.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">REFLECTION</text><text x="955.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">a shiny floor</text><text x="955.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="955.0" dy="0">read as</tspan><tspan x="955.0" dy="13">standing water</tspan></text><text x="1095.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">TRANSLUCENCE</text><text x="1095.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">a glass partition</text><text x="1095.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="1095.0" dy="0">read as</tspan><tspan x="1095.0" dy="13">open passage</tspan></text><text x="1235.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">OCCLUSION</text><text x="1235.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">cover and exposure</text><text x="1235.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="1235.0" dy="0">viewshed and</tspan><tspan x="1235.0" dy="13">shadow-volume computation</tspan></text><text x="1375.0" y="757" text-anchor="middle" fill="var(--ink)" style="font-size:13px;font-weight:bold;letter-spacing:0.2px;">BACKLIGHT</text><text x="1375.0" y="773" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-weight:normal;">a lit edge</text><text x="1375.0" y="791" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:9.5px;font-weight:normal;font-style:italic;"><tspan x="1375.0" dy="0">read as</tspan><tspan x="1375.0" dy="13">open ground</tspan></text><path d="M 635.0,817 L 635.0,872.0 Q 635.0,927.0 689.4,935.2 L 900.0,967.0 Q 900.0,967.0 900.0,967.0 L 900,967" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M 1165.0,817 L 1165.0,872.0 Q 1165.0,927.0 1110.6,935.2 L 900.0,967.0 Q 900.0,967.0 900.0,967.0 L 900,967" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><line x1="635.0" y1="687" x2="635.0" y2="817" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><line x1="1165.0" y1="687" x2="1165.0" y2="817" stroke="var(--ink)" stroke-width="1" stroke-linecap="round"/><text x="900" y="1017" text-anchor="middle" fill="var(--ink)" style="font-size:42px;font-weight:bold;letter-spacing:1px;">Environment Affordance</text><text x="900" y="1045" text-anchor="middle" fill="var(--ink-2)" style="font-size:12px;font-weight:normal;letter-spacing:0.5px;">the relationship between environment and platform · PRIVATE, SOVEREIGN DEPLOYMENT · L5</text><text x="900" y="1065" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-weight:normal;font-style:italic;">ARM Kirin, Kunpeng  ·  MIPS Loongson  ·  SW-64 Sunway  ·  x86</text><text x="900" y="1122" text-anchor="middle" fill="var(--ink-3)" style="font-size:11px;font-weight:normal;letter-spacing:0.5px;">microNature · system architecture and execution path · digitising special-scene environments and validating before deployment</text>
+            </svg></div>
+        <figcaption class="plate-cap">
+          <b>FIG.05</b>
+          <span>Environment Affordance™ system architecture · L1–L5 execution path<button class="plate-zoom" type="button" data-zoom="fig05" data-zoom-label="FIG.05 — Environment Affordance™ system architecture">Enlarge ⤴</button></span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═══ 07 VALIDATION ═══ -->
+  <section class="band" id="validation">
+    <div class="rail"><span class="rail-num">07</span><span class="rail-en">Validation</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">The Sensor Deception Library and the Red-Team Proving Ground</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">Red team, blue team</span>
+          From the red-team tradition. You build the attack rather than wait to defend against it. NIST SP 800-115 is one reference for the method.
+        </aside>
+        <p class="p">The <span class="term" data-t="redblue">red team, blue team</span> idea comes from safety testing in specialized industries. We work out in advance which scenes make a perception system look at one thing and see another, write them up as a checklist, and put the robot's own judgement through them one item at a time.</p>
+        <p class="p">The proving ground is built to manufacture disagreement: scenes where what the site holds and what perception concludes come apart. In one spot, what the robot's perception system reports and what is actually there are two different things.</p>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr><th>Site feature</th><th>Perception verdict</th><th>What is actually there</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Reflective floor</td><td class="is-wrong">Standing water</td><td class="is-true">Solid ground, safe to stand on</td></tr>
+            <tr><td>Wet metal grating</td><td class="is-wrong">Solid footing</td><td class="is-true">Slippery, support unreliable</td></tr>
+            <tr><td>Translucent partition</td><td class="is-wrong">An open passage</td><td class="is-true">A solid barrier, impassable</td></tr>
+            <tr><td>A hollow hidden by cover</td><td class="is-wrong">Flat ground</td><td class="is-true">A hollow with a drop</td></tr>
+            <tr><td>An edge in backlight</td><td class="is-wrong">Open area</td><td class="is-true">A drop or a boundary, and a risk</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col">
+        <p class="p">The whole flow is in <a class="xref" href="#fig06">FIG.06</a>. Every scene records what the robot's perception system reported, sets it against the true properties of the site, and feeds a standardised validation report saying which scenes were called correctly, where the call went wrong, and at which stage it went wrong.</p>
+        <p class="p">The five rows above are an extract. The full library is organised by physical cause, and every entry records that cause, which way the misjudgement runs, the conditions that trigger it, and how to build the scene. Samples are in <a class="link" href="atlas.html" target="_blank" rel="noopener">EA-03 Sensor Deception Library · Scenario atlas</a>.</p>
+      </div>
+
+      <figure class="plate rise" id="fig06">
+        <div class="plate-body"><svg role="img" viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+            <title>red-team validation flow</title>
+            <defs><marker id="arrowRB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/></marker></defs>
+            
+
+            <text x="450" y="28" text-anchor="middle" fill="var(--ink-3)" style="font-size:11px;font-weight:bold;letter-spacing:1px;">AFFORDANCE VALIDATION &amp; CORRECTION LAYER</text>
+
+            <rect x="250" y="55" width="400" height="85" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+            <text x="450" y="88" text-anchor="middle" fill="var(--ink)" style="font-size:14px;font-weight:bold;letter-spacing:0.3px;">SENSOR DECEPTION SCENARIO LIBRARY</text>
+            <text x="450" y="107" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:12.5px;">SENSOR DECEPTION LIBRARY</text>
+            <text x="450" y="126" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">the five classes of trap listed above</text>
+
+            <line x1="450" y1="140" x2="450" y2="176" stroke="var(--ink)" stroke-width="1.1" marker-end="url(#arrowRB)"/>
+            <circle cx="450" cy="178" r="3" fill="var(--ink)"/>
+            <line x1="450" y1="178" x2="228" y2="222" stroke="var(--ink)" stroke-width="1" marker-end="url(#arrowRB)"/>
+            <line x1="450" y1="178" x2="672" y2="222" stroke="var(--ink)" stroke-width="1" marker-end="url(#arrowRB)"/>
+
+            <rect x="70" y="225" width="310" height="120" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+            <text x="225" y="258" text-anchor="middle" fill="var(--ink)" style="font-size:13.5px;font-weight:bold;letter-spacing:0.3px;">RED · ENVIRONMENT SIDE</text>
+            <text x="225" y="277" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:12px;">RED · ENVIRONMENT SIDE</text>
+            <text x="225" y="299" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">sets the traps into the proving ground from the list</text>
+            <text x="225" y="316" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">the true properties of the site are known</text>
+
+            <rect x="520" y="225" width="310" height="120" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+            <text x="675" y="258" text-anchor="middle" fill="var(--ink)" style="font-size:13.5px;font-weight:bold;letter-spacing:0.3px;">BLUE · PERCEPTION SIDE</text>
+            <text x="675" y="277" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:12px;">BLUE · PERCEPTION SYSTEM</text>
+            <text x="675" y="299" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">the robot judges on its own sensors alone</text>
+            <text x="675" y="316" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">and is not told what has been set</text>
+
+            <line x1="450" y1="225" x2="450" y2="345" stroke="var(--rule)" stroke-width="1" stroke-dasharray="3,3"/>
+            <rect x="432" y="277" width="36" height="22" fill="var(--paper)"/>
+            <text x="450" y="294" text-anchor="middle" fill="var(--ink-3)" style="font-size:18px;font-weight:bold;">VS</text>
+
+            <line x1="225" y1="345" x2="450" y2="393" stroke="var(--ink)" stroke-width="1" marker-end="url(#arrowRB)"/>
+            <line x1="675" y1="345" x2="450" y2="393" stroke="var(--ink)" stroke-width="1" marker-end="url(#arrowRB)"/>
+
+            <rect x="225" y="395" width="450" height="95" fill="var(--wash)" stroke="var(--ink)" stroke-width="1.1"/>
+            <text x="450" y="428" text-anchor="middle" fill="var(--ink)" style="font-size:14px;font-weight:bold;letter-spacing:0.3px;">PERCEPTION CLASH &amp; VERIFICATION</text>
+            <text x="450" y="447" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:12.5px;">CLASH AND COMPARISON</text>
+            <text x="450" y="467" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:10.5px;font-style:italic;">blue's verdicts checked one by one against red's known truth</text>
+
+            <line x1="450" y1="490" x2="450" y2="526" stroke="var(--ink)" stroke-width="1.1" marker-end="url(#arrowRB)"/>
+
+            <rect x="150" y="528" width="600" height="115" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.3"/>
+            <text x="450" y="562" text-anchor="middle" fill="var(--ink)" style="font-size:15px;font-weight:bold;letter-spacing:0.3px;">VALIDATED OUTPUT · standardised validation report</text>
+            <text x="450" y="584" text-anchor="middle" fill="var(--ink-2)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-style:italic;">which verdicts held, where they diverged, at which stage</text>
+            <text x="450" y="603" text-anchor="middle" fill="var(--ink-3)" style="font-family:Georgia, Liberation Serif, Noto Serif CJK SC, serif;font-size:11px;font-style:italic;">→ corrected affordance map</text>
+
+            <text x="450" y="675" text-anchor="middle" fill="var(--ink-3)" style="font-size:10.5px;letter-spacing:0.5px;">Environment Affordance</text>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.06</b><span>red-team validation flow</span></figcaption>
+      </figure>
+
+      <div class="col">
+        <p class="p">For cover and exposure we use algorithms already proven in specialized industrial work: <span class="term" data-t="viewshed">viewshed analysis</span>, shadow volumes and openness analysis. Pointed now at the perception limits of a robot inside a site. Is the robot itself in cover or out in the open, and can it pick out a target that is not?</p>
+        <p class="p">The library is organised by task type, covering inspection, transport, collaborative work and security patrol, and we keep adding to it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 08 EXECUTION ═══ -->
+  <section class="band" id="execution">
+    <div class="rail"><span class="rail-num">08</span><span class="rail-en">Execution</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">From Your Data to a Delivered Report</h2>
+      <div class="col">
+        <aside class="mnote">
+          <span class="mnote-k">See also</span>
+          A finished L3 annotation is shown in <a href="map.html" target="_blank" rel="noopener">EA-02 Affordance map</a>
+        </aside>
+        <p class="p">The <a class="xref" href="#fig05">architecture diagram, FIG.05</a> above gives the L1 to L5 frame. Below, stage by stage, is what goes in, how it is done, and what you get back.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step" id="step-l1">
+          <div class="step-n">L1<small>STAGE ONE</small></div>
+          <div>
+            <h4 class="h4">Site data capture</h4>
+            <p>You supply multi-source data from the real deployment site: oblique imagery, laser point clouds, BIM models, on-site sensor records. Any format. We handle coordinate alignment and fusion.</p>
+          </div>
+        </div>
+        <div class="step" id="step-l2">
+          <div class="step-n">L2<small>STAGE TWO</small></div>
+          <div>
+            <h4 class="h4">Three-dimensional base map</h4>
+            <p>The sources are fused into a single coordinate system to produce a 3D digital twin of the site, which loads and displays smoothly at terabyte scale. Nothing at this step touches platform specs, so the output stands on its own and any number of different platforms can call it again.</p>
+          </div>
+        </div>
+        <div class="step" id="step-l3">
+          <div class="step-n">L3<small>STAGE THREE</small></div>
+          <div>
+            <h4 class="h4">Affordance annotation</h4>
+            <p>Your platform specs go in: dimensions, gait range, grasp span, sensor height. The base map comes back marked up with walkable surfaces, passable channels, graspable objects, obstacles and hazard boundaries. One site can carry a different annotation for every platform it's asked to serve.</p>
+            <span class="step-out"><b>Deliverable</b>An annotated site map, recomputed whenever platform specs change, reusing the L2 base map with no new survey</span>
+          </div>
+        </div>
+        <div class="step" id="step-l4">
+          <div class="step-n">L4<small>STAGE FOUR</small></div>
+          <div>
+            <h4 class="h4">Sensor-deception testing</h4>
+            <p>From the annotation we generate the test scenes that mislead perception: reflective floors, wet grating, translucent partitions, hollows hidden by cover, backlit edges. What the robot reports is set item by item against the true properties of the site, while cover and exposure are checked independently through viewshed and openness analysis. The calls being compared come from your own perception system. Environment Affordance™ neither supplies that capability nor stands in for it.</p>
+            <span class="step-out"><b>Deliverable</b>Standardised validation report</span>
+          </div>
+        </div>
+        <div class="step" id="step-l5">
+          <div class="step-n">L5<small>STAGE FIVE</small></div>
+          <div>
+            <h4 class="h4">Report and delivery</h4>
+            <p>You get a standardised validation report: which scenes were called correctly, where the call went wrong, at which stage. Annotation files, scenario library and report all land together on your internal network. When platform specs change, only <a class="xref" href="#step-l3">L3</a> and <a class="xref" href="#step-l4">L4</a> need running again. The outputs of <a class="xref" href="#step-l1">L1</a> and <a class="xref" href="#step-l2">L2</a> can be reused as they stand.</p>
+          </div>
+        </div>
+      </div>
+
+      <a class="cta" href="map.html" target="_blank" rel="noopener">
+        <span class="eyebrow">Sheet EA-02 · Sample deliverable</span>
+        <h3 class="h3">Affordance map · interactive sample</h3>
+        <p>The affordance map is the standard L3 deliverable. Here is a working demonstration: one sample solar-plus-storage site, annotated for four platforms. Switch platform and the verdicts, the matrix and the data tables all recompute on the spot, reusing the L2 base map and recalculating the L3 annotation alone.</p>
+        <span class="cta-go">Open the sample →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ 09 COMPARISON ═══ -->
+  <section class="band" id="comparison">
+    <div class="rail"><span class="rail-num">09</span><span class="rail-en">Comparison</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">How This Differs from a General-Purpose Simulator</h2>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr><th></th><th>General-purpose simulator</th><th class="own">Environment Affordance™</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>The business model</td><td>A tool you use to validate for yourself</td><td class="own">An independent verifier that delivers the verdict itself</td></tr>
+            <tr><td>Core deliverable</td><td>A physics engine or rendering environment</td><td class="own">An affordance map annotated to your platform, and a validation report</td></tr>
+            <tr><td>Where scenes come from</td><td>You model them, or take them from a generic library</td><td class="own">Converted straight from your real site data</td></tr>
+            <tr><td>What “precision” refers to</td><td>Numerical precision of the physics engine</td><td class="own">Completeness of the affordance</td></tr>
+            <tr><td>Test method</td><td>Generic benchmarks</td><td class="own">Deception scenes built to your platform and your task</td></tr>
+            <tr><td>Deployment</td><td>Mostly SaaS or cloud</td><td class="own">Private and local, fully domestically compliant</td></tr>
+            <tr><td>Site data sovereignty</td><td>Depends on the provider</td><td class="own">Stays on your own servers throughout</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col">
+        <p class="p">On numerical precision and rendering frame rate a general-purpose simulator has the head start, and this was never the same business anyway. A simulator sells you computing power to take away and use. Environment Affordance™ sells one independent judgement, drawn from your own site data against the specs of a specific platform, in a form a deployment decision can act on.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 10 CO-BUILD ═══ -->
+  <section class="band" id="customers">
+    <div class="rail"><span class="rail-num">10</span><span class="rail-en">Co-build</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">Working Together</h2>
+
+      <div class="grid grid-3">
+        <div class="cell">
+          <span class="cell-code">Robot makers</span>
+          <p>You need policy validated in simulation before anyone enters a real site. We give you an affordance map and stress scenes built from the site where deployment will actually happen, so policy iteration has something solid to work against before it goes live.</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">Policy training and foundation model companies</span>
+          <p>Sim2real transfer and automated evaluation need high-fidelity scenes in volume. We supply scene generation and deception testing built to real platform specs, covering the long-tail conditions a generic benchmark never reaches.</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">Operators in specialized industries</span>
+          <p>If you run a mine, a substation or a plant, you want a third-party site safety report in hand before a robot goes in. We give you an affordance assessment and a perception risk list drawn from measured site data.</p>
+        </div>
+      </div>
+
+      <div class="col">
+        <p class="p">Tell us about your industry, the site you look after, and the problems you have run into. We would like to hear what you have seen, tell you how we read it, and put together a sample report tailored to your situation.</p>
+      </div>
+      <p class="small" style="margin-top:18px; color:var(--ink-3)">Email, WeChat and other contact details are listed on <a class="link" href="about.html#contact" target="_blank" rel="noopener">microNature · About</a>.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="doc">
+    <div class="foot-line">
+      <span>microNature — Environment Affordance™</span>
+      <span>Infrastructure for digitising complex, high-hazard sites and validating before deployment</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../site.js" defer></script>
+
+</body>
+</html>
