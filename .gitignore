@@ -1,0 +1,15 @@
+# 系统文件
+.DS_Store
+
+# 与站点无关的资料文件
+WGSN*
+*.pptx
+*.txt
+proceedinterpreting*
+files (11)/
+files (12)/
+files (13)/
+tmp_*.png
+
+# 部署临时工具
+.deploy-tmp/
