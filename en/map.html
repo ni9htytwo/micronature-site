@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Theme before first paint: a saved choice wins; the English-language version
+   defaults to dark; otherwise the system preference decides. Runs this early
+   so a reload never flashes the other theme. */
+(function(){var t=null;try{t=localStorage.getItem('mn-theme');}catch(e){}
+if(t!=='dark'&&t!=='light'){var en=(document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en')===0;
+t=en?'dark':((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');}
+document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<title>Affordance Map — A PV and Storage Plant Sample | Environment Affordance™</title>
+<meta name="description" content="An Environment Affordance™ sample deliverable. One example PV and storage plant of 520 × 340 m, 15 annotated elements × 4 platforms = 60 verdicts. Switch platform and the whole drawing recomputes live, reusing the L2 base map and recomputing the L3 annotation alone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="alternate" hreflang="zh-Hans" href="../map.html">
+<link rel="alternate" hreflang="en" href="map.html">
+<link rel="alternate" hreflang="x-default" href="../map.html">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../demo.css">
+</head>
+<body class="blueprint">
+
+<nav class="nav" aria-label="Site navigation">
+  <div class="nav-in">
+    <a class="nav-mark" href="index.html">microNature<span>Physical Intelligence Infrastructure</span></a>
+    <div class="nav-links">
+      <a href="index.html">Architecture</a>
+      <a href="environmentaffordance.html">Affordance™</a>
+      <span class="cur" aria-current="page">Map</span>
+      <a href="atlas.html">Atlas</a>
+      <a href="insight.html">Insight</a>
+      <a href="about.html">About</a>
+    </div>
+  <div class="nav-lang">
+    <a href="../map.html" hreflang="zh-Hans" lang="zh-CN">中</a>
+    <span class="cur" aria-current="true">EN</span>
+  </div>
+  <button class="nav-theme" type="button" aria-pressed="false"></button>
+  </div>
+</nav>
+
+<div class="sheet">
+<div class="stamp">Sample</div>
+
+<nav class="crumbs" aria-label="Parent pages">
+  <a class="crumb" href="environmentaffordance.html">← Product · Environment Affordance™</a>
+  <a class="crumb parent" href="index.html">Architecture · microNature</a>
+</nav>
+
+<header class="hd">
+  <div class="mono" style="margin-bottom:20px">Sheet EA-02 · Deliverable sample 01 / 02</div>
+  <h1>Affordance Map</h1>
+  <p class="sub">Affordance Map — a PV and storage plant sample · one site, with passage, reach and exclusion computed separately for four platforms</p>
+  <div class="meta">
+    <div><span class="k">Plant type</span><span class="v">Integrated PV and storage plant<br>(example scene)</span></div>
+    <div><span class="k">Site extent</span><span class="v">520 × 340 m<br>/ 176,800 m²</span></div>
+    <div><span class="k">Annotated elements</span><span class="v">①–⑮, 15 in all<br>/ 7 categories</span></div>
+    <div><span class="k">Target platforms</span><span class="v">4 types, switchable</span></div>
+    <div><span class="k">Drawing no.</span><span class="v" id="hd-dwg">EA-DEMO-PV-2026</span></div>
+  </div>
+</header>
+
+
+<!-- ══ HOW TO USE ═════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no"> <b>HOW TO USE</b></span>
+  <h2 class="t">This Robot, on This Site. What It Can Do, and What It Cannot.</h2>
+  <p class="p" style="margin-top:16px"><span class="term" data-t="affordance">Affordance</span> holds between the environment and a <span class="term" data-t="embodiment">body</span>. It is a <strong>relation</strong>, not a fixed property of the site. So there is no general-purpose version of this drawing. It only means anything once it is tied to one specific robot, and the platform switch below is what ties it. <strong>Switch platform and every verdict on the same base map is recomputed</strong>, and the graphics, the matrix, the tables, the statistics and the title block all go with it. Switch once before you read on.</p>
+  <p class="p">Through all of that the L2 base map, meaning the site geometry itself, does not move. Only the L3 annotation layer is recalculated. Watch the right-hand side of the control bar: the L2 checksum holds steady across the switch, next to the elapsed time and element count for the L3 recompute. Those two readings are the proof, on the page, that we reuse the base map and recompute the annotation alone.</p>
+  <div class="note">
+    <div class="h">Conventions used in this sample</div>
+    <ul>
+      <li><strong>Numbering</strong>. ①–⑮ run throughout, and each number means one element and one only. Like elements share a number and can appear more than once on the drawing, as ⑦, the inverter rooms, does in three places.</li>
+      <li><strong>Two coding channels</strong>. The <strong>outline style</strong> of an element carries its affordance category, 7 of them, fixed. The <strong>fill texture and verdict symbol</strong> carry the verdict for the current platform, 4 values, recomputed per platform. Hazard boundaries stay warning red. Everything else survives black and white printing intact.</li>
+      <li><strong>Numbers</strong>. Every key data item carries a measurement method code, <span class="src M1">M1</span>–<span class="src M5">M5</span>, explained in TAB.03. A number without a code does not exist.</li>
+      <li><strong>Verdicts</strong>. Every passage conclusion is computed on the spot from platform specs and measured geometry. Nothing is typed in by hand. The reasoning behind each one, margins included, is in TAB.01.</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ EMBODIMENTS ══════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no"> <b>TARGET EMBODIMENTS</b> · where platform specs enter L3</span>
+  <h2 class="t">Four Target Platforms</h2>
+  <p class="p">Everything below is the entire input to the verdict engine. <strong>Minimum passage width</strong> and <strong>required clear height</strong> are derived, computed from platform dimensions plus a safety margin. Whether a robot fits through a gap comes down to its <strong>widest point</strong> plus side clearance, not track width.</p>
+  <div class="scroll-x"><table class="t" id="tbl-bodies"></table></div>
+  <p class="cap" id="cap-bodies"></p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ LEGEND ═══════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no"> <b>LEGEND</b></span>
+  <h2 class="t">Two Coding Channels</h2>
+  <h3 class="t">Channel A | outline style = affordance category, unchanged by platform</h3>
+  <div class="lg" id="lg-cat"></div>
+  <h3 class="t">Channel B | fill and symbol = the verdict for the current platform, recomputed per platform</h3>
+  <div class="lg" id="lg-verdict"></div>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ CONTROL BAR ═════════════════════════════════════════════ -->
+
+<div class="ctrl" id="ctrl">
+  <div class="ctrl-row">
+    <div class="ctrl-lab"><b>PLATFORM</b></div>
+    <div class="bodies" id="body-switch" role="group" aria-label="Select target platform"></div>
+  </div>
+  <div class="ctrl-row">
+    <div class="ctrl-lab"><b>LAYERS</b></div>
+    <div class="layers" id="layer-switch"></div>
+  </div>
+  <div class="ctrl-row">
+    <div class="ctrl-lab"><b>RECOMPUTE</b></div>
+    <div class="readout" id="readout"></div>
+  </div>
+</div>
+
+
+<!-- ══ FIG.01 ════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no"> <b>FIG.01</b> · SITE AFFORDANCE MAP</span>
+  <h2 class="t">The Site Affordance Drawing</h2>
+  <p class="p">Plotted at 1:2000. ①–⑮ match number for number with <a class="xref" href="#tab01">TAB.01</a>. One thing follows from the scale: <strong>a 0.50 m maintenance gap comes out under 0.3 mm wide</strong>, too small to draw at true width, so it shows up as a leader note with a detail index instead. The real geometry is in <a class="xref" href="#fig03sec">FIG.03, the section detail</a>. That is the scale talking, not a gap in the annotation.</p>
+  <div class="fig fig-b"><div id="fig01"></div></div>
+  <p class="cap" id="cap-fig01"></p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ FIG.02 ════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no"> <b>FIG.02</b> · AFFORDANCE MATRIX</span>
+  <h2 class="t">15 Elements × 4 Platforms, 60 Verdicts</h2>
+  <p class="p">Put the four platforms side by side and the relational nature of affordance becomes visible. <strong>No column is a subset of another</strong>. The column for the current platform is shown darker.</p>
+  <div class="scroll-x"><div class="fig" id="fig02"></div></div>
+  <p class="cap" id="cap-fig02"></p>
+  <div class="stats" id="stats"></div>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ TAB.01 ════════════════════════════════════════════════════ -->
+
+<section class="sec" id="tab01">
+  <span class="sec-no"> <b>TAB.01</b> · ZONE REGISTER</span>
+  <h2 class="t">Item by Item: Data, Provenance, and the Basis for Each Verdict</h2>
+  <p class="p">The basis column recomputes with the platform, and the margin in brackets is a number the engine actually worked out, not a turn of phrase.</p>
+  <div class="scroll-x"><table class="t" id="tbl-zones"></table></div>
+  <p class="cap">Method codes are explained in <a class="xref" href="#tab03">TAB.03</a>. The basis is computed live by <span class="tag">rule(platform)</span>, and the whole table refreshes when the platform changes.</p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ FIG.03 ════════════════════════════════════════════════════ -->
+
+<section class="sec" id="fig03sec">
+  <span class="sec-no"> <b>FIG.03</b> · SECTION DETAIL 1:20</span>
+  <h2 class="t">Gap ③ in Section: Where 0.50 m Runs Out</h2>
+  <p class="p">Here is the 0.50 m the main drawing is too small to show, at 1:20. The grey dashed box is the <strong>passage envelope</strong> of the current platform: its dimensions, plus side margins, plus top margin. Lay that over the measured clearance and you can see at once which dimension is doing the blocking. Switch platform and the envelope changes with it.</p>
+  <div class="fig fig-b"><div id="fig03"></div></div>
+  <p class="cap" id="cap-fig03"></p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ FIG.04 ════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no"> <b>FIG.04</b> · VIEWSHED ANALYSIS</span>
+  <h2 class="t">What PTZ-01 Can See, and What It Cannot</h2>
+  <p class="p">Mounting a fixed PTZ does not mean it can see. The drawing below runs a two-dimensional shadow-volume computation for a PTZ on a 12.0 m pole. Each occluder outline is projected along the line of sight, scaled by <span class="tag">k = (H<sub>PTZ</sub> − h<sub>target</sub>) / (H<sub>PTZ</sub> − h<sub>occluder</sub>)</span> and the convex hull of the original and projected outlines becomes the shadow. That shadow is then subtracted from the circle of effective recognition distance.</p>
+  <p class="p"><strong>Target height is taken from the current platform</strong>, so the viewshed depends on the platform as well. The module racking top edge at +2.20 m hides a 0.60 m quadruped completely and hides nothing at all from a UAV at 3.00 m. Coverage is computed by intersecting a 3 m grid point by point. It is not an estimate.</p>
+  <div class="fig fig-b"><div id="fig04"></div></div>
+  <p class="cap" id="cap-fig04"></p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ WHY EMBODIMENT MATTERS ═════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no"> <b>WHY EMBODIMENT MATTERS</b></span>
+  <h2 class="t">Three Gaps, Three Different Answers</h2>
+  <p class="p">③④⑤ are three inter-table maintenance gaps, each <strong>measured individually</strong>, not one figure shared between them. Put them side by side and you can see why an affordance map cannot be annotated with a typical value.</p>
+  <div class="scroll-x"><table class="t" id="tbl-gaps"></table></div>
+  <div class="cmp" id="cmp-gap"></div>
+  <p class="cap" id="cap-gap"></p>
+
+  <h3 class="t">One element, two opposite verdicts</h3>
+  <p class="p">The sharpest case is not a gap at all. It is ⑭, the PV module surface. To the wheeled, quadruped and UAV platforms it is the most emphatic <strong>no-step surface</strong> on the site. To CL-P2, the rail cleaning robot, it is the <strong>only working surface</strong> the site has. Same glass, same geometry, opposite conclusions, and every bit of the difference comes from the platform.</p>
+  <p class="p">The 13 n/a entries in the CL-P2 column are not missing data either. They are a finding. <strong>In this robot's world there is only rail and panel, and most of what stands on the site is not an affordance object for it at all.</strong> Change the platform and it is not only the verdicts that need recomputing. Which elements are worth annotating changes too.</p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ TAB.02 ════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no"> <b>TAB.02</b> · PERCEPTION RISK REGISTER</span>
+  <h2 class="t">P1–P5: Five Identified Perception Risks</h2>
+  <p class="p">This register records <strong>physical causes</strong> and <strong>expected directions of misjudgement</strong> only, and every entry is still marked To be verified. For a verdict on a specific perception system, see the L4 perception validation report, in preparation. The two documents do different jobs. <strong>The affordance map tells you whether a place can be passed. The validation report tells you whether the robot knows that.</strong></p>
+  <div class="scroll-x"><table class="t" id="tbl-risks"></table></div>
+  <p class="cap">Trigger conditions are there so the risk can be reproduced in L4 testing, and the validation item points at the matching entry in the Sensor Deception Library.</p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ TAB.03 ════════════════════════════════════════════════════ -->
+
+<section class="sec" id="tab03">
+  <span class="sec-no"> <b>TAB.03</b> · DATA PROVENANCE</span>
+  <h2 class="t">Measured, or Inferred</h2>
+  <p class="p">Not every number on this drawing carries the same weight. How a figure was obtained sets its precision, its shelf life, and whether it can carry a passable verdict on its own.</p>
+  <div class="scroll-x"><table class="t" id="tbl-methods"></table></div>
+  <h3 class="t">Distribution of data items on this drawing</h3>
+  <div class="stats" id="stats-src"></div>
+  <p class="cap" id="cap-src"></p>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ TAB.04 ════════════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no"> <b>TAB.04</b> · RECOMPUTE TRIGGERS</span>
+  <h2 class="t">When an Affordance Map Stops Being True</h2>
+  <p class="p">An affordance map has a shelf life, and it has conditions under which it stops being true. Once any of the following applies, the verdicts on this drawing no longer stand: recompute within the stated scope and reissue under a new revision. T1 to T5 all touch the L3 annotation layer and nothing else. <strong>In almost every case the L2 base map is reused directly</strong>, with no need to survey the site again.</p>
+  <div class="scroll-x"><table class="t" id="tbl-triggers"></table></div>
+</section>
+
+<hr class="r">
+
+
+<!-- ══ LIMITATIONS ════════════════════════════════════════════ -->
+
+<section class="sec">
+  <span class="sec-no"> <b>LIMITATIONS</b></span>
+  <h2 class="t">Notes</h2>
+  <div class="note warn">
+    <div class="h">Limitations · read these with the drawing. The graphics are not to be cited on their own</div>
+    <ol id="list-limits"></ol>
+  </div>
+  <div class="note">
+    <div class="h">Relation to the perception validation report</div>
+    <p>Elements ⑫ perimeter fence north and ⑬ retention pond are marked as perception risk zones, as is every entry in P1–P5. All any of them says is <strong>that physical conditions here may mislead a perception system</strong>. None of them says anything about whether a particular robot gets it right here. That comes from the next sample, the perception validation report: adversarial scenes are built from P1–P5, your own perception system runs them for real, what it reports is set item by item against the true properties annotated here, and out comes a deviation list and a corrected affordance map. For how these physical causes are classified and how each scene is built, see <a class="xref" href="atlas.html">EA-03 Sensor Deception Library · Scenario atlas</a>.</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-line">
+    <span>microNature — Environment Affordance™</span>
+    <span>Infrastructure for digitising complex, high-hazard sites and validating before deployment</span>
+    <span>© 2026</span>
+  </div>
+  <div class="foot-sheet">
+    <span class="mono" id="ft-dwg">Sample deliverable 01/02 · affordance map</span>
+    <span>Example site. The data exists only to demonstrate the annotation method · a sample perception validation report is supplied separately</span>
+  </div>
+</footer>
+
+</div>
+
+<script>
+
+/* ==========================================================================
+   [1] DATA LAYER
+   This block is the single source of truth for the drawing. The map, the legend,
+   the matrix, the tables, the statistics and the title block are generated from
+   it. Every number, code and verdict anywhere on the page comes from here.
+   ========================================================================== */
+
+/* --- 1.1 Measurement methods and confidence ------------------------------------------------ */
+const METHODS = {
+  M1: { code:'M1', name:'On-site measurement',   tool:'Handheld laser rangefinder, median of three readings at one point', tol:'±3 mm',   conf:'High',   ttl:'12 months' },
+  M2: { code:'M2', name:'Point cloud measurement',   tool:'Measured from registered terrestrial lidar',           tol:'±25 mm',  conf:'Medium-high', ttl:'12 months' },
+  M3: { code:'M3', name:'Estimated from drawings',   tool:'As-built drawings or manufacturer figures, not checked on site',   tol:'as drawn', conf:'Medium',   ttl:'6 months' },
+  M4: { code:'M4', name:'O and M records',   tool:'Supplied by the site, not independently verified',             tol:'—',       conf:'Low',   ttl:'6 months' },
+  M5: { code:'M5', name:'Awaiting remeasurement',     tool:'No valid data obtained this round',               tol:'—',       conf:'not counted', ttl:'—' }
+};
+
+/* --- 1.2 Affordance categories (7; they set the outline style of an element) --------------------------- */
+const CATS = {
+  support:  { key:'support',  name:'Traversable support surface',      en:'SUPPORT SURFACE',  desc:'A hardened surface that carries weight and can be crossed directly.' },
+  passage:  { key:'passage',  name:'Restricted passage',          en:'RESTRICTED PASSAGE', desc:'Geometrically present. Whether it is usable depends on platform dimensions and obstacle capability.' },
+  fragile:  { key:'fragile',  name:'Not traversable, fragile surface', en:'FRAGILE SURFACE',  desc:'Visually flat, but it will not take a wheel or a foot.' },
+  hazard:   { key:'hazard',   name:'Hazard edge',          en:'HAZARD EDGE',      desc:'Electrical, fall or confined-space risk. Closed to every platform, manual authorisation excepted.' },
+  operable: { key:'operable', name:'Operable point',          en:'OPERABLE POINT',   desc:'A specific position that has to be reached: an access door, a card reader, a valve.' },
+  nofly:    { key:'nofly',    name:'UAV restricted zone',      en:'UAV RESTRICTED',   desc:'Clearance around live equipment. Airborne platforms are height-limited or excluded.' },
+  percept:  { key:'percept',  name:'Perception risk zone',        en:'PERCEPTION RISK',  desc:'Materials liable to mislead perception. This drawing marks the physical cause only and carries no verdict.' }
+};
+
+/* --- 1.3 Verdict symbols (they set the fill; orthogonal to category, two channels) ------------- */
+const VERDICTS = {
+  pass: { key:'pass', glyph:'●', label:'Clear',     en:'CLEAR',     desc:'Every geometric and capability constraint is met, with margin to spare.' },
+  cond: { key:'cond', glyph:'◐', label:'Conditional',   en:'CONDITIONAL',  desc:'Thin margin, or dependent on an environmental state, or requiring reduced speed or authorisation.' },
+  fail: { key:'fail', glyph:'✕', label:'Blocked',   en:'BLOCKED', desc:'A constraint is not met, or the area is closed.' },
+  na:   { key:'na',   glyph:'—', label:'N/A',   en:'N/A',          desc:'This element is not an affordance object for this platform.' }
+};
+const P = (r) => ({ v:'pass', r }); const C = (r) => ({ v:'cond', r });
+const F = (r) => ({ v:'fail', r }); const N = (r) => ({ v:'na',   r });
+const MARGIN = 0.05;            // clear-width margin threshold in m; below this the verdict is conditional
+const fx = (x, d=2) => Number(x).toFixed(d);
+
+/* --- 1.4 Target platforms (the switchable input) --------------------------------------- */
+const BODIES = [
+  {
+    id:'WR',  model:'WR-220', name:'Wheeled inspection robot', en:'WHEELED INSPECTION ROBOT',
+    domain:'ground', short:'Wheeled',
+    dims:'0.82 × 0.58 × 0.75 m (L × W × H)',
+    sensorH:0.90, bodyW:0.58, bodyH:0.75, sideClear:0.05, topClear:0.10,
+    stepMax:0.08, slopeMax:15, ditchMax:0.00,
+    mob:'Step ≤0.08 m · slope ≤15° · cannot cross trenches',
+    task:'Module hot-spot inspection, road patrol',
+    key:'Widest point 0.58 m, not track width. This sets the minimum clear width',
+    tgtH:0.75
+  },
+  {
+    id:'QR',  model:'QR-X4', name:'Quadruped robot', en:'QUADRUPED ROBOT',
+    domain:'ground', short:'Quadruped',
+    dims:'0.90 × 0.40 × 0.60 m (standing)',
+    sensorH:0.65, bodyW:0.38, bodyH:0.60, sideClear:0.05, topClear:0.10,
+    stepMax:0.20, slopeMax:25, ditchMax:0.40,
+    mob:'Step ≤0.20 m · slope ≤25° · trench crossing ≤0.40 m',
+    task:'Inspection of narrow inter-table passages',
+    key:'Narrowed-gait lateral envelope 0.38 m. This sets the minimum clear passage width',
+    tgtH:0.60
+  },
+  {
+    id:'UAV', model:'UAV-M6', name:'Inspection UAV', en:'INSPECTION UAV',
+    domain:'air', short:'UAV',
+    dims:'Wheelbase 0.45 m · maximum diameter including props 0.62 m',
+    sensorH:null, bodyW:0.62, bodyH:null, sideClear:0, topClear:0,
+    minAGL:3.00, workClear:0.80, stepMax:null, slopeMax:null, ditchMax:null,
+    mob:'Minimum safe flight altitude 3.00 m · working clearance ≥0.80 m',
+    task:'Infrared aerial survey of modules, perimeter and line corridor patrol',
+    key:'Minimum safe flight altitude 3.00 m. This sets clearance from live equipment and structures',
+    tgtH:3.00
+  },
+  {
+    id:'CL',  model:'CL-P2', name:'Rail cleaning robot', en:'RAIL CLEANING ROBOT',
+    domain:'rail', short:'Rail',
+    dims:'Runs only on dedicated rails along the module racking',
+    sensorH:null, bodyW:null, bodyH:0.22, sideClear:0, topClear:0,
+    stepMax:null, slopeMax:null, ditchMax:null,
+    mob:'No off-rail obstacle capability, moves only within its own rail network',
+    task:'Cleaning module surfaces',
+    key:'No off-rail capability. Most elements on this site are not affordance objects for it at all',
+    tgtH:2.30
+  }
+];
+BODIES.forEach(b => {
+  b.minPassW = (b.domain === 'ground') ? +(b.bodyW + 2*b.sideClear).toFixed(2) : null;
+  b.minVertH = (b.domain === 'ground') ? +(b.bodyH + b.topClear).toFixed(2) : null;
+});
+const BODY = id => BODIES.find(b => b.id === id);
+
+/* --- 1.5 The fifteen annotated elements, ①–⑮ -------------------------------------------
+   n        number, unique across the sheet; like elements share one number
+   data[]   key data items plus method code m; the provenance table sums these
+   rule(e)  verdict function: platform specs in, verdict and basis out. Every
+            conclusion on the page is computed here and nowhere else.
+   ---------------------------------------------------------------------- */
+const ELEMENTS = [
+{ n:1, code:'GATE-01', name:'Main entrance gate', en:'MAIN GATE', cat:'support',
+  data:[{k:'Gate clear width', v:'4.20 m', m:'M2'}, {k:'Gantry height limit', v:'2.80 m', m:'M3'}, {k:'Apron gradient', v:'1.8 %', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('Site roads are not its rails');
+    if(e.domain==='air')  return N('A ground gate places no constraint on airspace; the take-off point sits separately on the ⑧ hardstanding');
+    if(2.80 < e.minVertH) return F(`Gantry limit 2.80 m &lt; required clear height ${fx(e.minVertH)} m`);
+    if(1.8 > e.slopeMax)  return F('Apron gradient exceeds the limit');
+    return P(`Clear width 4.20 m ≥ minimum passage width ${fx(e.minPassW)} m (margin ${fx(4.20-e.minPassW)} m)`);
+  }},
+
+{ n:2, code:'ROAD-01', name:'Main service road (north loop, south loop, connector)', en:'MAIN SERVICE ROAD', cat:'support',
+  data:[{k:'Carriageway clear width', v:'4.00 m', m:'M2'}, {k:'Maximum gradient', v:'2.6 %', m:'M2'}, {k:'Pavement bearing', v:'≥3.5 t', m:'M4'}],
+  rule(e){
+    if(e.domain==='rail') return N('Site roads are not its rails');
+    if(e.domain==='air')  return P('Usable as a low-altitude corridor at ≥3.00 m, with no taller structures on either side');
+    if(2.6 > e.slopeMax)  return F('Gradient exceeds the limit');
+    return P(`Clear width 4.00 m ≥ required ${fx(e.minPassW)} m; gradient 2.6 % ≤ ${e.slopeMax}°`);
+  }},
+
+{ n:3, code:'GAP-B05', name:'Inter-table maintenance gap B-05', en:'INTER-TABLE GAP B-05', cat:'passage',
+  gapW:0.50, clearH:0.85,
+  data:[{k:'Measured clear width', v:'0.50 m', m:'M1'}, {k:'Clear height under module edge', v:'0.85 m', m:'M1'}, {k:'Ground flatness', v:'±18 mm', m:'M2'}],
+  rule(e){ return gapRule(e, 0.50, 0.85, 'detour to the ② south loop, about 180 m added one way'); }},
+
+{ n:4, code:'GAP-C08', name:'Inter-table maintenance gap C-08', en:'INTER-TABLE GAP C-08', cat:'passage',
+  gapW:0.78, clearH:0.88,
+  data:[{k:'Measured clear width', v:'0.78 m', m:'M1'}, {k:'Clear height under module edge', v:'0.88 m', m:'M1'}],
+  rule(e){ return gapRule(e, 0.78, 0.88, 'detour to the ② north loop'); }},
+
+{ n:5, code:'GAP-A11', name:'Inter-table maintenance gap A-11', en:'INTER-TABLE GAP A-11', cat:'passage',
+  gapW:0.44, clearH:0.85,
+  data:[{k:'Measured clear width', v:'0.44 m', m:'M1'}, {k:'Clear height under module edge', v:'0.85 m', m:'M1'}],
+  rule(e){ return gapRule(e, 0.44, 0.85, 'detour to the ② west connector'); }},
+
+{ n:6, code:'DTCH-01', name:'Open drain crossing, south loop', en:'OPEN DRAIN CROSSING', cat:'passage',
+  data:[{k:'Drain clear width', v:'0.35 m', m:'M1'}, {k:'Drain depth', v:'0.28 m', m:'M2'}, {k:'Cover', v:'none', m:'M1'}],
+  rule(e){
+    if(e.domain==='rail') return N('Outside its rail network');
+    if(e.domain==='air')  return N('A ground drain places no constraint on airspace');
+    if(e.ditchMax >= 0.35) return P(`Trench crossing ${fx(e.ditchMax)} m ≥ drain width 0.35 m (margin ${fx(e.ditchMax-0.35)} m)`);
+    return F(`Trench crossing ${fx(e.ditchMax)} m &lt; drain width 0.35 m; detour to the E150 culvert crossing, about 210 m added one way`);
+  }},
+
+{ n:7, code:'INV-01/02/03', name:'Inverter rooms, three sharing one number', en:'INVERTER ROOM ×3', cat:'operable',
+  data:[{k:'Access door clear width', v:'0.90 m', m:'M1'}, {k:'Threshold height', v:'0.05 m', m:'M1'}, {k:'Clear space at the door', v:'1.50 m', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('Outside its rail network');
+    if(e.domain==='air')  return N('Indoor space; a rotary-wing platform does not enter');
+    if(0.90 < e.minPassW) return F(`Door clear width 0.90 m &lt; required ${fx(e.minPassW)} m`);
+    if(0.05 > e.stepMax)  return F(`Threshold 0.05 m &gt; step capability ${fx(e.stepMax)} m`);
+    return P(`Door clear width 0.90 m ≥ ${fx(e.minPassW)} m; threshold 0.05 m ≤ step ${fx(e.stepMax)} m`);
+  }},
+
+{ n:8, code:'BESS-01', name:'BESS yard, hardstanding in front of the containers', en:'BESS YARD', cat:'support',
+  data:[{k:'Yard flatness', v:'±22 mm', m:'M2'}, {k:'Container roof level', v:'+2.90 m', m:'M3'}, {k:'Yard gradient', v:'0.8 %', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('Outside its rail network');
+    if(e.domain==='air')  return C('Hover inspection over the roofs is possible, holding ≥0.80 m above the roof and ≥3.00 m altitude. With the roof at +2.90 m the working altitude is ≥3.70 m');
+    return P(`Hardened level yard, gradient 0.8 % ≤ ${e.slopeMax}°, flatness deviation ±22 mm ≤ step ${fx(e.stepMax)} m`);
+  }},
+
+{ n:9, code:'BESS-AISLE', name:'BESS inter-bay aisle', en:'BESS INTER-BAY AISLE', cat:'passage',
+  data:[{k:'Clear width, doors closed', v:'1.20 m', m:'M1'}, {k:'Clear width, a door open', v:'0.62 m', m:'M3'}, {k:'Aisle length', v:'129 m', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('Outside its rail network');
+    if(e.domain==='air')  return N('Aisle clear width 1.20 m &lt; the two-sided safety envelope for a 0.62 m rotor span, so it is not an air corridor');
+    const closed = 1.20, open = 0.62;
+    if(closed < e.minPassW) return F(`Clear width with all doors closed ${fx(closed)} m &lt; required ${fx(e.minPassW)} m`);
+    if(open   < e.minPassW) return C(`Passable only with all doors closed (${fx(closed)} m). Any door open narrows it to ${fx(open)} m &lt; required ${fx(e.minPassW)} m, an environment-state dependency that triggers a T3 recompute`);
+    return P(`Both door states clear the requirement: closed ${fx(closed)} m / open ${fx(open)} m ≥ required ${fx(e.minPassW)} m`);
+  }},
+
+{ n:10, code:'SUB-01', name:'Step-up and switching substation', en:'STEP-UP SUBSTATION', cat:'hazard',
+  data:[{k:'Live-zone fence line', v:'per design drawings', m:'M3'}, {k:'Highest structure point', v:'+6.50 m', m:'M3'}, {k:'Safety clearance required', v:'per voltage class', m:'M3'}],
+  rule(e){
+    if(e.domain==='rail') return N('Outside its rail network');
+    return F('Live zone. Closed to every platform including the airspace above, manual authorisation and a permit to work excepted');
+  }},
+
+{ n:11, code:'OHL-COR', name:'Transmission line clearance zone', en:'OVERHEAD LINE CLEARANCE', cat:'nofly',
+  data:[{k:'Corridor width', v:'40 m', m:'M3'}, {k:'Minimum conductor-to-ground distance', v:'6.50 m', m:'M5'}, {k:'Corridor length on site', v:'264 m', m:'M2'}],
+  rule(e){
+    if(e.domain==='air')  return F('Clearance zone around live conductors, closed. Keep ≥20 m horizontal separation outside the corridor boundary');
+    if(e.domain==='rail') return P('Rail running height ≤1.60 m, far below the 6.50 m conductor-to-ground distance, so clearance is satisfied');
+    return P('No added obstacles on the ground inside the corridor, so passage is normal. No lifting, hoisting or antenna deployment of any kind inside it');
+  }},
+
+{ n:12, code:'FENCE-N', name:'Perimeter mesh fence, north section, diamond mesh', en:'PERIMETER MESH FENCE, NORTH', cat:'percept',
+  data:[{k:'Mesh aperture', v:'50 mm', m:'M1'}, {k:'Fence height', v:'2.50 m', m:'M2'}, {k:'Annotated length', v:'230 m', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('Outside its rail network');
+    if(e.domain==='air')  return P('Fence height 2.50 m &lt; the 3.00 m minimum safe altitude, so it can be overflown. Crossing the boundary needs separate authorisation');
+    return F('A solid boundary, not crossable. The 2.00 m patrol strip inside it is passable. This section is also listed as perception risk P2');
+  }},
+
+{ n:13, code:'POND-01', name:'Retention pond', en:'RETENTION POND', cat:'hazard',
+  data:[{k:'Water surface area', v:'approx. 1,850 m²', m:'M2'}, {k:'Bank slope', v:'1 : 1.5', m:'M3'}, {k:'Normal water level', v:'-1.20 m', m:'M4'}, {k:'Guard rail', v:'none', m:'M1'}],
+  rule(e){
+    if(e.domain==='rail') return N('Outside its rail network');
+    if(e.domain==='air')  return C('Overhead photography is possible, holding ≥5.00 m above the water to avoid downwash disturbance and specular overexposure. This area is also listed as perception risk P1');
+    return F('Unguarded 1:1.5 bank at the water edge, fall risk. A 3.00 m buffer outside the bank is closed as well');
+  }},
+
+{ n:14, code:'PV-SURF', name:'PV module surface, arrays A–D', en:'PV MODULE SURFACE', cat:'fragile',
+  data:[{k:'Module lower edge level', v:'+0.85 m', m:'M1'}, {k:'Module upper edge level', v:'+2.20 m', m:'M1'}, {k:'Cover glass distributed load', v:'≤2 400 Pa', m:'M3'}, {k:'Tilt', v:'25°', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return P('Dedicated rails run along the racking, and the module surface is the only working surface CL-P2 has. The same element is a no-step surface for the other three platforms');
+    if(e.domain==='air')  return C('Hover only, no contact, holding ≥0.80 m from the panel face. Specular reflection at midday on a clear day is listed as perception risk P3');
+    return F('Toughened cover glass takes a distributed load of ≤2 400 Pa only. No concentrated load and no stepping, rail-mounted platforms excepted');
+  }},
+
+{ n:15, code:'CTRL-01', name:'Control room', en:'CONTROL ROOM', cat:'operable',
+  data:[{k:'Access door clear width', v:'0.95 m', m:'M1'}, {k:'Threshold height', v:'0.03 m', m:'M1'}, {k:'Clear space at the door', v:'2.40 m', m:'M2'}],
+  rule(e){
+    if(e.domain==='rail') return N('Outside its rail network');
+    if(e.domain==='air')  return N('Indoor space; a rotary-wing platform does not enter');
+    if(0.95 < e.minPassW) return F(`Door clear width 0.95 m &lt; required ${fx(e.minPassW)} m`);
+    return P(`Door clear width 0.95 m ≥ ${fx(e.minPassW)} m; threshold 0.03 m ≤ step ${fx(e.stepMax)} m. Card authorisation required`);
+  }}
+];
+
+/* The three inter-table gaps share one rule. Only the measured numbers differ,
+   and the conclusion follows from the numbers. */
+function gapRule(e, w, h, detour){
+  if(e.domain==='rail') return N('The gap sits under the racking, outside the rail network');
+  if(e.domain==='air')  return N(`Ground gaps are not its route; it passes above the array at ≥3.00 m altitude and ≥0.80 m from the panel face`);
+  const need = e.minPassW, m = +(w - need).toFixed(2);
+  if(m < 0)  return F(`Clear width ${fx(w)} m &lt; minimum passage width ${fx(need)} m, short by ${fx(Math.abs(m))} m; ${detour}`);
+  if(h < e.minVertH) return F(`Width clears, but clear height under the module edge ${fx(h)} m &lt; required ${fx(e.minVertH)} m, short by ${fx(e.minVertH-h)} m`);
+  const vm = +(h - e.minVertH).toFixed(2);
+  if(m < MARGIN)  return C(`Clear width ${fx(w)} m ≥ required ${fx(need)} m, but the margin is only ${fx(m)} m &lt; the ${fx(MARGIN)} m threshold. Narrowed gait, speed down to 0.3 m/s, edge-following guidance on`);
+  if(vm < MARGIN) return C(`Width margin ${fx(m)} m is ample; the binding dimension is vertical. Clear height under the module edge ${fx(h)} m leaves only ${fx(vm)} m against the required ${fx(e.minVertH)} m, below the ${fx(MARGIN)} m threshold. Marginal, and to be checked on site`);
+  return P(`Clear width ${fx(w)} m ≥ required ${fx(need)} m (margin ${fx(m)} m); clear height ${fx(h)} m ≥ ${fx(e.minVertH)} m (margin ${fx(vm)} m)`);
+}
+
+/* --- 1.6 Perception risk register, P1–P5 ------------------------------------------- */
+const RISKS = [
+  { id:'P1', at:[13], name:'Specular reflection off still water', cause:'Still water at normal pond level forms an almost perfect mirror once wind speed drops below 1 m/s',
+    err:'A depth camera or structured light gets no valid return off a mirror → read as a void or as infinity. The reflected image of the bank may also be read as traversable ground',
+    bodies:'WR · QR · UAV', trig:'Wind speed <1 m/s; solar elevation 40°–70°; clear days 10:00–15:00',
+    test:'L4-REF-01 reflective ground scene · 20 approaches on each of three platforms', st:'To be verified' },
+  { id:'P2', at:[12], name:'Semi-transparent diamond mesh fence', cause:'Mesh aperture 50 mm, solid fraction about 12 %, and both laser and vision pass through it largely unimpeded',
+    err:'Sparse point cloud → read as a crossable gap. In backlight, stereo vision reads the fence as a passage',
+    bodies:'WR · QR', trig:'Open ground behind; illuminance difference across the mesh >3 EV',
+    test:'L4-TRA-02 translucent partition scene · backlit and front-lit sets', st:'To be verified' },
+  { id:'P3', at:[14], name:'Specular reflection off module cover glass', cause:'Toughened cover glass at 25° tilt, and midday incidence approaches specular conditions',
+    err:'Reflected sky → read as water or open airspace. Infrared thermometry picks up false hot spots off the reflection',
+    bodies:'UAV · CL', trig:'Clear days 11:00–14:00; solar azimuth within 20° of the module normal',
+    test:'L4-REF-03 module specular scene · with an infrared channel comparison', st:'To be verified' },
+  { id:'P4', at:[3,4,5,14], name:'Array end gaps in backlight', cause:'For an hour after sunrise and an hour before sunset, brightness differs sharply between the array ends and the background',
+    err:'Overexposed edges → gap width overestimated, which can return a false passable verdict on the 0.44 m gap ⑤',
+    bodies:'WR · QR', trig:'Solar elevation <15°, line of sight within 30° of solar azimuth',
+    test:'L4-BLK-04 backlit edge scene · covers the three measured gaps ③④⑤', st:'To be verified' },
+  { id:'P5', at:[8,9], name:'Galvanised steel grating maintenance platform', cause:'Steel grating platform in front of the BESS containers, open area about 65 %',
+    err:'Sparse lidar returns with elevation jumps → read as a void or a drop. It may also be read the other way, as continuous solid ground with the trench below ignored',
+    bodies:'WR · QR', trig:'All weather; misjudgement becomes more likely with standing water after rain',
+    test:'L4-GRD-05 grating platform scene · dry and wet conditions', st:'To be verified' }
+];
+
+/* --- 1.7 Recompute triggers ---------------------------------------------------- */
+const TRIGGERS = [
+  { id:'T1', name:'Platform changed, or its specs changed', ex:'A different model, or any change to width, gait envelope, obstacle capability or sensor mounting height',
+    scope:'Recompute the L3 annotation layer only', reuse:'L1 raw data and the L2 base map are reused directly, with no new capture' },
+  { id:'T2', name:'Site geometry changed', ex:'Equipment added or removed; racking modified; a road closed or rerouted; fencing rebuilt',
+    scope:'Partial L2 recapture, plus L3 recomputed for the affected elements', reuse:'The L2 base map is reused for unchanged areas' },
+  { id:'T3', name:'Environmental state changed', ex:'⑨ a BESS door opened; maintenance barriers set up; snow, standing water, ice; temporary storage',
+    scope:'Recompute L3 for the affected elements. State-dependent elements must carry the state as a stated precondition', reuse:'The L2 base map is reused' },
+  { id:'T4', name:'Annotation data out of date', ex:'M1 and M2 measurements at 12 months; M3 and M4 estimates and records at 6 months; M5 items are permanently awaiting remeasurement',
+    scope:'Retake the data item concerned, then recompute L3', reuse:'The L2 base map is reused' },
+  { id:'T5', name:'L4 perception validation finds the annotation at odds with the site', ex:'Red-team testing finds a real property somewhere that does not match this drawing',
+    scope:'Correct the L3 annotation and reissue the drawing at a new revision', reuse:'The L2 base map is reused' }
+];
+
+/* --- 1.8 Limitations -------------------------------------------------------- */
+const LIMITS = [
+  'This drawing is a demonstration sample. The site is invented, and every coordinate, dimension and number on it exists to explain the annotation method. None of them belong to a real site.',
+  'This is a static geometric annotation. It leaves out dynamic obstacles such as vehicles, people and temporary storage, and it leaves out working-surface conditions that change over time.',
+  'We obtained no measured data on ground bearing capacity or friction this round. Support surface verdicts rest on geometric flatness and design bearing figures alone.',
+  'Affordance verdicts come from the geometric dimensions and rated obstacle capability of a platform. They do not tell you what its control system will actually manage on site. Any conditional verdict with a margin below threshold has to be validated on the real robot before you rely on it.',
+  'A perception risk zone marks the physical conditions that may mislead, and nothing more. It passes no verdict on any specific perception system. That comes from the L4 perception validation report.',
+  'This is not a surveying product. It carries no legal force as a surveying document, and it cannot be used for construction setting-out, land boundary definition, or any compliance argument about safety clearances.'
+];
+
+/* ==========================================================================
+   [2] L2 GEOMETRY  +  the FIG.01 generator
+   L2 geometry is platform-independent. Switching platform leaves this object untouched,
+   which the checksum demonstrates.
+   ========================================================================== */
+
+const SITE_W = 520, SITE_H = 340;                 // site dimensions, m
+const S = 2;                                       // drawing units per metre → 1:2000 at A3
+const OX = 76, OY = 60;                            // map origin inside the border
+const MX = m => OX + m * S, MY = m => OY + m * S;
+
+/* --- 2.1 L2 base geometry (platform-independent) ---------------------------------------- */
+function tablesOf(x0, x1, gapNom){
+  const w = x1 - x0, n = Math.max(2, Math.round(w / 26));
+  const tw = (w - (n - 1) * gapNom) / n, out = [];
+  for(let i = 0, x = x0; i < n; i++, x += tw + gapNom) out.push([x, x + tw]);
+  return { seg: out, tw, n };
+}
+const L2 = {
+  site: [[6,6],[514,6],[514,334],[6,334]],
+  fenceN: { y:6, x0:150, x1:380 },
+  roads: [ [20,88,480,4], [20,300,480,4], [20,92,4,208], [496,92,4,208],
+           [148,92,4,208], [288,92,4,208], [428,92,4,208],
+           [242,304,4,30], [218,52,4,36], [96,64,4,24] ],
+  gate:  { x0:238, x1:254, y:334 },
+  arrays:[ {id:'A',x0:26,x1:148}, {id:'B',x0:152,x1:288}, {id:'C',x0:292,x1:428}, {id:'D',x0:432,x1:494} ],
+  rows:  { y0:104, pitch:17, depth:5, n:11 },
+  gapNom:1.0,
+  gaps:  [ {n:3,arr:'B',row:3,gi:1}, {n:4,arr:'C',row:6,gi:2}, {n:5,arr:'A',row:9,gi:1} ],
+  ditch: { y:306, x0:145, x1:470, cross:[244,306] },
+  inv:   [ [100,74,16,12], [250,74,16,12], [380,74,16,12] ],
+  bess:  { zone:[26,16,144,48], cw:12.2, ch:2.5, x0:34, pitch:15.2, n:8, r1y:30, r2y:33.7 },
+  sub:   [300,14,200,56],
+  ohl:   [444,70,40,264],
+  pond:  [[32,310],[110,308],[138,316],[120,327],[54,329],[26,320]],
+  ctrl:  [196,18,52,34],
+  ptz:   { x:150, y:196, h:12.0, range:120, id:'PTZ-01' }
+};
+L2.arrays.forEach(a => Object.assign(a, tablesOf(a.x0, a.x1, L2.gapNom)));
+L2.gaps.forEach(g => {
+  const a = L2.arrays.find(x => x.id === g.arr);
+  g.x = a.x0 + (g.gi + 1) * a.tw + g.gi * L2.gapNom + L2.gapNom / 2;
+  g.y = L2.rows.y0 + L2.rows.pitch * g.row + L2.rows.depth / 2;
+});
+
+/* L2 geometry checksum; it must not change when the platform is switched */
+function fnv1a(s){ let h = 0x811c9dc5; for(let i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h>>>0).toString(16).toUpperCase().padStart(8,'0'); }
+const L2SUM = fnv1a(JSON.stringify(L2));
+
+/* --- 2.2 Number bubbles and leader points, in metres ----------------------------------------- */
+const MARKS = {
+  1:[[268,322],[246,334]], 2:[[58,294],[58,302]], 6:[[206,320],[244,306]],
+  7:[[108,66],[108,74]],  8:[[180,26],[160,30]],  9:[[180,44],[152,33.1]],
+  10:[[508,22],[500,28]], 11:[[508,150],[484,150]], 12:[[262,12],[262,6]],
+  13:[[158,316],[138,318]], 14:[[330,296],[300,288]], 15:[[264,42],[248,42]]
+};
+const INV_EXTRA = [[258,66,258,74],[388,66,388,74]];
+
+/* --- 2.3 category → outline style (channel A) / verdict → fill (channel B) -------------- */
+const CAT_STROKE = {
+  support: { w:1.3, d:null,          c:'#15181B' },
+  passage: { w:1.1, d:'5,2',         c:'#15181B' },
+  fragile: { w:0.8, d:'1,2',         c:'#8E949B' },
+  hazard:  { w:1.8, d:null,          c:'#A8322D' },
+  operable:{ w:1.3, d:null,          c:'#15181B' },
+  nofly:   { w:1.7, d:'13,3,2,3',    c:'#4B5157' },
+  percept: { w:1.2, d:'2,2',         c:'#4B5157' }
+};
+const CAT_LAYER = { support:'road', passage:'pass', fragile:'pv', hazard:'haz', operable:'ops', nofly:'uav', percept:'per' };
+const vFill = (v, cat) => v === 'pass' ? 'none'
+  : v === 'cond' ? 'url(#fCond)'
+  : v === 'fail' ? (cat === 'hazard' || cat === 'nofly' ? 'url(#fFailH)' : 'url(#fFail)')
+  : 'url(#fNA)';
+
+const LAYERS = [
+  { id:'grid', name:'Grid',   on:true },
+  { id:'road', name:'Support surfaces',   on:true },
+  { id:'pv',   name:'Module arrays', on:true },
+  { id:'pass', name:'Restricted passage', on:true },
+  { id:'ops',  name:'Operable point', on:true },
+  { id:'haz',  name:'Hazard edge', on:true },
+  { id:'uav',  name:'Restricted airspace',   on:true },
+  { id:'per',  name:'Perception risk', on:true },
+  { id:'tag',  name:'Element numbers', on:true }
+];
+
+/* --- 2.4 SVG primitives -------------------------------------------------------- */
+const E = (t, a = {}, kids = '') => {
+  let s = '<' + t;
+  for(const k in a) if(a[k] !== null && a[k] !== undefined) s += ` ${k}="${a[k]}"`;
+  return s + (kids ? `>${kids}</${t}>` : '/>');
+};
+const TXT = (x, y, s, o = {}) => E('text', {
+  x, y, 'text-anchor': o.a || 'start', fill: o.c || '#15181B',
+  style:`font-family:'JetBrains Mono',monospace;font-size:${o.s||8}px;font-weight:${o.w||400};letter-spacing:${o.ls||.2}px;${o.st||''}`,
+  transform:o.tr, class:o.cls
+}, s);
+const CIRC = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮';
+
+function marker(n, verdict, bx, by, tx, ty){
+  const X = MX(bx), Y = MY(by), TX = MX(tx), TY = MY(ty), r = 11;
+  const dx = TX - X, dy = TY - Y, L = Math.hypot(dx, dy) || 1;
+  let s = '';
+  if(L > r + 2) s += E('line', { x1:X + dx/L*r, y1:Y + dy/L*r, x2:TX, y2:TY, stroke:'#15181B', 'stroke-width':0.6 })
+                  + E('circle', { cx:TX, cy:TY, r:1.6, fill:'#15181B' });
+  s += E('circle', { cx:X, cy:Y, r, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1.2 });
+  s += TXT(X, Y + 4, CIRC[n-1], { a:'middle', s:12, w:700 });
+  const V = VERDICTS[verdict], vc = { pass:'#1E4A38', cond:'#8A6A12', fail:'#A8322D', na:'#656B71' }[verdict];
+  s += E('rect', { x:X + r + 1, y:Y - 7, width:14, height:14, fill:'#FBFAF7', stroke:vc, 'stroke-width':1 });
+  s += TXT(X + r + 8, Y + 4, V.glyph, { a:'middle', s:10, w:700, c:vc });
+  return s;
+}
+
+/* --- 2.5 Main drawing ------------------------------------------------------------ */
+function drawMap(b){
+  const V = {}; ELEMENTS.forEach(e => V[e.n] = e.rule(b).v);
+  const st = n => { const e = ELEMENTS.find(x => x.n === n), c = CAT_STROKE[e.cat];
+    return { fill: vFill(V[n], e.cat), stroke:c.c, 'stroke-width':c.w, 'stroke-dasharray':c.d }; };
+  const G = {}; LAYERS.forEach(l => G[l.id] = '');
+
+  /* grid */
+  for(let e = 0; e <= 500; e += 50){
+    G.grid += E('line', { x1:MX(e), y1:MY(0), x2:MX(e), y2:MY(SITE_H), stroke:'#EAE6DE', 'stroke-width':.5 });
+    G.grid += TXT(MX(e), MY(SITE_H) + 14, 'E' + e, { a:'middle', s:7.5, c:'#656B71' });
+  }
+  for(let n = 0; n <= 300; n += 50){
+    const y = MY(SITE_H - n);
+    G.grid += E('line', { x1:MX(0), y1:y, x2:MX(SITE_W), y2:y, stroke:'#EAE6DE', 'stroke-width':.5 });
+    G.grid += TXT(MX(0) - 7, y + 3, 'N' + n, { a:'end', s:7.5, c:'#656B71' });
+  }
+  for(let e = 0; e <= 500; e += 50) for(let n = 0; n <= 300; n += 50){
+    const x = MX(e), y = MY(SITE_H - n);
+    G.grid += E('line', { x1:x-5, y1:y, x2:x+5, y2:y, stroke:'#C4C0B6', 'stroke-width':.7 })
+            + E('line', { x1:x, y1:y-5, x2:x, y2:y+5, stroke:'#C4C0B6', 'stroke-width':.7 });
+  }
+
+  /* perimeter (outside the layer of ②; kept on the road base layer) */
+  G.road += E('polygon', { points:L2.site.map(p => `${MX(p[0])},${MY(p[1])}`).join(' '), fill:'none', stroke:'#15181B', 'stroke-width':1.4 });
+  G.road += TXT(MX(10), MY(0) - 6, 'SITE PERIMETER', { s:8, c:'#656B71' });
+
+  /* ② roads + ① gate */
+  L2.roads.forEach(r => G.road += E('rect', Object.assign({ x:MX(r[0]), y:MY(r[1]), width:r[2]*S, height:r[3]*S }, st(2))));
+  G.road += TXT(MX(160), MY(297.5), 'MAIN SERVICE ROAD  clear width 4.00 m', { a:'middle', s:7.6, c:'#4B5157' });
+  const g = L2.gate;
+  G.road += E('rect', Object.assign({ x:MX(g.x0), y:MY(g.y) - 5, width:(g.x1-g.x0)*S, height:10 }, st(1)));
+  G.road += E('line', { x1:MX(g.x0+2), y1:MY(g.y)-9, x2:MX(g.x1-2), y2:MY(g.y)+3, stroke:'#15181B', 'stroke-width':1.4 });
+
+  /* ⑭ module arrays */
+  const R = L2.rows;
+  L2.arrays.forEach(a => {
+    for(let k = 0; k < R.n; k++){
+      const y = R.y0 + k * R.pitch;
+      a.seg.forEach(sg => G.pv += E('rect', Object.assign({ x:MX(sg[0]), y:MY(y), width:(sg[1]-sg[0])*S, height:R.depth*S }, st(14))));
+    }
+    G.pv += E('rect', { x:MX(a.x0)-3, y:MY(R.y0)-3, width:(a.x1-a.x0)*S+6, height:((R.n-1)*R.pitch+R.depth)*S+6, fill:'none', stroke:'#C4C0B6', 'stroke-width':.6, 'stroke-dasharray':'6,4' });
+    G.pv += TXT(MX((a.x0+a.x1)/2), MY(R.y0) - 8, 'PV MODULE ARRAY ' + a.id, { a:'middle', s:8, c:'#4B5157', ls:.6 });
+  });
+
+  /* ③④⑤ inter-table gaps: detail index circle + local enlargement */
+  L2.gaps.forEach(gp => {
+    const cx = MX(gp.x), cy = MY(gp.y);
+    G.pass += E('circle', Object.assign({ cx, cy, r:16 }, st(gp.n), { fill:vFill(V[gp.n], 'passage') }));
+    G.pass += E('circle', { cx, cy, r:2.4, fill:'#15181B' });
+    G.pass += E('line', { x1:cx, y1:cy-16, x2:cx, y2:cy-24, stroke:'#15181B', 'stroke-width':.6 });
+    const el = ELEMENTS.find(x => x.n === gp.n);
+    G.pass += TXT(cx, cy - 27, el.code + ' ' + el.gapW.toFixed(2) + 'm', { a:'middle', s:7, c:'#15181B', w:700 });
+  });
+
+  /* ⑥ open drain */
+  const d = L2.ditch;
+  G.pass += E('line', { x1:MX(d.x0), y1:MY(d.y)-1.4, x2:MX(d.x1), y2:MY(d.y)-1.4, stroke:'#4B5157', 'stroke-width':.7 });
+  G.pass += E('line', { x1:MX(d.x0), y1:MY(d.y)+1.4, x2:MX(d.x1), y2:MY(d.y)+1.4, stroke:'#4B5157', 'stroke-width':.7 });
+  for(let x = d.x0; x < d.x1; x += 8) G.pass += E('line', { x1:MX(x), y1:MY(d.y)-1.4, x2:MX(x+2), y2:MY(d.y)+1.4, stroke:'#C4C0B6', 'stroke-width':.4 });
+  G.pass += E('rect', Object.assign({ x:MX(d.cross[0])-7, y:MY(d.cross[1])-5, width:14, height:10 }, st(6)));
+  G.pass += TXT(MX(d.x1)+4, MY(d.y)+3, 'open drain 0.35m', { s:7, c:'#656B71' });
+
+  /* ⑦ inverter rooms */
+  L2.inv.forEach(r => {
+    G.ops += E('rect', Object.assign({ x:MX(r[0]), y:MY(r[1]), width:r[2]*S, height:r[3]*S }, st(7)));
+    const dx = MX(r[0] + r[2]/2), dy = MY(r[1] + r[3]);
+    G.ops += E('line', { x1:dx-5, y1:dy, x2:dx+5, y2:dy, stroke:'#FBFAF7', 'stroke-width':2.4 });
+    G.ops += E('path', { d:`M${dx-5},${dy} A10,10 0 0 1 ${dx+5},${dy}`, fill:'none', stroke:'#15181B', 'stroke-width':.6 });
+    G.ops += E('circle', { cx:dx, cy:dy, r:2, fill:'#15181B' });
+  });
+  G.ops += TXT(MX(134), MY(69), 'INVERTER ROOMS INV-01/02/03 · door clear width 0.90m', { s:7.2, c:'#4B5157' });
+
+  /* ⑧⑨ BESS yard */
+  const B = L2.bess;
+  G.road += E('rect', Object.assign({ x:MX(B.zone[0]), y:MY(B.zone[1]), width:B.zone[2]*S, height:B.zone[3]*S }, st(8), { 'stroke-dasharray':'2,3', 'stroke-width':.9 }));
+  for(let i = 0; i < B.n; i++){
+    const x = B.x0 + i * B.pitch;
+    [B.r1y, B.r2y].forEach(y => G.road += E('rect', { x:MX(x), y:MY(y), width:B.cw*S, height:B.ch*S, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':.8 }));
+  }
+  G.pass += E('rect', Object.assign({ x:MX(B.x0), y:MY(B.r1y+B.ch), width:(B.n*B.pitch-B.pitch+B.cw)*S, height:(B.r2y-B.r1y-B.ch)*S }, st(9)));
+  const ax = B.x0 + B.pitch*2.5, ay = (B.r1y + B.ch + B.r2y)/2;
+  G.pass += E('circle', { cx:MX(ax), cy:MY(ay), r:15, fill:'none', stroke:'#15181B', 'stroke-width':1.1, 'stroke-dasharray':'5,2' })
+          + E('circle', { cx:MX(ax), cy:MY(ay), r:2.2, fill:'#15181B' })
+          + E('line', { x1:MX(ax), y1:MY(ay)+15, x2:MX(ax), y2:MY(ay)+24, stroke:'#15181B', 'stroke-width':.6 })
+          + TXT(MX(ax), MY(ay)+33, 'inter-bay aisle 1.20m (0.62m with a door open)', { a:'middle', s:7, w:700 });
+  G.road += TXT(MX(B.zone[0]+2), MY(B.zone[1])+9, 'BESS ARRAY  16 containers', { s:8, c:'#4B5157' });
+
+  /* ⑩ substation */
+  const sb = L2.sub;
+  G.haz += E('rect', Object.assign({ x:MX(sb[0]), y:MY(sb[1]), width:sb[2]*S, height:sb[3]*S }, st(10)));
+  [0,1,2].forEach(i => { const cx = MX(sb[0]+42+i*58), cy = MY(sb[1]+30);
+    G.haz += E('circle', { cx, cy:cy-6, r:11, fill:'none', stroke:'#A8322D', 'stroke-width':.9 })
+           + E('circle', { cx, cy:cy+6, r:11, fill:'none', stroke:'#A8322D', 'stroke-width':.9 }); });
+  G.haz += TXT(MX(sb[0]+sb[2]/2), MY(sb[1])-4, 'SUBSTATION — closed to every platform', { a:'middle', s:8, c:'#A8322D' });
+
+  /* ⑪ transmission line clearance zone */
+  const o = L2.ohl;
+  G.uav += E('rect', Object.assign({ x:MX(o[0]), y:MY(o[1]), width:o[2]*S, height:o[3]*S }, st(11)));
+  G.uav += TXT(MX(o[0]+o[2]/2), MY(o[1])+22, 'Transmission line clearance zone', { a:'middle', s:7.6, c:'#4B5157', tr:`rotate(90 ${MX(o[0]+o[2]/2)} ${MY(o[1])+22})` });
+  G.uav += E('line', { x1:MX(o[0]+o[2]/2), y1:MY(o[1]), x2:MX(o[0]+o[2]/2), y2:MY(o[1]+o[3]), stroke:'#656B71', 'stroke-width':.6, 'stroke-dasharray':'14,3,2,3' });
+
+  /* ⑫ perimeter fence, north */
+  const f = L2.fenceN;
+  G.per += E('line', Object.assign({ x1:MX(f.x0), y1:MY(f.y), x2:MX(f.x1), y2:MY(f.y) }, { stroke:CAT_STROKE.percept.c, 'stroke-width':2.4, 'stroke-dasharray':'2,2' }));
+  for(let x = f.x0; x < f.x1; x += 6) G.per += E('path', { d:`M${MX(x)},${MY(f.y)-4} l4,8 M${MX(x)+4},${MY(f.y)-4} l-4,8`, stroke:'#656B71', 'stroke-width':.45, fill:'none' });
+  G.per += TXT(MX((f.x0+f.x1)/2), MY(f.y)-9, 'PERIMETER FENCE NORTH · diamond mesh 50mm (perception risk P2)', { a:'middle', s:7.4, c:'#4B5157' });
+
+  /* ⑬ retention pond */
+  const pts = L2.pond.map(p => `${MX(p[0])},${MY(p[1])}`).join(' ');
+  const cxp = L2.pond.reduce((s,p)=>s+p[0],0)/L2.pond.length, cyp = L2.pond.reduce((s,p)=>s+p[1],0)/L2.pond.length;
+  G.haz += E('polygon', { points:L2.pond.map(p => `${MX(cxp+(p[0]-cxp)*1.06)},${MY(cyp+(p[1]-cyp)*1.06)}`).join(' '), fill:'none', stroke:'#A8322D', 'stroke-width':.8, 'stroke-dasharray':'3,3' });
+  G.haz += E('polygon', Object.assign({ points:pts }, st(13)));
+  G.per += E('polygon', { points:pts, fill:'url(#fPer)', stroke:'none', opacity:.85 });
+  G.haz += TXT(MX(150), MY(328), 'RETENTION POND · still-water glare (P1) + unguarded 1:1.5 bank', { s:7.4, c:'#A8322D' });
+
+  /* ⑮ control room */
+  const c = L2.ctrl;
+  G.ops += E('rect', Object.assign({ x:MX(c[0]), y:MY(c[1]), width:c[2]*S, height:c[3]*S }, st(15)));
+  G.ops += TXT(MX(c[0]+c[2]/2), MY(c[1]+c[3]/2)+3, 'Control room', { a:'middle', s:8.5, c:'#15181B' });
+  G.ops += E('circle', { cx:MX(c[0]+c[2]/2), cy:MY(c[1]+c[3]), r:2, fill:'#15181B' });
+
+  /* PTZ-01 (cross-referenced from FIG.04) */
+  const pz = L2.ptz;
+  G.road += E('circle', { cx:MX(pz.x), cy:MY(pz.y), r:4.5, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1.1 })
+          + E('path', { d:`M${MX(pz.x)-3},${MY(pz.y)-3} l6,0 l-3,6 z`, fill:'#15181B' })
+          + TXT(MX(pz.x)+7, MY(pz.y)+3, 'PTZ-01 ↗FIG.04', { s:6.8, c:'#4B5157' });
+
+  /* element numbers */
+  ELEMENTS.forEach(e => { const m = MARKS[e.n];
+    if(m) G.tag += marker(e.n, V[e.n], m[0][0], m[0][1], m[1][0], m[1][1]); });
+  L2.gaps.forEach(gp => { const cx = gp.x, cy = gp.y;
+    G.tag += marker(gp.n, V[gp.n], cx - 22, cy - 24, cx, cy - 12); });
+  INV_EXTRA.forEach(p => { G.tag += E('circle', { cx:MX(p[0]), cy:MY(p[1]), r:8, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1 })
+    + TXT(MX(p[0]), MY(p[1])+3, '⑦', { a:'middle', s:9, w:700 })
+    + E('line', { x1:MX(p[0]), y1:MY(p[1])+8, x2:MX(p[2]), y2:MY(p[3]), stroke:'#15181B', 'stroke-width':.6 }); });
+
+  return { groups:G, verdicts:V };
+}
+
+/* --- 2.6 Border, scale bar, north point, title block ----------------------------------- */
+function sheet(b, V, ms){
+  const cnt = { pass:0, cond:0, fail:0, na:0 }; ELEMENTS.forEach(e => cnt[V[e.n]]++);
+  let s = '';
+  /* border */
+  s += E('rect', { x:0, y:0, width:1200, height:900, fill:'#FBFAF7' });
+  s += E('rect', { x:12, y:12, width:1176, height:876, fill:'none', stroke:'#15181B', 'stroke-width':2.4 });
+  s += E('rect', { x:36, y:36, width:1128, height:828, fill:'none', stroke:'#15181B', 'stroke-width':.8 });
+  /* north point */
+  const nx = 1094, ny = 108;
+  s += E('circle', { cx:nx, cy:ny, r:19, fill:'none', stroke:'#15181B', 'stroke-width':.8 })
+     + E('path', { d:`M${nx},${ny-15} l6,22 l-6,-6 l-6,6 z`, fill:'#15181B' })
+     + TXT(nx, ny + 32, 'N', { a:'middle', s:11, w:700 });
+  /* scale bar */
+  const sx = 60, sy = 776, seg = 25 * S;
+  for(let i = 0; i < 4; i++) s += E('rect', { x:sx + i*seg, y:sy, width:seg, height:9, fill:i%2 ? '#FBFAF7' : '#15181B', stroke:'#15181B', 'stroke-width':.7 });
+  for(let i = 0; i <= 4; i++) s += TXT(sx + i*seg, sy - 4, String(i*25), { a:'middle', s:7.5, c:'#4B5157' });
+  s += TXT(sx + 4*seg + 6, sy + 8, 'm', { s:7.5, c:'#4B5157' });
+  s += TXT(sx, sy + 26, 'Scale 1:2000, plotted at A3. On screen the scale follows the viewport', { s:7.6, c:'#656B71' });
+  /* notes */
+  const notes = [
+    'Note 1  Outline style = affordance category, 7 of them, platform-independent. Fill and the symbol at right = the verdict for the current platform, 4 values, recomputed per platform.',
+    'Note 2  At this scale the 0.44–0.78 m maintenance gaps come out under 0.4 mm, so they are shown by a detail index. Real geometry is in FIG.03.',
+    'Note 3  ⑦ is shared across like elements and appears 3 times. Every other number appears once.',
+    'Note 4  Coordinates are a site-local grid (example), not real survey coordinates. This drawing is not a surveying product.'
+  ];
+  notes.forEach((t, i) => s += TXT(60, 812 + i*13, t, { s:7.4, c:'#4B5157' }));
+  /* title block */
+  const TB = { x:700, y:764, w:464, h:100 };
+  s += E('rect', { x:TB.x, y:TB.y, width:TB.w, height:TB.h, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1.4 });
+  const cell = (x, y, w, h, k, v, hi) => {
+    let o = E('rect', { x, y, width:w, height:h, fill:hi ? '#EDF0EC' : 'none', stroke:'#15181B', 'stroke-width':.5 });
+    o += TXT(x + 5, y + 9, k, { s:6.4, c:'#656B71', ls:.6 });
+    o += TXT(x + 5, y + 20, v, { s:8.2, w:700, c:hi ? '#A8322D' : '#15181B' });
+    return o;
+  };
+  const r1 = TB.y, r2 = TB.y + 25, r3 = TB.y + 50, r4 = TB.y + 75;
+  s += cell(TB.x, r1, 200, 25, 'PROJECT', 'PV + storage plant · example site');
+  s += cell(TB.x + 200, r1, 264, 25, 'TITLE', 'AFFORDANCE MAP · L3 annotation layer');
+  s += cell(TB.x, r2, 200, 25, 'PLATFORM', b.model + ' ' + b.name, true);
+  s += cell(TB.x + 200, r2, 264, 25, 'DWG NO', 'EA-DEMO-PV-2026 / FIG.01 / L3-' + b.id, true);
+  s += cell(TB.x, r3, 100, 25, 'SCALE', '1:2000 A3');
+  s += cell(TB.x + 100, r3, 130, 25, 'CRS', 'site-local (example)');
+  s += cell(TB.x + 230, r3, 120, 25, 'REV', 'L2 v1.0 · L3 ' + b.id, true);
+  s += cell(TB.x + 350, r3, 114, 25, 'DATE', '2026-07-31');
+  s += cell(TB.x, r4, 200, 25, 'L2 GEOMETRY CHECKSUM', L2SUM + ' · unchanged');
+  s += cell(TB.x + 200, r4, 150, 25, 'L3 RECOMPUTE', `15 elements / ${ms} ms`, true);
+  s += cell(TB.x + 350, r4, 114, 25, 'STATUS', 'SAMPLE');
+  /* verdict tally bar */
+  s += TXT(330, 782, `Verdicts for this platform: clear ${cnt.pass} · conditional ${cnt.cond} · blocked ${cnt.fail} · n/a ${cnt.na}  (15 in all)`, { s:8, c:'#4B5157' });
+  return s;
+}
+
+const DEFS = `<defs>
+<pattern id="fCond" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="8" stroke="#C4A64E" stroke-width=".85"/></pattern>
+<pattern id="fFail" width="9" height="9" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="9" y2="9" stroke="#AFABA2" stroke-width=".6"/><line x1="9" y1="0" x2="0" y2="9" stroke="#AFABA2" stroke-width=".6"/></pattern>
+<pattern id="fFailH" width="9" height="9" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="9" y2="9" stroke="#C98A87" stroke-width=".7"/><line x1="9" y1="0" x2="0" y2="9" stroke="#C98A87" stroke-width=".7"/></pattern>
+<pattern id="fNA" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".8" fill="#C9C5BC"/><circle cx="6" cy="6" r=".8" fill="#C9C5BC"/></pattern>
+<pattern id="fPer" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#656B71"/><circle cx="6.5" cy="6.5" r="1" fill="#656B71"/></pattern>
+</defs>`;
+
+function renderFig01(b){
+  const t0 = performance.now();
+  const { groups, verdicts } = drawMap(b);
+  const ms = Math.max(1, Math.round((performance.now() - t0) * 10) / 10);
+  const body = LAYERS.map(l => E('g', { id:'L-' + l.id, style:l.on ? '' : 'display:none' }, groups[l.id])).join('');
+  document.getElementById('fig01').innerHTML =
+    `<svg viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Affordance map, main drawing">${DEFS}${sheet(b, verdicts, ms)}${body}</svg>`;
+  LAYERS.forEach(l => { const g = document.getElementById('L-' + l.id); if(g) g.style.display = l.on ? '' : 'none'; });
+  return { ms, verdicts };
+}
+
+/* ==========================================================================
+   [3] FIG.02 affordance matrix · FIG.03 section detail 1:20 · FIG.04 viewshed
+   ========================================================================== */
+const VC = { pass:'#1E4A38', cond:'#8A6A12', fail:'#A8322D', na:'#656B71' };
+
+/* --- 3.1 FIG.02 affordance matrix ---------------------------------------------- */
+function renderFig02(act){
+  const W = 1080, rowH = 30, top = 74, H = top + ELEMENTS.length*rowH + 62;
+  const C0 = 38, C1 = 300, C2 = 424, CW = (W - C2 - 14)/4;
+  let s = E('rect', { x:0, y:0, width:W, height:H, fill:'#FBFAF7' });
+
+  BODIES.forEach((b, i) => { if(b.id === act.id)
+    s += E('rect', { x:C2 + i*CW, y:34, width:CW, height:H - 34 - 46, fill:'#EDF0EC' }); });
+
+  s += TXT(14, 16, 'ELEMENT', { s:8, c:'#656B71', ls:.8 });
+  s += TXT(C2, 16, 'PLATFORM — one geometry, four conclusions', { s:8, c:'#656B71', ls:.8 });
+  BODIES.forEach((b, i) => {
+    const x = C2 + i*CW + CW/2, on = b.id === act.id;
+    s += TXT(x, 50, b.model, { a:'middle', s:10.5, w:700, c:on ? '#15181B' : '#4B5157' });
+    s += TXT(x, 64, b.name, { a:'middle', s:8, c:'#656B71' });
+    if(on) s += TXT(x, 30, '◀ current platform ▶', { a:'middle', s:7, c:'#A8322D', ls:1 });
+  });
+  s += E('line', { x1:0, y1:top - 4, x2:W, y2:top - 4, stroke:'#15181B', 'stroke-width':1.3 });
+
+  ELEMENTS.forEach((el, r) => {
+    const y = top + r*rowH;
+    if(r % 2) s += E('rect', { x:0, y, width:C2 - 6, height:rowH, fill:'#F4F1EB' });
+    s += TXT(14, y + 19, CIRC[el.n-1], { a:'middle', s:12, w:700 });
+    s += TXT(C0, y + 19, el.name.length > 20 ? el.name.slice(0,19) + '…' : el.name, { s:10.5, c:'#15181B', ls:.1, st:"font-family:'Noto Sans SC',sans-serif;" });
+    s += TXT(C1, y + 19, CATS[el.cat].name, { s:8.4, c:'#656B71' });
+    BODIES.forEach((b, i) => {
+      const v = el.rule(b).v, V = VERDICTS[v], x = C2 + i*CW + CW/2, on = b.id === act.id;
+      s += TXT(x - 24, y + 20, V.glyph, { a:'middle', s:13, w:700, c:VC[v] });
+      s += TXT(x - 12, y + 19, V.label, { a:'start', s:9, w:on ? 700 : 400, c:v === 'na' ? '#656B71' : '#4B5157', st:"font-family:'Noto Sans SC',sans-serif;" });
+    });
+    s += E('line', { x1:0, y1:y + rowH, x2:W, y2:y + rowH, stroke:'#EAE6DE', 'stroke-width':.6 });
+  });
+
+  const yb = top + ELEMENTS.length*rowH;
+  s += E('line', { x1:0, y1:yb, x2:W, y2:yb, stroke:'#15181B', 'stroke-width':1.3 });
+  s += TXT(C0, yb + 22, 'Total, 15 elements', { s:9.5, c:'#15181B', w:700, st:"font-family:'Noto Sans SC',sans-serif;" });
+  BODIES.forEach((b, i) => {
+    const c = { pass:0, cond:0, fail:0, na:0 }; ELEMENTS.forEach(e => c[e.rule(b).v]++);
+    const x = C2 + i*CW + CW/2;
+    s += TXT(x - 24, yb + 22, `${c.pass} / ${c.cond} / ${c.fail} / ${c.na}`, { s:10, w:700, c:'#15181B' });
+    s += TXT(x - 24, yb + 34, 'clear / conditional / blocked / n/a', { s:6.6, c:'#656B71' });
+  });
+  document.getElementById('fig02').innerHTML =
+    `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="min-width:860px" role="img" aria-label="Affordance matrix">${s}</svg>`;
+}
+
+/* --- 3.2 FIG.03 section detail 1:20 ------------------------------------------- */
+function renderFig03(b){
+  const el = ELEMENTS.find(e => e.n === 3), gw = el.gapW, ch = el.clearH;
+  const K = 180, GX = 500, GY = 505;                       // 1 m = 180 units; ±0.00 datum
+  const px = m => GX + m*K, py = h => GY - h*K;
+  const W = 1040, H = 706;
+  let s = E('rect', { x:0, y:0, width:W, height:H, fill:'#FBFAF7' });
+
+  /* ground line and subgrade hatching */
+  s += E('line', { x1:40, y1:GY, x2:W - 40, y2:GY, stroke:'#15181B', 'stroke-width':1.6 });
+  for(let x = 40; x < W - 40; x += 9) s += E('line', { x1:x, y1:GY, x2:x - 7, y2:GY + 9, stroke:'#C4C0B6', 'stroke-width':.6 });
+  s += TXT(46, GY - 5, '±0.00 site design level', { s:7.6, c:'#656B71' });
+
+  /* module ends on both sides (elevation, viewed north) */
+  const tab = (x0, x1) => {
+    let o = E('rect', { x:px(x0), y:py(2.20), width:(x1-x0)*K, height:(2.20-0.85)*K, fill:'url(#fFragL)', stroke:'#15181B', 'stroke-width':1.1 });
+    o += E('line', { x1:px(x0), y1:py(0.85), x2:px(x1), y2:py(0.85), stroke:'#15181B', 'stroke-width':1.4 });
+    const cx = (x0 + x1)/2;
+    o += E('rect', { x:px(cx) - 5, y:py(1.55), width:10, height:(1.55)*K, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1 });
+    o += E('rect', { x:px(cx) - 16, y:GY - 4, width:32, height:8, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':1 });
+    return o;
+  };
+  s += tab(-2.05, -gw/2) + tab(gw/2, 2.05);
+  s += TXT(px(-1.3), py(1.55), 'module racking A-05a', { a:'middle', s:7.6, c:'#4B5157' });
+  s += TXT(px(1.3), py(1.55), 'module racking A-05b', { a:'middle', s:7.6, c:'#4B5157' });
+
+  /* dimension lines (45-degree tick terminators) */
+  const dimH = (x0, x1, y, t, col) => {
+    const c = col || '#15181B';
+    let o = E('line', { x1:px(x0), y1:y, x2:px(x1), y2:y, stroke:c, 'stroke-width':.8 });
+    [x0, x1].forEach(x => { o += E('line', { x1:px(x)-4, y1:y+4, x2:px(x)+4, y2:y-4, stroke:c, 'stroke-width':1.1 });
+                            o += E('line', { x1:px(x), y1:y-9, x2:px(x), y2:y+9, stroke:c, 'stroke-width':.5 }); });
+    o += TXT(px((x0+x1)/2), y - 6, t, { a:'middle', s:9, w:700, c });
+    return o;
+  };
+  const dimV = (x, h0, h1, t, col) => {
+    const c = col || '#15181B';
+    let o = E('line', { x1:x, y1:py(h0), x2:x, y2:py(h1), stroke:c, 'stroke-width':.8 });
+    [h0, h1].forEach(h => { o += E('line', { x1:x-4, y1:py(h)+4, x2:x+4, y2:py(h)-4, stroke:c, 'stroke-width':1.1 }); });
+    o += TXT(x - 7, py((h0+h1)/2), t, { a:'middle', s:9, w:700, c, tr:`rotate(-90 ${x-7} ${py((h0+h1)/2)})` });
+    return o;
+  };
+  s += dimH(-gw/2, gw/2, GY + 46, `${(gw*1000).toFixed(0)}  measured clear width M1`);
+  s += dimV(px(-2.05) - 34, 0, 0.85, `${(ch*1000).toFixed(0)}  clear height under module edge M1`);
+  s += dimV(px(2.05) + 34, 0, 2.20, '2200  module upper edge');
+
+  /* passage envelope of the current platform */
+  const isGround = b.domain === 'ground';
+  const envW = isGround ? b.minPassW : (b.domain === 'air' ? b.bodyW : null);
+  const envH = isGround ? b.minVertH : null;
+  if(isGround){
+    const fits = envW <= gw && envH <= ch;
+    const col = fits ? '#1E4A38' : '#A8322D';
+    s += E('rect', { x:px(-envW/2), y:py(envH), width:envW*K, height:envH*K, fill:fits ? 'rgba(44,85,69,.07)' : 'rgba(168,50,45,.07)',
+                     stroke:col, 'stroke-width':1.5, 'stroke-dasharray':'7,3' });
+    s += E('rect', { x:px(-b.bodyW/2), y:py(b.bodyH), width:b.bodyW*K, height:b.bodyH*K, fill:'none', stroke:col, 'stroke-width':1 });
+    s += TXT(px(0), py(envH) - 10, `${b.model} passage envelope ${(envW*1000).toFixed(0)} × ${(envH*1000).toFixed(0)}`, { a:'middle', s:8.6, w:700, c:col });
+    s += TXT(px(0), py(b.bodyH/2), `platform ${(b.bodyW*1000).toFixed(0)}`, { a:'middle', s:7.4, c:col });
+    s += dimH(-envW/2, envW/2, GY + 76, `${(envW*1000).toFixed(0)}  required width = widest point ${(b.bodyW*1000).toFixed(0)} + side margin 2×${(b.sideClear*1000).toFixed(0)}`, col);
+    const dw = +(gw - envW).toFixed(3), dh = +(ch - envH).toFixed(3);
+    const msg = dw < 0 ? `Short by ${Math.abs(dw*1000).toFixed(0)} mm. Geometrically it cannot pass`
+              : dh < 0 ? `Width clears with ${(dw*1000).toFixed(0)} mm to spare, but headroom is short by ${Math.abs(dh*1000).toFixed(0)} mm`
+              : `Width margin ${(dw*1000).toFixed(0)} mm / headroom margin ${(dh*1000).toFixed(0)} mm`;
+    s += TXT(px(0), 44, msg, { a:'middle', s:11, w:700, c:col, st:"font-family:'Noto Sans SC',sans-serif;" });
+    if(dw < 0){
+      s += E('line', { x1:px(-envW/2), y1:py(envH*.55), x2:px(-gw/2), y2:py(envH*.55), stroke:'#A8322D', 'stroke-width':2.4 });
+      s += E('line', { x1:px(gw/2), y1:py(envH*.55), x2:px(envW/2), y2:py(envH*.55), stroke:'#A8322D', 'stroke-width':2.4 });
+      s += TXT(px(-(envW+gw)/4), py(envH*.55) - 7, 'clash', { a:'middle', s:7.6, w:700, c:'#A8322D' });
+      s += TXT(px((envW+gw)/4), py(envH*.55) - 7, 'clash', { a:'middle', s:7.6, w:700, c:'#A8322D' });
+    }
+  } else if(b.domain === 'air'){
+    s += E('line', { x1:60, y1:py(3.0), x2:W - 60, y2:py(3.0), stroke:'#1E4A38', 'stroke-width':1.4, 'stroke-dasharray':'11,3,2,3' });
+    s += TXT(70, py(3.0) - 7, `${b.model} minimum safe altitude +3.00. It passes above the array, so the ground gap is no constraint`, { s:9, w:700, c:'#1E4A38' });
+    s += E('circle', { cx:px(0), cy:py(3.0), r:b.bodyW/2*K, fill:'none', stroke:'#1E4A38', 'stroke-width':1.2 });
+    s += dimV(px(0) + 20, 2.20, 3.0, '800 clearance', '#1E4A38');
+    s += TXT(px(0), 44, 'Not applicable to UAV-M6. It does not use ground gaps as a route', { a:'middle', s:11, w:700, c:'#656B71', st:"font-family:'Noto Sans SC',sans-serif;" });
+  } else {
+    s += E('line', { x1:px(-2.05), y1:py(2.28), x2:px(-gw/2), y2:py(2.28), stroke:'#1E4A38', 'stroke-width':2.2 });
+    s += E('line', { x1:px(gw/2), y1:py(2.28), x2:px(2.05), y2:py(2.28), stroke:'#1E4A38', 'stroke-width':2.2 });
+    s += TXT(px(0), 44, 'Not applicable to CL-P2. It runs on the module upper surface, and the gap sits under the racking', { a:'middle', s:11, w:700, c:'#656B71', st:"font-family:'Noto Sans SC',sans-serif;" });
+    s += TXT(px(1.3), py(2.28) - 8, 'dedicated rail · the only working surface CL-P2 has', { a:'middle', s:8, w:700, c:'#1E4A38' });
+  }
+
+  /* key plan (index) */
+  const kx = 74, ky = 596, kk = 26;
+  s += E('rect', { x:kx - 14, y:ky - 40, width:214, height:128, fill:'#FBFAF7', stroke:'#15181B', 'stroke-width':.7 });
+  s += TXT(kx - 8, ky - 27, 'KEY PLAN, not to scale', { s:7, c:'#656B71' });
+  s += E('rect', { x:kx, y:ky, width:70, height:kk*1.6, fill:'url(#fFragL)', stroke:'#15181B', 'stroke-width':.9 });
+  s += E('rect', { x:kx + 78, y:ky, width:70, height:kk*1.6, fill:'url(#fFragL)', stroke:'#15181B', 'stroke-width':.9 });
+  s += E('line', { x1:kx + 74, y1:ky - 12, x2:kx + 74, y2:ky + kk*1.6 + 12, stroke:'#A8322D', 'stroke-width':1.2 });
+  s += TXT(kx + 82, ky - 8, 'section 1—1', { s:7, w:700, c:'#A8322D' });
+  s += TXT(kx + 35, ky + kk*1.6 + 13, 'racking A-05a', { a:'middle', s:6.6, c:'#4B5157' });
+  s += TXT(kx + 113, ky + kk*1.6 + 13, 'racking A-05b', { a:'middle', s:6.6, c:'#4B5157' });
+  s += TXT(kx + 74, ky + kk*1.6 + 26, `end gap ${(gw*1000).toFixed(0)} mm, measured M1`, { a:'middle', s:7, w:700 });
+
+  s += TXT(40, H - 12, '1—1 ELEVATION DETAIL 1:20, viewed north  plotted at A3; on screen the scale follows the viewport', { s:8, c:'#656B71' });
+  s += TXT(W - 40, H - 12, `③ GAP-B05 · E${L2.gaps[0].x.toFixed(0)} N${(SITE_H - L2.gaps[0].y).toFixed(0)}`, { a:'end', s:8, c:'#656B71' });
+
+  document.getElementById('fig03').innerHTML =
+    `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="0.50 m gap section detail">
+     <defs><pattern id="fFragL" width="6" height="6" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="6" y2="6" stroke="#C9C5BC" stroke-width=".7"/><line x1="6" y1="0" x2="0" y2="6" stroke="#C9C5BC" stroke-width=".7"/></pattern></defs>${s}</svg>`;
+  document.getElementById('cap-fig03').textContent =
+    `FIG.03 — ③ GAP-B05 elevation detail 1:20 · current platform ${b.model}. The passage envelope is computed live from platform specs: ${b.domain === 'ground' ? `widest point ${(b.bodyW*1000).toFixed(0)} mm + side margin 2×${(b.sideClear*1000).toFixed(0)} mm = ${(b.minPassW*1000).toFixed(0)} mm` : 'not a ground platform, so a ground passage envelope does not apply'}.`;
+}
+
+/* --- 3.3 FIG.04 viewshed (two-dimensional shadow volumes, computed) -------------------------------- */
+function hull(pts){
+  const p = pts.slice().sort((a,b) => a[0]-b[0] || a[1]-b[1]);
+  const cr = (o,a,b) => (a[0]-o[0])*(b[1]-o[1]) - (a[1]-o[1])*(b[0]-o[0]);
+  const lo = [], up = [];
+  for(const q of p){ while(lo.length >= 2 && cr(lo[lo.length-2], lo[lo.length-1], q) <= 0) lo.pop(); lo.push(q); }
+  for(let i = p.length-1; i >= 0; i--){ const q = p[i]; while(up.length >= 2 && cr(up[up.length-2], up[up.length-1], q) <= 0) up.pop(); up.push(q); }
+  lo.pop(); up.pop(); return lo.concat(up);
+}
+function inPoly(x, y, poly){
+  let c = false;
+  for(let i = 0, j = poly.length-1; i < poly.length; j = i++){
+    const [xi,yi] = poly[i], [xj,yj] = poly[j];
+    if(((yi > y) !== (yj > y)) && (x < (xj-xi)*(y-yi)/(yj-yi) + xi)) c = !c;
+  }
+  return c;
+}
+const bbox = p => { let a=1e9,b=1e9,c=-1e9,d=-1e9; for(const q of p){ a=Math.min(a,q[0]); b=Math.min(b,q[1]); c=Math.max(c,q[0]); d=Math.max(d,q[1]); } return [a,b,c,d]; };
+
+function occluders(){
+  const O = [], rect = (x,y,w,h,ht,nm) => O.push({ p:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]], h:ht, nm });
+  L2.inv.forEach(r => rect(r[0], r[1], r[2], r[3], 3.2, 'inverter room'));
+  const B = L2.bess;
+  for(let i = 0; i < B.n; i++){ const x = B.x0 + i*B.pitch;
+    rect(x, B.r1y, B.cw, B.ch, 2.9, 'BESS container'); rect(x, B.r2y, B.cw, B.ch, 2.9, 'BESS container'); }
+  rect(L2.ctrl[0], L2.ctrl[1], L2.ctrl[2], L2.ctrl[3], 4.2, 'Control room');
+  rect(L2.sub[0], L2.sub[1], L2.sub[2], L2.sub[3], 6.5, 'substation structure');
+  const R = L2.rows;
+  L2.arrays.forEach(a => { for(let k = 0; k < R.n; k++){ const y = R.y0 + k*R.pitch;
+    a.seg.forEach(sg => rect(sg[0], y, sg[1]-sg[0], R.depth, 2.20, 'module racking')); } });
+  O.forEach(o => o.bb = bbox(o.p));
+  return O;
+}
+const OCC = occluders();
+
+function viewshed(t){
+  const P = L2.ptz, H = P.h, R = P.range, K = 60;
+  const inR = OCC.filter(o => o.h > t && !(o.bb[0] > P.x+R+8 || o.bb[2] < P.x-R-8 || o.bb[1] > P.y+R+8 || o.bb[3] < P.y-R-8));
+  const sh = inR.map(o => {
+    const k = o.h >= H ? K : Math.min(K, (H - t) / (H - o.h));
+    const proj = o.p.map(q => [P.x + (q[0]-P.x)*k, P.y + (q[1]-P.y)*k]);
+    const g = hull(o.p.concat(proj));
+    return { g, bb:bbox(g) };
+  });
+  let vis = 0, tot = 0;
+  for(let x = P.x - R; x <= P.x + R; x += 3) for(let y = P.y - R; y <= P.y + R; y += 3){
+    if(Math.hypot(x-P.x, y-P.y) > R) continue;
+    if(x < 6 || x > 514 || y < 6 || y > 334) continue;
+    tot++;
+    let blocked = false;
+    for(const q of sh){ if(x < q.bb[0] || x > q.bb[2] || y < q.bb[1] || y > q.bb[3]) continue; if(inPoly(x, y, q.g)){ blocked = true; break; } }
+    if(!blocked) vis++;
+  }
+  return { sh, inR, cov: tot ? vis/tot : 0, tot, vis, R, H };
+}
+
+function renderFig04(b){
+  const t0 = performance.now();
+  const t = b.tgtH, P = L2.ptz;
+  const { sh, inR, cov, tot, vis, R, H } = viewshed(t);
+  const X0 = P.x - 130, Y0 = P.y - 130, KS = 3.3, PAD = 40;
+  const vx = m => PAD + (m - X0)*KS, vy = m => PAD + (m - Y0)*KS;
+  const W = 260*KS + PAD*2, MH = 260*KS + PAD*2, HH = MH + 104;
+  let s = E('rect', { x:0, y:0, width:W, height:HH, fill:'#FBFAF7' });
+
+  const poly = p => p.map(q => `${vx(q[0]).toFixed(1)},${vy(q[1]).toFixed(1)}`).join(' ');
+  s += `<defs><mask id="vmask"><rect x="0" y="0" width="${W}" height="${HH}" fill="black"/>
+        <circle cx="${vx(P.x)}" cy="${vy(P.y)}" r="${R*KS}" fill="white"/>
+        ${sh.map(q => E('polygon', { points:poly(q.g), fill:'black' })).join('')}</mask>
+        <pattern id="fVis" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="6" stroke="#1E4A38" stroke-width=".9"/></pattern>
+        <clipPath id="vsite"><polygon points="${poly(L2.site)}"/></clipPath></defs>`;
+
+  s += E('rect', { x:PAD, y:PAD, width:260*KS, height:260*KS, fill:'none', stroke:'#15181B', 'stroke-width':1 });
+  s += E('g', { 'clip-path':'url(#vsite)' }, E('rect', { x:0, y:0, width:W, height:MH, fill:'url(#fVis)', opacity:.5, mask:'url(#vmask)' }));
+  s += E('circle', { cx:vx(P.x), cy:vy(P.y), r:R*KS, fill:'none', stroke:'#1E4A38', 'stroke-width':1.1, 'stroke-dasharray':'6,4' });
+
+  OCC.forEach(o => { const bb = o.bb;
+    if(bb[0] > X0+260 || bb[2] < X0 || bb[1] > Y0+260 || bb[3] < Y0) return;
+    s += E('polygon', { points:poly(o.p), fill:'#FBFAF7', stroke:'#4B5157', 'stroke-width':.55 }); });
+  L2.roads.forEach(r => s += E('rect', { x:vx(r[0]), y:vy(r[1]), width:r[2]*KS, height:r[3]*KS, fill:'none', stroke:'#C9C5BC', 'stroke-width':.7 }));
+
+  s += E('circle', { cx:vx(P.x), cy:vy(P.y), r:6, fill:'#15181B' });
+  s += E('circle', { cx:vx(P.x), cy:vy(P.y), r:11, fill:'none', stroke:'#15181B', 'stroke-width':1 });
+  s += TXT(vx(P.x) + 15, vy(P.y) + 4, `${P.id} pole H=${H.toFixed(1)} m`, { s:9, w:700 });
+  s += TXT(vx(P.x) + 15, vy(P.y) + 16, `E${P.x} N${SITE_H - P.y}`, { s:7.4, c:'#656B71' });
+  s += TXT(vx(P.x) + R*KS - 6, vy(P.y) - 6, `effective recognition distance R=${R} m`, { a:'end', s:7.6, c:'#1E4A38' });
+
+  /* readout strip */
+  const yb = MH + 10;
+  s += E('line', { x1:PAD, y1:yb, x2:W - PAD, y2:yb, stroke:'#15181B', 'stroke-width':1.2 });
+  const cells = [
+    ['TARGET h', `${t.toFixed(2)} m`, b.model],
+    ['OCCLUDERS', `${inR.length}`, `counted where h > ${t.toFixed(2)} m`],
+    ['SHADOWS', `${sh.length}`, 'convex hull projection, computed'],
+    ['COVERAGE', `${(cov*100).toFixed(1)} %`, `3 m grid, ${vis}/${tot} points`],
+    ['BLIND', `${((1-cov)*100).toFixed(1)} %`, 'needs extra camera positions or a mobile platform']
+  ];
+  const cw = (W - PAD*2)/cells.length;
+  cells.forEach((c, i) => { const x = PAD + i*cw;
+    if(i) s += E('line', { x1:x, y1:yb, x2:x, y2:yb + 72, stroke:'#EAE6DE', 'stroke-width':.8 });
+    s += TXT(x + 10, yb + 18, c[0], { s:7, c:'#656B71', ls:.9 });
+    s += TXT(x + 10, yb + 40, c[1], { s:17, w:700, c:i === 3 ? '#1E4A38' : '#15181B' });
+    s += TXT(x + 10, yb + 56, c[2], { s:7.4, c:'#656B71' }); });
+  s += TXT(PAD, HH - 8, `Shadow projection factor k = (H − h target) / (H − h occluder). Where h ≥ H the shadow extends beyond the recognition distance. Window 260 × 260 m, scale 1:800.`, { s:7.4, c:'#656B71' });
+
+  document.getElementById('fig04').innerHTML =
+    `<svg viewBox="0 0 ${W} ${HH}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fixed PTZ viewshed analysis">${s}</svg>`;
+  const ms = Math.round((performance.now() - t0) * 10) / 10;
+  document.getElementById('cap-fig04').textContent =
+    `FIG.04 — PTZ-01 viewshed · target height taken as ${t.toFixed(2)} m, the height of the ${b.model}. ${inR.length} occluders taller than the target enter the computation and generate ${sh.length} shadow volumes. Coverage of ${(cov*100).toFixed(1)} % comes from intersecting a 3 m grid point by point (${vis}/${tot} points), in ${ms} ms.`;
+}
+
+/* ==========================================================================
+   [4] Tables, registers, statements, and the wiring for the platform switch
+   ========================================================================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const SRC = m => `<span class="src ${m}" title="${METHODS[m].name} | ${METHODS[m].tool} | tolerance ${METHODS[m].tol} | confidence ${METHODS[m].conf} | valid for ${METHODS[m].ttl}">${m}</span>`;
+const VBADGE = r => `<span class="v v-${r.v}"><span class="g">${VERDICTS[r.v].glyph}</span>${VERDICTS[r.v].label}</span>`;
+
+const LDEFS = `<defs><pattern id="lCond" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="7" stroke="#8A6A12" stroke-width="1"/></pattern><pattern id="lFail" width="6" height="6" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="6" y2="6" stroke="#656B71" stroke-width=".8"/><line x1="6" y1="0" x2="0" y2="6" stroke="#656B71" stroke-width=".8"/></pattern><pattern id="lNA" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".8" fill="#C9C5BC"/><circle cx="6" cy="6" r=".8" fill="#C9C5BC"/></pattern></defs>`;
+
+/* --- 4.1 Static tables: platforms, legend, risks, provenance, triggers, statements --------------------- */
+function renderStatic(){
+  /* platform table */
+  $('tbl-bodies').innerHTML =
+    `<thead><tr><th>Platform</th><th>Domain</th><th>Key dimensions</th><th>Derived: minimum clear width / minimum headroom</th><th>Obstacle and mobility limits</th><th>Primary task</th></tr></thead><tbody>` +
+    BODIES.map(b => `<tr>
+      <td class="nm">${b.name}<br><span class="m" style="color:var(--ink3);font-weight:400">${b.model}</span></td>
+      <td class="m nw">${{ground:'Ground',air:'Air',rail:'Rail'}[b.domain]}</td>
+      <td>${b.dims}${b.sensorH ? `<br><span class="m" style="color:var(--ink3)">sensor height ${b.sensorH.toFixed(2)} m</span>` : ''}</td>
+      <td class="m">${b.minPassW
+          ? `<b>${b.minPassW.toFixed(2)} m</b> = widest point ${b.bodyW.toFixed(2)} + 2 × ${b.sideClear.toFixed(2)}<br><b>${b.minVertH.toFixed(2)} m</b> = height ${b.bodyH.toFixed(2)} + ${b.topClear.toFixed(2)}`
+          : `<span style="color:var(--ink3)">N/A (${b.domain === 'air' ? 'airborne platform' : 'rail-bound platform'})</span>`}</td>
+      <td>${b.mob}</td><td>${b.task}</td></tr>`).join('') + '</tbody>';
+  $('cap-bodies').innerHTML = 'Minimum clear width and minimum headroom are not entered values. They are computed live from the dimensions at left. Whether a robot fits through a gap comes down to its <b>widest point</b> plus the safety margin on each side.';
+
+  /* legend A: categories */
+  $('lg-cat').innerHTML = Object.values(CATS).map(c => {
+    const s = CAT_STROKE[c.key];
+    return `<div class="lg-i"><svg width="46" height="28" viewBox="0 0 46 28">${LDEFS}
+      <rect x="3" y="3" width="40" height="22" fill="none" stroke="${s.c}" stroke-width="${s.w}"${s.d ? ` stroke-dasharray="${s.d}"` : ''}/>
+      ${c.key === 'operable' ? '<circle cx="23" cy="14" r="3" fill="#15181B"/>' : ''}
+      ${c.key === 'percept' ? '<circle cx="14" cy="10" r="1.2" fill="#656B71"/><circle cx="26" cy="18" r="1.2" fill="#656B71"/><circle cx="32" cy="9" r="1.2" fill="#656B71"/>' : ''}
+      </svg><div><h5>${c.name}<span>${c.en}</span></h5><p>${c.desc}</p></div></div>`;
+  }).join('');
+
+  /* legend B: verdicts */
+  $('lg-verdict').innerHTML = Object.values(VERDICTS).map(v => {
+    const f = { pass:'none', cond:'url(#lCond)', fail:'url(#lFail)', na:'url(#lNA)' }[v.key];
+    return `<div class="lg-i"><svg width="46" height="28" viewBox="0 0 46 28">${LDEFS}
+      <rect x="3" y="3" width="40" height="22" fill="${f}" stroke="#15181B" stroke-width="1"/></svg>
+      <div><h5><span class="v v-${v.key}" style="font-size:13px">${v.glyph}</span> ${v.label}<span>${v.en}</span></h5><p>${v.desc}</p></div></div>`;
+  }).join('');
+
+  /* perception risk register */
+  $('tbl-risks').innerHTML =
+    `<thead><tr><th>ID</th><th>At</th><th>Risk and physical cause</th><th>Expected direction of misjudgement</th><th>Platforms affected</th><th>Trigger conditions</th><th>Validation item</th><th>Status</th></tr></thead><tbody>` +
+    RISKS.map(r => `<tr>
+      <td class="mono" style="font-weight:700">${r.id}</td>
+      <td class="mono" style="font-size:13px">${r.at.map(n => CIRC[n-1]).join('')}</td>
+      <td class="nm">${r.name}<br><span style="font-weight:300;color:var(--ink2);font-size:11.5px">${r.cause}</span></td>
+      <td style="font-size:11.5px">${r.err}</td>
+      <td class="mono" style="font-size:10.5px">${r.bodies}</td>
+      <td style="font-size:11.5px;color:var(--ink2)">${r.trig}</td>
+      <td class="mono" style="font-size:10.5px">${r.test}</td>
+      <td class="mono" style="color:var(--alarm);font-size:10.5px">${r.st}</td></tr>`).join('') + '</tbody>';
+
+  /* measurement methods */
+  $('tbl-methods').innerHTML =
+    `<thead><tr><th>Code</th><th>Method</th><th>Means</th><th>Tolerance</th><th>Confidence</th><th>Valid for</th><th>Enough on its own to call something passable?</th></tr></thead><tbody>` +
+    Object.values(METHODS).map(m => `<tr>
+      <td class="mono" style="font-weight:700">${m.code}</td><td class="nm">${m.name}</td>
+      <td style="font-size:11.5px;color:var(--ink2)">${m.tool}</td><td class="mono">${m.tol}</td>
+      <td class="mono">${m.conf}</td><td class="mono">${m.ttl}</td>
+      <td style="font-size:11.5px">${{
+        M1:'Yes', M2:'Yes, though a margin under 50 mm needs an M1 check',
+        M3:'No, indicative only, to be checked on site before use',
+        M4:'No, it needs independent verification', M5:'No, the verdict for that item is marked awaiting remeasurement'
+      }[m.code]}</td></tr>`).join('') + '</tbody>';
+
+  const cnt = {}; let tot = 0;
+  ELEMENTS.forEach(e => e.data.forEach(d => { cnt[d.m] = (cnt[d.m]||0) + 1; tot++; }));
+  $('stats-src').innerHTML = Object.values(METHODS).map(m =>
+    `<div><span class="k">${m.code} ${m.name}</span><span class="n">${cnt[m.code]||0}<span class="u">/ ${tot} items</span></span></div>`).join('') +
+    `<div><span class="k">measured share M1+M2</span><span class="n">${(((cnt.M1||0)+(cnt.M2||0))/tot*100).toFixed(0)}<span class="u">%</span></span></div>`;
+  $('cap-src').innerHTML = `The 15 elements on this drawing carry ${tot} key data items between them. ${cnt.M5||0} of those are still awaiting remeasurement: item ⑪, minimum conductor-to-ground distance, which has to be taken near live equipment and produced nothing usable this round. The verdict concerned is marked ${SRC('M5')} in TAB.01, and no clearance compliance conclusion may be drawn from it.`;
+
+  /* recompute triggers */
+  $('tbl-triggers').innerHTML =
+    `<thead><tr><th>ID</th><th>Trigger</th><th>Typical case</th><th>Recompute scope</th><th>What can be reused</th></tr></thead><tbody>` +
+    TRIGGERS.map(t => `<tr><td class="mono" style="font-weight:700">${t.id}</td><td class="nm">${t.name}</td>
+      <td style="font-size:11.5px;color:var(--ink2)">${t.ex}</td><td>${t.scope}</td>
+      <td style="font-size:11.5px;color:var(--ink2)">${t.reuse}</td></tr>`).join('') + '</tbody>';
+
+  $('list-limits').innerHTML = LIMITS.map(t => `<li>${t}</li>`).join('');
+
+  /* control bar */
+  $('body-switch').innerHTML = BODIES.map(b =>
+    `<button class="bbtn" type="button" data-b="${b.id}" aria-pressed="false"><span class="mk" aria-hidden="true"></span><span class="bt"><span class="m">${b.model}</span><span class="n">${b.name}</span></span></button>`).join('');
+  $('layer-switch').innerHTML = LAYERS.map(l =>
+    `<label class="lchk"><input type="checkbox" data-l="${l.id}"${l.on ? ' checked' : ''}><span>${l.name}</span></label>`).join('');
+}
+
+/* --- 4.2 The parts that recompute per platform ------------------------------------------------ */
+function renderDynamic(b){
+  const t0 = performance.now();
+  const R = {}; ELEMENTS.forEach(e => R[e.n] = e.rule(b));
+
+  /* zone register */
+  $('tbl-zones').innerHTML =
+    `<thead><tr><th>№</th><th>Site element and code</th><th>Affordance category</th><th>Key data, with method</th>
+      <th style="color:var(--ink)">${b.model} verdict</th><th style="color:var(--ink)">Basis, computed live</th></tr></thead><tbody>` +
+    ELEMENTS.map(e => `<tr>
+      <td class="num">${CIRC[e.n-1]}</td>
+      <td class="nm">${e.name}<br><span class="m" style="color:var(--ink3);font-weight:400">${e.code}</span></td>
+      <td class="m" style="font-size:11px;${e.cat === 'hazard' ? 'color:var(--alarm);font-weight:500' : ''}">${CATS[e.cat].name}</td>
+      <td style="font-size:11.5px">${e.data.map(d => `${d.k} <b class="m">${d.v}</b>${SRC(d.m)}`).join('<br>')}</td>
+      <td class="hit">${VBADGE(R[e.n])}</td>
+      <td style="font-size:11.5px;color:var(--ink2)" class="hit">${R[e.n].r}</td></tr>`).join('') + '</tbody>';
+
+  /* the three gaps side by side */
+  const gaps = ELEMENTS.filter(e => e.gapW);
+  $('tbl-gaps').innerHTML =
+    `<thead><tr><th>№</th><th>Code</th><th>Measured clear width</th><th>Clear height under module edge</th>` +
+      BODIES.map(x => `<th${x.id === b.id ? ' style="color:var(--ink)"' : ''}>${x.short}</th>`).join('') + `</tr></thead><tbody>` +
+    gaps.map(g => `<tr><td class="num">${CIRC[g.n-1]}</td><td class="m">${g.code}</td>
+      <td class="m" style="font-weight:700">${g.gapW.toFixed(2)} m ${SRC('M1')}</td>
+      <td class="m">${g.clearH.toFixed(2)} m ${SRC('M1')}</td>` +
+      BODIES.map(x => { const r = g.rule(x); return `<td${x.id === b.id ? ' class="hit"' : ''}>${VBADGE(r)}</td>`; }).join('') + '</tr>').join('') +
+    `<tr><td></td><td class="m" style="color:var(--ink3)">minimum passage width</td><td colspan="2" class="m" style="color:var(--ink3)">the geometric threshold for this platform</td>` +
+      BODIES.map(x => `<td class="m"${x.id === b.id ? ' class="hit"' : ''} style="font-weight:700">${x.minPassW ? x.minPassW.toFixed(2) + ' m' : '—'}</td>`).join('') + '</tr></tbody>';
+
+  $('cmp-gap').innerHTML = gaps.map(g => { const r = g.rule(b);
+    return `<div><span class="em">${CIRC[g.n-1]} ${g.code} · measured ${g.gapW.toFixed(2)} m</span>
+      <div class="vd v-${r.v}">${VERDICTS[r.v].glyph} ${VERDICTS[r.v].label}</div><p>${r.r}</p></div>`; }).join('');
+  const gv = gaps.map(g => VERDICTS[g.rule(b).v].label);
+  $('cap-gap').innerHTML = `For the current platform <b>${b.model}</b> the three gaps come out as ${gv.join(' / ')}. They differ by 0.34 m, and the verdicts differ with them. This is why we measure every gap individually instead of assuming one figure. Annotate a whole array with a typical 0.5 m and you get missed hazards and false alarms at the same time.`;
+
+  /* main drawing + statistics + title block */
+  const { ms } = renderFig01(b);
+  renderFig02(b); renderFig03(b); renderFig04(b);
+
+  const c = { pass:0, cond:0, fail:0, na:0 }; ELEMENTS.forEach(e => c[R[e.n].v]++);
+  $('stats').innerHTML = [
+    ['CLEAR', c.pass, 'var(--ok)'], ['CONDITIONAL', c.cond, '#8A6A12'],
+    ['BLOCKED', c.fail, 'var(--alarm)'], ['N/A', c.na, 'var(--ink3)']
+  ].map(x => `<div><span class="k">${x[0]}</span><span class="n" style="color:${x[2]}">${x[1]}<span class="u">/ 15</span></span></div>`).join('') +
+    `<div><span class="k">CURRENT PLATFORM</span><span class="n" style="font-size:14px;line-height:1.5">${b.model}<br><span class="u" style="margin:0">${b.key}</span></span></div>`;
+
+  const total = Math.round((performance.now() - t0) * 10) / 10;
+  $('readout').innerHTML = [
+    ['L2 BASE GEOMETRY', L2SUM, 'checksum unchanged · reused as is', false],
+    ['L3 ANNOTATION LAYER', `${ELEMENTS.length} elements · ${total} ms`, 'every verdict recomputed', true],
+    ['FIG.01 REDRAWN', `${ms} ms`, 'graphics, legend and title block in step', true],
+    ['VERDICT SPREAD', `${c.pass} / ${c.cond} / ${c.fail} / ${c.na}`, 'clear / conditional / blocked / n/a', true],
+    ['DWG NO', 'L3-' + b.id, 'revision issued per platform', true]
+  ].map(x => `<div class="ro${x[3] ? ' chg' : ''}"><b>${x[0]}</b><em>${x[1]}</em>${x[2]}</div>`).join('');
+
+  $('hd-dwg').textContent = 'EA-DEMO-PV-2026 / L3-' + b.id;
+  $('ft-dwg').textContent = 'Sample deliverable 01/02 · affordance map · L3-' + b.id;
+  $('cap-fig01').innerHTML = `FIG.01 — affordance map, example site, 1:2000 at A3 · platform <b>${b.model} ${b.name}</b>. ①–⑮ correspond number for number with TAB.01, and ⑦ is shared across like elements, appearing 3 times. The L2 geometry checksum is ${L2SUM}, unchanged by this switch.`;
+  $('cap-fig02').innerHTML = `FIG.02 — affordance matrix, 15 × 4 = 60 cells, every one computed live by <span class="tag">rule(platform)</span>. No column is a subset of another: ${BODIES.map(x => { const cc = {}; ELEMENTS.forEach(e => cc[e.rule(x).v] = (cc[e.rule(x).v]||0)+1); return `${x.short} clear ${cc.pass||0}`; }).join(', ')}.`;
+}
+
+/* --- 4.3 Wiring ------------------------------------------------------------ */
+let CUR = BODIES[0];
+function setBody(id){
+  CUR = BODY(id);
+  document.querySelectorAll('.bbtn').forEach(el => el.setAttribute('aria-pressed', String(el.dataset.b === id)));
+  renderDynamic(CUR);
+}
+function init(){
+  renderStatic();
+  $('body-switch').addEventListener('click', e => { const btn = e.target.closest('.bbtn'); if(btn) setBody(btn.dataset.b); });
+  $('layer-switch').addEventListener('change', e => {
+    const i = e.target; if(!i.dataset.l) return;
+    const L = LAYERS.find(x => x.id === i.dataset.l); L.on = i.checked;
+    const g = document.getElementById('L-' + L.id); if(g) g.style.display = L.on ? '' : 'none';
+  });
+  setBody(BODIES[0].id);
+}
+document.addEventListener('DOMContentLoaded', init);
+
+
+</script>
+<script src="../site.js"></script>
+</body>
+</html>
