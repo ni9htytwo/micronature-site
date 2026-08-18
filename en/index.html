@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Theme before first paint: a saved choice wins; the English-language version
+   defaults to dark; otherwise the system preference decides. Runs this early
+   so a reload never flashes the other theme. */
+(function(){var t=null;try{t=localStorage.getItem('mn-theme');}catch(e){}
+if(t!=='dark'&&t!=='light'){var en=(document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en')===0;
+t=en?'dark':((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');}
+document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<title>microNature — Physical Intelligence Infrastructure</title>
+<meta name="description" content="microNature builds the real-world infrastructure for physical intelligence. The site a robot will actually work on becomes a digital proving ground it can be trained on, validated against and scored in, delivered across training, validation and deployment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="alternate" hreflang="zh-Hans" href="../index.html">
+<link rel="alternate" hreflang="en" href="index.html">
+<link rel="alternate" hreflang="x-default" href="../index.html">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Site navigation">
+  <div class="nav-in">
+    <a class="nav-mark" href="index.html">microNature<span>Physical Intelligence Infrastructure</span></a>
+    <span class="nav-here" aria-hidden="true"></span>
+    <div class="nav-links">
+      <span class="cur" aria-current="page">Architecture</span>
+      <a href="environmentaffordance.html">Affordance™</a>
+      <a href="map.html">Map</a>
+      <a href="atlas.html">Atlas</a>
+      <a href="insight.html">Insight</a>
+      <a href="about.html">About</a>
+    </div>
+  <div class="nav-lang">
+    <a href="../index.html" hreflang="zh-Hans" lang="zh-CN">中</a>
+    <span class="cur" aria-current="true">EN</span>
+  </div>
+  <button class="nav-theme" type="button" aria-pressed="false"></button>
+  </div>
+</nav>
+
+<main class="doc">
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <div class="tblock">
+      <div class="tblock-cell"><span class="tblock-k">Sheet</span><span class="tblock-v">MN-00</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Title</span><span class="tblock-v cn">Architecture & Thesis</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Issue</span><span class="tblock-v">2026.08</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Scope</span><span class="tblock-v">real → sim → real</span></div>
+    </div>
+
+    <h1 class="h1">Get the Physics Right, and the Machine Stops Fighting It</h1>
+
+    <p class="lede hero-lede">microNature builds the real-world groundwork physical intelligence runs on. Instead of bending hardware to fit a simulator, we work with the environment and the robot's own embodiment exactly as they physically are — never simplifying one to fit the other. Every bit of friction removed at the physical level is brute force the robot no longer has to supply.</p>
+
+    <div class="hero-spec">
+      <span>Domain-Native Physical Intelligence Infra</span>
+      <span>Scene-native · <b>100+</b> deliveries in specialized industries</span>
+      <span>In-house physics engine + spatial intelligence</span>
+    </div>
+
+    <div class="statement">
+      <span class="mono">Thesis</span>
+      A better model alone won't close the gap between what works in the lab and what works on site. Closing that gap takes infrastructure grounded in the real physical world. That's what we're here to build.
+    </div>
+  </header>
+
+  <!-- ═══ CONTENTS ═══ -->
+  <section class="band" id="toc">
+    <div class="rail"><span class="rail-num">00</span><span class="rail-en">Contents</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <nav class="toc" aria-label="Contents">
+        <ol class="toc-list">
+          <li><a href="#s1"><span class="toc-n">01</span><span class="toc-t">How microNature Works</span><span class="toc-d">Architecture</span></a></li>
+          <li><a href="#s2"><span class="toc-n">02</span><span class="toc-t">A Domain-Native Path, Seen from the Robot's Point of View</span><span class="toc-d">Difference</span></a></li>
+          <li><a href="#s3"><span class="toc-n">03</span><span class="toc-t">Proven Technology, New Application</span><span class="toc-d">Proof</span></a></li>
+          <li><a href="#s4"><span class="toc-n">04</span><span class="toc-t">Closing the Gap, Building Intuition</span><span class="toc-d">Now &amp; Next</span></a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ═══ 01 ARCHITECTURE ═══ -->
+  <section class="band" id="s1">
+    <div class="rail"><span class="rail-num">01</span><span class="rail-en">Architecture</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">microNature · Real-Sim-Real</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">Real–Sim–Real</span>
+          Capture on the real site → physics-native simulation → back to the site for deployment, with deployment feedback returning into simulation.
+        </aside>
+        <p class="p">microNature runs the full <strong>real → sim → real</strong> loop. Take the whole thing, or just the real-sim half. At the centre sits a <span class="term" data-t="domain-native">domain-native</span> physical scene that any kind of intelligent hardware can plug into, keeping the path from training through validation to rollout lightweight.</p>
+      </div>
+
+      <figure class="plate rise" id="fig01">
+        <div class="plate-body"><svg role="img" viewBox="0 0 960 790" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                <defs>
+                    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                        <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/>
+                    </marker>
+                </defs>
+                
+
+                <!-- top inputs -->
+                <text x="480" y="34" text-anchor="middle" font-size="10" fill="var(--ink-3)" letter-spacing="2">TASK &amp; BODY INPUT</text>
+                <rect x="250" y="48" width="200" height="58" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="350" y="72" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="bold">LLM TASK</text>
+                <text x="350" y="90" text-anchor="middle" font-size="10" fill="var(--ink-2)">task encoding · 0.1–1 Hz</text>
+                <rect x="510" y="48" width="200" height="58" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="610" y="72" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="bold">ROBOT FILES</text>
+                <text x="610" y="90" text-anchor="middle" font-size="10" fill="var(--ink-2)">platform digital twin · URDF</text>
+                <line x1="350" y1="106" x2="350" y2="152" stroke="var(--ink)" stroke-width="1.1" marker-end="url(#arr)"/>
+                <line x1="610" y1="106" x2="610" y2="152" stroke="var(--ink)" stroke-width="1.1" marker-end="url(#arr)"/>
+
+                <!-- REAL column -->
+                <rect x="40" y="200" width="225" height="270" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="152" y="232" text-anchor="middle" font-size="14" fill="var(--ink)" font-weight="bold">REAL</text>
+                <text x="152" y="250" text-anchor="middle" font-size="10" fill="var(--ink-2)">real site · domain-native</text>
+                <line x1="60" y1="264" x2="245" y2="264" stroke="var(--rule)" stroke-width="1"/>
+                <text x="152" y="288" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">vision</text>
+                <text x="152" y="310" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">lidar</text>
+                <text x="152" y="332" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">thermal</text>
+                <text x="152" y="354" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">mmWave</text>
+                <text x="152" y="376" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">tactile</text>
+                <text x="152" y="398" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">force</text>
+                <text x="152" y="440" text-anchor="middle" font-size="9.5" fill="var(--ink-3)" font-style="italic">multi-modal capture of physical quantities</text>
+
+                <!-- SIM column -->
+                <rect x="335" y="165" width="290" height="340" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.6" stroke-dasharray="1,0"/>
+                <text x="480" y="196" text-anchor="middle" font-size="14" fill="var(--ink)" font-weight="bold" letter-spacing="1">PHYSICS-NATIVE SIM</text>
+                <text x="480" y="214" text-anchor="middle" font-size="10" fill="var(--accent)" letter-spacing="2">microNature</text>
+                <rect x="355" y="232" width="250" height="58" fill="var(--paper)" stroke="var(--ink)" stroke-width="1"/>
+                <text x="480" y="256" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="bold">PHYSICS ENGINE</text>
+                <text x="480" y="274" text-anchor="middle" font-size="9.5" fill="var(--ink-2)">scene-native · geometry + physics + dynamics</text>
+                <rect x="355" y="302" width="250" height="58" fill="var(--paper)" stroke="var(--ink)" stroke-width="1"/>
+                <text x="480" y="326" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="bold">FULL-DOMAIN PERCEPTION</text>
+                <text x="480" y="344" text-anchor="middle" font-size="9.5" fill="var(--ink-2)">full-domain fusion · runs on physical quantities</text>
+                <rect x="355" y="372" width="250" height="58" fill="var(--wash)" stroke="var(--accent)" stroke-width="1.4"/>
+                <text x="480" y="396" text-anchor="middle" font-size="11" fill="var(--accent)" font-weight="bold">EA · ENVIRONMENT AFFORDANCE</text>
+                <text x="480" y="414" text-anchor="middle" font-size="9.5" fill="var(--ink-2)">affordance annotation · adversarial validation · scoring</text>
+                <text x="480" y="468" text-anchor="middle" font-size="9.5" fill="var(--ink-3)" font-style="italic">lightweight training · validation</text>
+
+                <!-- DEPLOY column -->
+                <rect x="695" y="200" width="225" height="270" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="807" y="232" text-anchor="middle" font-size="14" fill="var(--ink)" font-weight="bold">DEPLOY</text>
+                <text x="807" y="250" text-anchor="middle" font-size="10" fill="var(--ink-2)">heterogeneous intelligent hardware</text>
+                <line x1="715" y1="264" x2="900" y2="264" stroke="var(--rule)" stroke-width="1"/>
+                <text x="807" y="292" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">legged</text>
+                <text x="807" y="314" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">wheeled</text>
+                <text x="807" y="336" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">UAV</text>
+                <text x="807" y="358" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">arm</text>
+                <text x="807" y="380" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">AV</text>
+                <text x="807" y="440" text-anchor="middle" font-size="9.5" fill="var(--ink-3)" font-style="italic">machines that pass the exam go on site</text>
+
+                <!-- horizontal arrows -->
+                <line x1="265" y1="335" x2="327" y2="335" stroke="var(--ink)" stroke-width="1.3" marker-end="url(#arr)"/>
+                <text x="296" y="322" text-anchor="middle" font-size="10" fill="var(--ink)" font-weight="bold">R2S</text>
+                <line x1="625" y1="335" x2="687" y2="335" stroke="var(--ink)" stroke-width="1.3" marker-end="url(#arr)"/>
+                <text x="656" y="322" text-anchor="middle" font-size="10" fill="var(--ink)" font-weight="bold">S2R</text>
+
+                <!-- flywheel -->
+                <rect x="40" y="560" width="880" height="76" fill="var(--wash)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="480" y="592" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="bold" letter-spacing="1">DATA FLYWHEEL</text>
+                <text x="480" y="614" text-anchor="middle" font-size="10" fill="var(--ink-2)">co-built with the industry domain · scene data ↔ validation standards · both ends accumulate</text>
+                <path d="M807,470 L807,520 Q807,540 787,540 L500,540 Q480,540 480,552 L480,556" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arr)"/>
+                <path d="M152,470 L152,520 Q152,540 172,540 L460,540 Q480,540 480,552" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="5,4"/>
+                <text x="480" y="532" text-anchor="middle" font-size="9" fill="var(--ink-3)" letter-spacing="1">DEPLOYMENT FEEDBACK</text>
+
+                <!-- plug-in docks -->
+                <text x="480" y="678" text-anchor="middle" font-size="10" fill="var(--ink-3)" letter-spacing="2">PLUG-IN STACKS · swappable</text>
+                <rect x="180" y="692" width="270" height="56" fill="var(--paper)" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="315" y="716" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="bold">SENSING STACK</text>
+                <text x="315" y="734" text-anchor="middle" font-size="9.5" fill="var(--ink-2)">any sensing stack plugs in</text>
+                <rect x="510" y="692" width="270" height="56" fill="var(--paper)" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="645" y="716" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="bold">POLICY STACK</text>
+                <text x="645" y="734" text-anchor="middle" font-size="9.5" fill="var(--ink-2)">any policy stack plugs in</text>
+                <line x1="315" y1="692" x2="315" y2="650" stroke="var(--ink-3)" stroke-width="0.9" stroke-dasharray="2,4"/>
+                <line x1="645" y1="692" x2="645" y2="650" stroke="var(--ink-3)" stroke-width="0.9" stroke-dasharray="2,4"/>
+                <text x="480" y="776" text-anchor="middle" font-size="9.5" fill="var(--ink-3)">microNature — real-sim-real · a lightweight deployment across training, validation and deployment</text>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.01</b><span>microNature architecture · real-sim-real</span></figcaption>
+      </figure>
+
+      <div class="col"><p class="p">The chain works as one piece, and it breaks down cleanly into three products.</p></div>
+
+      <div class="grid grid-3">
+        <div class="cell">
+          <span class="cell-code">M1 · REAL→SIM</span>
+          <p>We digitise a real scene and rebuild it physics-first. You get a reusable digital proving ground: the 3D base map is built once, and every platform after that reuses it.</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">M2 · EA VALIDATION</span>
+          <p><a class="link" href="environmentaffordance.html" target="_blank" rel="noopener">Environment Affordance™</a> delivered on its own. We annotate affordances against your platform specs, run adversarial validation, and hand back <a class="link" href="map.html" target="_blank" rel="noopener">scores and samples</a>.</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">M3 · R2S2R FULL CHAIN</span>
+          <p>Lightweight training → validation → deployment, closed end to end. Built together with the industry, so what happens on site flows back and the data flywheel keeps turning.</p>
+        </div>
+      </div>
+
+      <h3 class="h3" style="margin-top:56px">Core component <a class="link" href="environmentaffordance.html" target="_blank" rel="noopener">Environment Affordance™</a><br>Where robots and intelligent equipment of every kind get aligned, rehearsed and cleared for entry</h3>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">Affordance</span>
+          A relationship between an environment and one specific <b>body</b>. Can this robot stand here, get through, take hold, or does it have to go around? Change the platform and the answer changes.
+        </aside>
+        <p class="p">EA, Environment Affordance, is what sets the microNature architecture apart. <strong>We validate from the robot's point of view and from the task, inside a reusable, physically real scene.</strong> The question is not what a general-purpose robot can do. It is what this robot can and cannot do on this site, and the answer comes back as a score and a report.</p>
+      </div>
+
+      <figure class="plate rise" id="fig02">
+        <div class="plate-body"><svg role="img" viewBox="0 0 860 400" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                    <defs>
+                        <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                            <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/>
+                        </marker>
+                    </defs>
+                    
+                    <rect x="40" y="40" width="215" height="82" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+                    <text x="147" y="74" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="bold">REUSABLE REAL SCENE</text>
+                    <text x="147" y="94" text-anchor="middle" font-size="10" fill="var(--ink-2)">reusable real scene</text>
+                    <rect x="40" y="155" width="215" height="82" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+                    <text x="147" y="189" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="bold">ROBOT BODY</text>
+                    <text x="147" y="209" text-anchor="middle" font-size="10" fill="var(--ink-2)">robot platform specs</text>
+                    <rect x="40" y="270" width="215" height="82" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+                    <text x="147" y="304" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="bold">ALIGNED TASK</text>
+                    <text x="147" y="324" text-anchor="middle" font-size="10" fill="var(--ink-2)">the aligned task</text>
+                    <line x1="255" y1="81" x2="348" y2="175" stroke="var(--ink)" stroke-width="1" marker-end="url(#arr2)"/>
+                    <line x1="255" y1="196" x2="348" y2="196" stroke="var(--ink)" stroke-width="1" marker-end="url(#arr2)"/>
+                    <line x1="255" y1="311" x2="348" y2="217" stroke="var(--ink)" stroke-width="1" marker-end="url(#arr2)"/>
+                    <rect x="352" y="130" width="235" height="132" fill="var(--wash)" stroke="var(--accent)" stroke-width="1.6"/>
+                    <text x="469" y="170" text-anchor="middle" font-size="14" fill="var(--accent)" font-weight="bold">EA ENGINE</text>
+                    <text x="469" y="192" text-anchor="middle" font-size="10" fill="var(--ink-2)">robot's point of view · task-aligned</text>
+                    <text x="469" y="210" text-anchor="middle" font-size="10" fill="var(--ink-2)">affordance computation · perception adversary</text>
+                    <text x="469" y="228" text-anchor="middle" font-size="10" fill="var(--ink-2)">closed-loop scoring</text>
+                    <line x1="587" y1="196" x2="668" y2="196" stroke="var(--ink)" stroke-width="1.2" marker-end="url(#arr2)"/>
+                    <rect x="672" y="130" width="150" height="132" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.4"/>
+                    <text x="747" y="168" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="bold">SCORE</text>
+                    <text x="747" y="196" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="bold">REPORT</text>
+                    <text x="747" y="224" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="bold">ADMISSION</text>
+                    <text x="430" y="382" text-anchor="middle" font-size="10" fill="var(--ink-3)" letter-spacing="1">exam before deployment</text>
+                </svg></div>
+        <figcaption class="plate-cap"><b>FIG.02</b><span>Environment Affordance™ validation loop</span></figcaption>
+      </figure>
+
+      <div class="grid grid-4">
+        <div class="cell"><h4 class="h4">Cost ↓</h4><p>Not every job needs a general-purpose robot. Validate the job on hardware you already own, and your robot budget comes down.</p></div>
+        <div class="cell"><h4 class="h4">Interoperability ↑</h4><p>Mixed fleets are validated in one proving ground against one standard, so they work better alongside whatever is already on site.</p></div>
+        <div class="cell"><h4 class="h4">Threshold ↓</h4><p>You do not need to understand models. You need to read a score. That is about as low as the barrier gets.</p></div>
+        <div class="cell"><h4 class="h4">Admission →</h4><p>One proving ground across domains. Whatever the field, the robot sits the exam before it goes in.</p></div>
+      </div>
+
+      <a class="cta" href="environmentaffordance.html" target="_blank" rel="noopener">
+        <span class="eyebrow">Product</span>
+        <h3 class="h3">Environment Affordance™ — independent validation before deployment</h3>
+        <p>We take your platform specs, re-annotate the real site as an affordance map, prioritize the scenes most likely to mislead perception systems, and issue an auditable, reproducible verdict before deployment starts. Available on its own, and also the core component of the full microNature chain.</p>
+        <span class="cta-go">Open the product sheet →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ 02 WHAT'S DIFFERENT ═══ -->
+  <section class="band" id="s2">
+    <div class="rail"><span class="rail-num">02</span><span class="rail-en">Difference</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">A Domain-Native Path, Seen from the Robot's Point of View</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">Sim2Real Gap</span>
+          The drop in performance when a policy trained in simulation is moved onto a real site. The cause usually sits in physical misalignment rather than in model size.
+        </aside>
+        <p class="p">Scaling laws for language models (<span class="term" data-t="scaling">scaling law</span>) sit on thirty years of internet data infrastructure. Scaling physical intelligence needs infrastructure of its own. Without a data foundation drawn from real environments, <span class="term" data-t="sim2real">sim2real</span> alignment has nothing to stand on. That leads to two answers: a different technical path, and different trade-offs.</p>
+      </div>
+
+      <h3 class="h3" style="margin-top:52px"><span class="eyebrow">Point one · technical path</span>We fit the simulation to the domain, not the hardware to the simulator</h3>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">Domain-native</span>
+          Physical models built for one specific working environment. A mine drift, a cleanroom and an open-pit mine are not the same place, and none of them is a general template.
+        </aside>
+        <p class="p">Robots do not end up working in synthetic scenes. They end up in plants, mine sites, campuses, substations and warehouses. General-purpose approaches tend to miss one fact here. Seen from the robot and from the job, different working environments need different physics engines. Low light, dust and explosion-proofing down a mine drift. Cleanliness and geometric precision in a cleanroom. Unstructured haul roads in an open pit. The physical properties, the sensing modalities and the motion constraints are all different. Force every scene into one template and the physics comes out wrong.</p>
+        <p class="p">Two of our core capabilities exist for exactly this reason (for the task spectrum see <a class="xref" href="#fig03">FIG.03</a>).</p>
+      </div>
+
+      <div class="pair">
+        <div>
+          <h4 class="h4">Physics engine · scene-native</h4>
+          <p>We model each domain's working environment physics-first, with geometry, physical parameters and dynamic behaviour built as one thing. Physics is not bolted on after the geometry is finished. It grows with the scene from the start. Scene-native means the simulation behaves the way the real site behaves.</p>
+        </div>
+        <div>
+          <h4 class="h4">Full-domain sensing · fusion of physical quantities</h4>
+          <p>Different environments call for different ways of capturing physical quantities. Vision in one place, temperature and humidity in another, millimetre wave, touch, force control. Our full-domain sensing fuses all of them and runs them inside one physics engine. Physical quantities in, physical quantities out, nothing collapsed along the way.</p>
+        </div>
+      </div>
+
+      <div class="statement">
+        <span class="mono">Domain-Native</span>
+        We lead with domain-native physical scenes that any intelligent hardware can engage with, robots of every kind included. The simulation takes the hardware on the domain's terms, rather than asking the hardware to accommodate the simulator. That is the main thing separating us from a general-purpose simulator.
+      </div>
+
+      <h3 class="h3" style="margin-top:60px"><span class="eyebrow">Point two · how we handle the trade-offs</span>From the robot's point of view, at the pace of industry</h3>
+
+      <div class="pair">
+        <div>
+          <h4 class="h4">The robot's view: <span class="term" data-t="liangli">know your limits</span></h4>
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">Embodiment</span>
+          The physical spec of one platform: dimensions, gait, grasp envelope, sensor mounting height. That is the entire input to an affordance verdict.
+        </aside>
+          <p>Not every job needs a top-of-the-line general-purpose robot. From the robot's side, finishing the job and staying operational matter more than being able to do everything. Line up the job, the site and what the platform can actually do, and a stripped-down, low-cost, purpose-built robot with the right infrastructure behind it will often beat an expensive general-purpose one.</p>
+          <p>Take a mine. What it actually needs is autonomous vehicles, quadrupeds, drones and wheeled robots working together, not one embodied robot handling everything. Environment Affordance™ validates from the robot's point of view, so every piece of hardware already on site gets used for what it is good at.</p>
+        </div>
+        <div>
+          <h4 class="h4">The pace of industry: development runs in order</h4>
+          <p>The usual position is that you solve highly structured tasks first on today's infrastructure, semi-structured next, and general capability last. That order does not reverse.</p>
+          <p>Most of what manufacturing and industrial sites urgently need today sits between structured and semi-structured. Layouts change slowly, and physical accuracy, hardware coordination and cost control carry the most weight. Infrastructure should take this stretch on first. It is the largest, and it is the most certain.</p>
+        </div>
+      </div>
+
+      <figure class="plate rise" id="fig03">
+        <div class="plate-body"><svg role="img" viewBox="0 0 860 330" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                    <defs>
+                        <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                            <line x1="0" y1="0" x2="0" y2="8" stroke="var(--ink)" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    
+                    <!-- three segments -->
+                    <rect x="60" y="80" width="235" height="74" fill="var(--ink)"/>
+                    <text x="177" y="112" text-anchor="middle" font-size="13" fill="var(--paper)" font-weight="bold">STRUCTURED</text>
+                    <text x="177" y="132" text-anchor="middle" font-size="11" fill="var(--rule)">repeatable</text>
+                    <rect x="305" y="80" width="280" height="74" fill="url(#hatch)" stroke="var(--ink)" stroke-width="1.2"/>
+                    <text x="445" y="112" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="bold">SEMI-STRUCTURED</text>
+                    <text x="445" y="132" text-anchor="middle" font-size="11" fill="var(--ink-2)">bounded variation</text>
+                    <rect x="595" y="80" width="205" height="74" fill="none" stroke="var(--ink-3)" stroke-width="1" stroke-dasharray="4,4"/>
+                    <text x="697" y="112" text-anchor="middle" font-size="13" fill="var(--ink-3)" font-weight="bold">UNSTRUCTURED</text>
+                    <text x="697" y="132" text-anchor="middle" font-size="11" fill="var(--ink-3)">open-ended / general</text>
+                    <!-- demand bracket -->
+                    <path d="M60,180 L60,192 L585,192 L585,180" fill="none" stroke="var(--accent)" stroke-width="1.4"/>
+                    <text x="322" y="214" text-anchor="middle" font-size="12" fill="var(--accent)" font-weight="bold" letter-spacing="1">industry's main demand sits here</text>
+                    <!-- annotations -->
+                    <text x="177" y="252" text-anchor="middle" font-size="10" fill="var(--ink-2)">already solved at scale</text>
+                    <text x="177" y="268" text-anchor="middle" font-size="10" fill="var(--ink-2)">density 470 per 10,000 workers · IFR 2023</text>
+                    <text x="445" y="252" text-anchor="middle" font-size="10" fill="var(--ink-2)">scenes change infrequently · physical accuracy</text>
+                    <text x="445" y="268" text-anchor="middle" font-size="10" fill="var(--ink-2)">hardware coordination · cost control</text>
+                    <text x="697" y="252" text-anchor="middle" font-size="10" fill="var(--ink-2)">frontier research · data gap &gt;99%</text>
+                    <text x="697" y="268" text-anchor="middle" font-size="10" fill="var(--ink-2)">not yet urgent</text>
+                    <!-- order line -->
+                    <text x="430" y="310" text-anchor="middle" font-size="11" fill="var(--ink)" letter-spacing="1">structured first → semi-structured next → general after that</text>
+                </svg></div>
+        <figcaption class="plate-cap"><b>FIG.03</b><span>the task spectrum, and where industry's demand currently sits</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═══ 03 PROOF ═══ -->
+  <section class="band" id="s3">
+    <div class="rail"><span class="rail-num">03</span><span class="rail-en">Proof</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">Proven Technology, New Application</h2>
+      <div class="col">
+        <aside class="mnote">
+          <span class="mnote-k">See also</span>
+          Team background in <a href="about.html" target="_blank" rel="noopener">MN-02 Team</a>
+        </aside>
+        <p class="p">microNature is a new idea built on mature technology. We hold a rare capability in physics engines and spatial intelligence, backed by a full in-house team, and all of it has been through real industrial delivery.</p>
+      </div>
+
+      <figure class="plate rise" id="fig04">
+        <div class="plate-body"><svg role="img" viewBox="0 40 1440 910" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                <defs>
+                    <marker id="arrK" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/>
+                    </marker>
+                </defs>
+
+                <rect x="0" y="40" width="1440" height="910" fill="var(--paper)"/>
+
+                <!-- input / output seed axis -->
+                <text x="1006" y="70" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="9" letter-spacing="1.5" fill="var(--ink-3)">INPUT · 10+ years of industrial delivery</text>
+                <circle cx="1016" cy="92" r="6" fill="none" stroke="var(--ink)" stroke-width="1.2"/>
+                <line x1="1028" y1="92" x2="1236" y2="92" stroke="var(--ink)" stroke-width="1"/>
+                <circle cx="1248" cy="92" r="6.5" fill="var(--ink)"/>
+                <text x="1180" y="112" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="9" letter-spacing="1.5" fill="var(--ink-3)">OUTPUT · a proving ground at the application layer</text>
+                <line x1="1260" y1="92" x2="1330" y2="92" stroke="var(--ink)" stroke-width="1" marker-end="url(#arrK)"/>
+                <text x="1344" y="96" font-size="12" fill="var(--ink-3)">···</text>
+
+                <!-- LEFT: MATURE FOUNDATION cluster -->
+                <text x="300" y="228" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="2.5" fill="var(--ink-2)">MATURE FOUNDATION</text>
+                <circle cx="300" cy="520" r="262" fill="none" stroke="var(--ink-3)" stroke-width="1.2" stroke-dasharray="4,5"/>
+
+                <circle cx="215" cy="430" r="92" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <circle cx="158" cy="372" r="12" fill="var(--ink)"/>
+                <text x="158" y="376.5" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="var(--paper)">01</text>
+                <text x="215" y="418" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">Physics engine</text>
+                <text x="215" y="438" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">and spatial base</text>
+                <text x="215" y="460" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">GIS · 10+ years of 3D simulation</text>
+                <text x="215" y="475" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">TB-scale loading · domestic CPU</text>
+
+                <circle cx="385" cy="420" r="92" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <circle cx="328" cy="362" r="12" fill="var(--ink)"/>
+                <text x="328" y="366.5" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="var(--paper)">02</text>
+                <text x="385" y="408" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">EA algorithms</text>
+                <text x="385" y="428" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">and adversarial strategy</text>
+                <text x="385" y="450" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">red vs blue · Deception Library</text>
+                <text x="385" y="465" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">geospatial algorithms carried over</text>
+
+                <circle cx="205" cy="600" r="92" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <circle cx="148" cy="542" r="12" fill="var(--ink)"/>
+                <text x="148" y="546.5" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="var(--paper)">03</text>
+                <text x="205" y="588" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">Perception, visualisation</text>
+                <text x="205" y="608" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">and manipulation</text>
+                <text x="205" y="630" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">heterogeneous quantity fusion</text>
+                <text x="205" y="645" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">physical-quantity interfaces · one stack throughout</text>
+
+                <circle cx="380" cy="595" r="92" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <circle cx="323" cy="537" r="12" fill="var(--ink)"/>
+                <text x="323" y="541.5" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="var(--paper)">04</text>
+                <text x="380" y="585" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">Edge compute R&amp;D</text>
+                <text x="380" y="612" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">FeFET compute-in-memory</text>
+                <text x="380" y="627" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">edge inference · low power</text>
+
+                <!-- single convergence axis -->
+                <circle cx="578" cy="520" r="5.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.6"/>
+                <line x1="588" y1="520" x2="772" y2="520" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M758,506.5 L786,520 L758,533.5" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+                <text x="676" y="478" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" letter-spacing="2" fill="var(--ink-3)">PROVEN → APPLIED</text>
+                <text x="676" y="498" text-anchor="middle" font-size="11.5" fill="var(--ink-2)">field-proven · translated into applications</text>
+
+                <!-- RIGHT: APPLICATION INNOVATION -->
+                <text x="1090" y="228" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="2.5" fill="var(--ink-2)">APPLICATION INNOVATION</text>
+                <ellipse cx="1090" cy="520" rx="292" ry="242" fill="none" stroke="var(--ink-3)" stroke-width="1.2" stroke-dasharray="4,5"/>
+
+                <line x1="874" y1="414" x2="988" y2="482" stroke="var(--ink)" stroke-width="0.9"/>
+                <circle cx="846" cy="398" r="40" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="846" y="403" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">pre-align</text>
+
+                <line x1="1302" y1="414" x2="1194" y2="482" stroke="var(--ink)" stroke-width="0.9"/>
+                <circle cx="1330" cy="398" r="40" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="1330" y="403" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">rehearse</text>
+
+                <line x1="1090" y1="636" x2="1090" y2="712" stroke="var(--ink)" stroke-width="0.9"/>
+                <circle cx="1090" cy="724" r="40" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="1090" y="729" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">admit →</text>
+
+                <circle cx="1090" cy="520" r="116" fill="var(--ink)"/>
+                <text x="1090" y="500" text-anchor="middle" font-size="21" font-weight="700" fill="var(--paper)">Environment</text>
+                <text x="1090" y="528" text-anchor="middle" font-size="21" font-weight="700" fill="var(--paper)">Affordance™</text>
+                <line x1="1032" y1="548" x2="1148" y2="548" stroke="var(--ink-2)" stroke-width="1"/>
+                <text x="1090" y="570" text-anchor="middle" font-size="12" fill="var(--rule)">application-layer innovation · digital proving ground</text>
+                <text x="1090" y="590" text-anchor="middle" font-size="9.5" fill="var(--ink-3)">new idea · affordance annotation · adversarial validation · scoring</text>
+
+                <!-- BOTTOM: four text blocks -->
+                <line x1="64" y1="842" x2="1376" y2="842" stroke="var(--rule)" stroke-width="1"/>
+
+                <g font-size="11" fill="var(--ink-2)">
+                    <text x="64" y="872" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" letter-spacing="1" fill="var(--ink)">CAP-1 · SPATIAL BASE</text>
+                    <text x="64" y="894">large-scene databases fused from many sources (oblique imagery · point cloud · BIM)</text>
+                    <text x="64" y="911">fast TB-scale 3D loading · every domestic CPU architecture</text>
+                    <text x="64" y="931" font-size="10" font-style="italic" fill="var(--ink-3)">10+ years of delivery in specialized industrial settings</text>
+                </g>
+
+                <g font-size="11" fill="var(--ink-2)">
+                    <text x="398" y="872" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" letter-spacing="1" fill="var(--ink)">CAP-2 · ADVERSARIAL STRATEGY</text>
+                    <text x="398" y="894">affordance annotation · Sensor Deception Library · red-blue adjudication</text>
+                    <text x="398" y="911">geospatial algorithms turned into tools for testing perception limits</text>
+                    <text x="398" y="931" font-size="10" font-style="italic" fill="var(--ink-3)">red vs blue · field-proven</text>
+                </g>
+
+                <g font-size="11" fill="var(--ink-2)">
+                    <text x="732" y="872" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" letter-spacing="1" fill="var(--ink)">CAP-3 · THREE LAYERS, ONE STACK</text>
+                    <text x="732" y="894">full-domain sensor fusion · large-scale 3D visualisation</text>
+                    <text x="732" y="911">physical-quantity control interfaces · top-tier across all three layers</text>
+                    <text x="732" y="931" font-size="10" font-style="italic" fill="var(--ink-3)">perception · visualization · manipulation</text>
+                </g>
+
+                <g font-size="11" fill="var(--ink-2)">
+                    <text x="1066" y="872" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" letter-spacing="1" fill="var(--ink)">CAP-4 · EDGE COMPUTE</text>
+                    <text x="1066" y="894">research on FeFET ferroelectric compute-in-memory chips</text>
+                    <text x="1066" y="911">latency and power · addressed at the hardware level</text>
+                    <text x="1066" y="931" font-size="10" font-style="italic" fill="var(--ink-3)">compute-in-memory · edge inference</text>
+                </g>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.04</b><span>mature foundation → application innovation</span></figcaption>
+      </figure>
+
+                  <aside class="mnote mnote-bars">
+        <span class="mnote-k">High-quality embodied data</span>
+        <span class="bar mute"><span class="bar-h">in existence<b>500k h</b></span><span class="bar-t"><i style="width:5%"></i></span></span>
+        <span class="bar"><span class="bar-h">needed for general capability<b>10M h</b></span><span class="bar-t"><i style="width:100%"></i></span></span>
+        <span class="bar-n">Gap above 99%. <a href="#sources">source 03</a>. On the widening gap see <a href="#sources">source 05</a></span>
+      </aside>
+<div class="statement">
+        <span class="mono">Two hard numbers</span>
+        Two numbers show how real this is. The gap between how impressive a product looks and how well it works on a real site is still widening. Meanwhile the shortfall in high-quality <span class="term" data-t="embodied">embodied</span> data runs past 99 per cent, and physical intelligence has none of the ready-made data infrastructure language models had when they took off. The full argument, covering token and compute efficiency, the four data paths taken apart, and the cost of teleoperation, is in <a class="link" href="insight.html" target="_blank" rel="noopener">Insight · the capability–deployment paradox</a>.
+      </div>
+
+      <a class="cta" href="about.html" target="_blank" rel="noopener">
+        <span class="eyebrow">Sheet MN-02 · Team</span>
+        <h3 class="h3">See the full team</h3>
+        <p>Urban regeneration, agricultural technology, cognitive neuroscience, compute-in-memory, optical switching. Where the team comes from, and what it works on.</p>
+        <span class="cta-go">About us →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ 04 NOW & NEXT ═══ -->
+  <section class="band" id="s4">
+    <div class="rail"><span class="rail-num">04</span><span class="rail-en">Now &amp; Next</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">Closing the Gap, Building Intuition</h2>
+
+      <div class="pair">
+        <div>
+          <h4 class="h4">NOW</h4>
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">Data flywheel</span>
+          Site data produces validation standards, and validation results feed back into site data. The more deployments there are, the faster both ends accumulate.
+        </aside>
+          <p>Right now we are building the layer of infrastructure that sits between a demo and a deployment. The gap comes from the absence of real physical infrastructure, so we are not chasing larger models. The moat builds along the way, as scene data accumulates and validation standards take hold.</p>
+        </div>
+        <div>
+          <h4 class="h4">NEXT</h4>
+          <p>Later, we give robots the physical intuition their domain and task demand — built into the infrastructure itself, not something the robot has to acquire on its own. A robot entering an unfamiliar site no longer has to learn the world from nothing. The infrastructure has already handed it the intuition.</p>
+        </div>
+      </div>
+
+      <aside class="mnote mnote-term">
+        <span class="mnote-k">Task-environment ontology</span>
+        What a site can offer and what a task requires, encoded in one scheme, so any robot that connects can be assigned work and scored.
+      </aside>
+      <div class="statement">
+        <span class="mono">Platform Vision</span>
+        We intend to become the layer every robotic agent connects to — in effect, a task-environment ontology. It assigns the task, the robot executes adaptively, and any sensing or policy stack can plug in. Every agent gets intuition, a task and a score. A robot that connects knows what it can and cannot do here. That is what delivering physical intuition looks like when it is complete.
+      </div>
+
+      <div class="statement">
+        <span class="mono">Why this is unavoidable</span>
+        Industry is not going to skip the infrastructure and land on general capability. Build the training, validation and deployment infrastructure for the real physical world properly, and the admission standard for the next stage will follow.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SOURCES ═══ -->
+  <section class="band" id="sources">
+    <div class="rail"><span class="rail-num">App.</span><span class="rail-en">Sources</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">Sources</h2>
+      <div class="notes">
+        <ol>
+          <li>IFR, World Robotics. Robot density in Chinese manufacturing reached 470 units per 10,000 employees in 2023, third worldwide, against a global average of 162. New installations in China in 2023 came to 276,000 units, roughly 51 per cent of the world total.</li>
+          <li>Gartner and industry estimates. The shortfall in high-quality data for humanoid robots runs to four orders of magnitude. Teleoperation data costs roughly CNY 2,000 per hour.</li>
+          <li>Gasgoo Auto Research Institute. High-quality embodied data in existence stands at about 500,000 hours against roughly 10 million hours needed for general capability, a shortfall above 99 per cent. The volume of physical AI data is about 1/20,000 of the corpus available to language models. Simulation can bring the cost of a single data item down to between 1/20 and 1/200.</li>
+          <li>Frost & Sullivan. The market for embodied intelligence solutions in China is projected at roughly CNY 142.6 billion by 2030.</li>
+          <li>Insight, the capability–deployment paradox. Token and compute consumption is high while capability does not grow in proportion. Total data volume is enormous but data efficiency is very low, and an hour of video may carry less usable physical knowledge than a thousand words of text. Teleoperation, ego-centric capture, synthetic data and video learning, the four mainstream data paths, all fall short on physical fidelity. Taken together, no scaling law for robots has appeared to date.</li>
+          <li>Insight, comparison of data costs. Teleoperation data costs roughly CNY 2,000 per hour (Gartner), while simulation can bring the cost of a single data item down to between 1/20 and 1/200. The physical corpus is about 1/20,000 of the corpus available to language models.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="doc">
+    <div class="foot-line">
+      <span>microNature — Physical Intelligence Infrastructure</span>
+      <span>Domain-native infrastructure for physical intelligence</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../site.js" defer></script>
+
+</body>
+</html>
