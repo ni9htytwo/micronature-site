@@ -1,0 +1,924 @@
+/* ==========================================================================
+   microNature — design system
+   One token file for both registers:
+     Editorial  (report body: wide measure, hairline bands)
+     Blueprint  (drawing sheet: ground fill, mono-dominant, plates)
+   DNA: zero radius, hairline rules, one deep green.
+   ========================================================================== */
+
+/* ---- 1. Tokens ---------------------------------------------------------- */
+:root{
+  /* Ground. Warm paper, one step of desk tone, one deeper for plates. */
+  --paper:      #FBFAF7;
+  --ground:     #F1EEE7;
+  --ground-2:   #E7E3D9;
+
+  /* Ink. Never pure black: printed ink sits a touch cool of it. */
+  --ink:        #15181B;
+  --ink-2:      #4B5157;
+  --ink-3:      #656B71;
+
+  /* Rules. Two weights of hairline, nothing else. */
+  --rule:       #D8D4CB;
+  --rule-2:     #EAE6DE;
+
+  /* The single accent. */
+  --accent:     #1E4A38;
+  --accent-2:   #2F6B51;
+  --wash:       #EDF0EC;
+
+  /* State only. Not a brand colour — used for "cannot pass" / risk. */
+  --flag:       #A8322D;
+  --flag-wash:  #F7EEED;
+
+  /* Type roles */
+  --disp: 'Archivo', 'Noto Sans SC', system-ui, sans-serif;
+  --body: 'Archivo', 'Noto Sans SC', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'Noto Sans SC', monospace;
+
+  /* Scale. Six steps, no more. */
+  --t-xs:   11px;
+  --t-sm:   13px;
+  --t-base: 16px;
+  --t-md:   19px;
+  --t-lg:   26px;
+  --t-xl:   clamp(28px, 3.2vw, 38px);
+  --t-2xl:  clamp(38px, 5.6vw, 66px);
+
+  /* Rhythm */
+  --band:   clamp(64px, 8vw, 108px);
+  --rail:   146px;
+  --gut:    52px;
+  --nav-h:  57px;
+}
+
+/* ---- 1b. Dark theme -------------------------------------------------------
+   The same sheet redrawn on green-black paper. Only the trigger changes —
+   html[data-theme="dark"] — so both registers and both languages share one
+   token set. Ground is ink with a green cast, never pure black; hairlines
+   flip direction and read lighter than the ground; the green moves up in
+   lightness so it survives a dark field. */
+html[data-theme="dark"]{
+  color-scheme:dark;
+
+  --paper:      #0F1613;
+  --ground:     #0A100D;
+  --ground-2:   #070C0A;
+
+  --ink:        #E9E8E2;
+  --ink-2:      #A8AEA9;
+  --ink-3:      #868D88;
+
+  --rule:       #2A342F;
+  --rule-2:     #1B2320;
+
+  --accent:     #64B489;
+  --accent-2:   #8ACFA9;
+  --wash:       #16241D;
+
+  --flag:       #E0736A;
+  --flag-wash:  #2A1917;
+}
+
+/* A handful of places carry literal colour instead of a token. They follow
+   the theme here. Underlines keep their original alphas, re-inked with the
+   dark accent; the lightbox scrim goes deeper than the paper itself. */
+html[data-theme="dark"] ::selection{ color:#0F1613 }
+html[data-theme="dark"] .link{ border-bottom-color:rgba(100,180,137,.32) }
+html[data-theme="dark"] .mnote a{ border-bottom-color:rgba(100,180,137,.28) }
+html[data-theme="dark"] .xref{ border-bottom-color:rgba(100,180,137,.3) }
+html[data-theme="dark"] .plate-zoom{ border-bottom-color:rgba(100,180,137,.35) }
+html[data-theme="dark"] .contact-cell a{ border-bottom-color:rgba(100,180,137,.3) }
+html[data-theme="dark"] .copy-v{ border-bottom-color:rgba(100,180,137,.3) }
+html[data-theme="dark"] .lb{ background:rgba(4,8,6,.85) }
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0 }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth }
+@media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto } }
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:var(--t-base);
+  font-weight:400;
+  line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--accent); color:#fff }
+
+/* ---- 2. Primitives ------------------------------------------------------ */
+.mono{
+  font-family:var(--mono);
+  font-size:var(--t-xs);
+  font-weight:500;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.mono-cn{ text-transform:none; letter-spacing:.08em }
+
+a{ color:inherit }
+
+.link{
+  color:var(--accent);
+  text-decoration:none;
+  border-bottom:1px solid rgba(30,74,56,.32);
+  padding-bottom:1px;
+  transition:border-color .18s, background-color .18s;
+}
+.link:hover{ border-bottom-color:var(--accent); background:var(--wash) }
+
+:focus-visible{ outline:2px solid var(--accent); outline-offset:3px }
+
+/* ---- 3. Document frame -------------------------------------------------- */
+.doc{
+  max-width:1240px;
+  margin:0 auto;
+  padding-inline:clamp(20px, 5vw, 68px);
+}
+
+/* A band is one clause of the document: number in the margin, text in the
+   measure. This is the spine of every page. */
+.band{
+  display:grid;
+  grid-template-columns:var(--rail) minmax(0,1fr);
+  column-gap:var(--gut);
+  border-top:1px solid var(--rule);
+  padding-block:var(--band);
+}
+.band > *{ min-width:0 }
+.rail{
+  align-self:start;
+  padding-top:9px; /* drops the mono label onto the h2 first baseline */
+  display:flex; align-items:baseline; flex-wrap:wrap; gap:2px 10px;
+}
+.rail-num{
+  font-family:var(--mono);
+  font-size:var(--t-sm);
+  font-weight:600;
+  letter-spacing:.1em;
+  color:var(--ink-3);
+  display:block;
+  transition:color .25s ease;
+}
+.rail-en{
+  font-family:var(--mono);
+  font-size:var(--t-xs);
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  transition:color .25s ease;
+}
+.rail-tick{ display:none }
+
+/* Eleven green numbers down the page told the reader nothing. One does. */
+.band.here .rail-num{ color:var(--accent) }
+.band.here .rail-en{ color:var(--ink-2) }
+
+
+.col{ max-width:70ch }
+.col-wide{ max-width:none }
+
+/* ---- 4. Headings & prose ------------------------------------------------ */
+.h1{
+  font-family:var(--disp);
+  font-size:var(--t-2xl);
+  font-weight:400;
+  line-height:1.06;
+  letter-spacing:-.03em;
+  text-wrap:balance;
+}
+.h2{
+  font-family:var(--disp);
+  font-size:var(--t-xl);
+  font-weight:500;
+  line-height:1.22;
+  letter-spacing:-.02em;
+  margin-bottom:26px;
+  text-wrap:balance;
+}
+.h3{
+  font-family:var(--disp);
+  font-size:var(--t-lg);
+  font-weight:500;
+  line-height:1.32;
+  letter-spacing:-.015em;
+  margin-bottom:16px;
+}
+.h4{
+  font-family:var(--disp);
+  font-size:var(--t-md);
+  font-weight:600;
+  line-height:1.4;
+  letter-spacing:-.01em;
+  margin-bottom:10px;
+}
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:var(--t-xs);
+  font-weight:500;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  display:block;
+  margin-bottom:14px;
+}
+
+.p{ margin-bottom:22px; color:var(--ink-2) }
+.p:last-child{ margin-bottom:0 }
+.p strong{ font-weight:600; color:var(--ink) }
+
+.lede{
+  font-size:var(--t-md);
+  line-height:1.72;
+  color:var(--ink-2);
+  font-weight:400;
+  letter-spacing:-.005em;
+  margin-bottom:30px;
+}
+
+.small{ font-size:var(--t-sm); line-height:1.75; color:var(--ink-2) }
+
+/* A statement is the argument voice: set off by an accent hairline, never
+   boxed. Boxes make claims look like callouts; a rule makes them look cited. */
+.statement{
+  border-left:2px solid var(--accent);
+  padding:4px 0 4px 26px;
+  margin:38px 0;
+  font-size:var(--t-md);
+  line-height:1.7;
+  color:var(--ink);
+  font-weight:400;
+  max-width:62ch;
+}
+.statement:last-child{ margin-bottom:0 }
+.statement .mono{ display:block; margin-bottom:10px }
+
+
+/* ---- 4b. Margin notes --------------------------------------------------- */
+/* The rail was 146px of empty paper next to a column carrying its own
+   citations, cross-references and undefined terms. A note is absolutely
+   positioned but given no `top`, so it keeps its static position and lands
+   level with the paragraph it belongs to. */
+.col, .col-wide{ position:relative }
+
+.mnote{
+  position:absolute;
+  left:calc(-1 * (var(--rail) + var(--gut)));
+  width:var(--rail);
+  padding-top:8px;
+  border-top:1px solid var(--rule);
+  font-size:11px;
+  line-height:1.68;
+  color:var(--ink-3);
+  letter-spacing:.005em;
+}
+.mnote-k{
+  font-family:var(--mono); font-size:9px; font-weight:600;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--ink-2);
+  display:block; margin-bottom:5px;
+}
+.mnote b{ color:var(--ink-2); font-weight:600 }
+.mnote a{
+  color:var(--accent); text-decoration:none;
+  border-bottom:1px solid rgba(30,74,56,.28);
+}
+.mnote a:hover{ border-bottom-color:var(--accent) }
+.mnote-term .mnote-k{ color:var(--accent) }
+
+/* ---- 4c. Terms & cross-references --------------------------------------- */
+/* Two devices, one popover. A term carries its definition; a cross-reference
+   carries where it points. Both stay legible with the popover unavailable —
+   the term reads as ordinary text, the reference as an ordinary link. */
+.term{
+  border-bottom:1px dotted var(--ink-3);
+  cursor:help; text-decoration:none;
+}
+.term:hover{ border-bottom-color:var(--accent); border-bottom-style:solid }
+.xref{
+  color:var(--accent); text-decoration:none;
+  border-bottom:1px solid rgba(30,74,56,.3);
+  white-space:nowrap; font-variant-numeric:tabular-nums;
+}
+.xref:hover{ border-bottom-color:var(--accent); background:var(--wash) }
+.pop{
+  position:fixed; z-index:120; width:min(310px, calc(100vw - 32px));
+  background:var(--paper); border:1px solid var(--ink);
+  padding:15px 17px 16px;
+  opacity:0; transform:translateY(-4px); pointer-events:none;
+  transition:opacity .16s ease, transform .16s ease;
+}
+.pop.on{ opacity:1; transform:none }
+.pop-k{
+  font-family:var(--mono); font-size:9px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+  display:block; margin-bottom:7px;
+}
+.pop-t{ font-size:var(--t-sm); font-weight:600; line-height:1.5; margin-bottom:6px }
+.pop-d{ font-size:12px; line-height:1.72; color:var(--ink-2) }
+@media (prefers-reduced-motion:reduce){ .pop{ transition:none } }
+
+/* Arriving somewhere by reference should say so. */
+.flash{ animation:flash 1.5s ease forwards }
+@keyframes flash{
+  0%{ background-color:var(--wash) }
+  70%{ background-color:var(--wash) }
+  100%{ background-color:transparent }
+}
+@media (prefers-reduced-motion:reduce){ .flash{ animation:none } }
+
+/* ---- 4d. Margin bars ----------------------------------------------------- */
+/* Only where the ratio is the argument. A number in a sentence is read; a
+   ratio has to be seen. Track = the larger reference, fill = the smaller
+   against it. Strictly a few per site — any more and it turns infographic. */
+.bar{ display:block; margin:7px 0 0 }
+.bar-h{ display:flex; justify-content:space-between; align-items:baseline; gap:8px }
+.bar-h b{ font-family:var(--mono); font-weight:600; white-space:nowrap }
+.bar-t{ display:block; height:3px; background:var(--rule); margin-top:3px }
+.bar-t i{ display:block; height:100%; background:var(--accent) }
+.bar.mute .bar-t i{ background:var(--ink-3); opacity:.5 }
+.bar-n{ display:block; margin-top:9px }
+
+/* ---- 5. Navigation ------------------------------------------------------ */
+.nav{
+  position:sticky; top:0; z-index:60;
+  background:var(--paper);
+  border-bottom:1px solid var(--rule);
+}
+.nav-in{
+  max-width:1240px; margin:0 auto;
+  padding:0 clamp(20px, 5vw, 68px);
+  height:var(--nav-h);
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+}
+.nav-mark{
+  font-family:var(--disp);
+  font-size:15px; font-weight:600; letter-spacing:-.02em;
+  text-decoration:none; color:var(--ink);
+  white-space:nowrap;
+}
+.nav-mark span{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:400;
+  letter-spacing:.12em; color:var(--ink-3); margin-left:12px;
+}
+
+/* Where am I in an eleven-part document. Empty until the reader leaves the
+   opening, so it never competes with the masthead on arrival. */
+.nav-here{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:500;
+  letter-spacing:.1em; color:var(--ink-3);
+  white-space:nowrap; overflow:hidden;
+  margin-right:auto;          /* sits beside the masthead, not adrift mid-bar */
+  max-width:0; opacity:0;
+  transition:max-width .4s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+}
+.nav-here.on{ max-width:280px; opacity:1 }
+.nav-here::before{
+  content:''; display:inline-block; width:1px; height:11px;
+  background:var(--rule); margin:0 16px -1px 4px;
+}
+.nav-here b{ color:var(--accent); font-weight:600; margin-right:7px }
+@media (max-width:900px){ .nav-here{ display:none } }
+@media (prefers-reduced-motion:reduce){ .nav-here{ transition:none } }
+.nav-links{ display:flex; align-items:center; gap:2px; overflow-x:auto; scrollbar-width:none }
+.nav-links::-webkit-scrollbar{ display:none }
+.nav-links a, .nav-links .cur{
+  font-family:var(--mono);
+  font-size:var(--t-xs); font-weight:500; letter-spacing:.1em;
+  text-transform:uppercase; text-decoration:none;
+  color:var(--ink-3);
+  padding:8px 13px;
+  white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:color .16s, border-color .16s;
+}
+.nav-links a:hover{ color:var(--ink) }
+.nav-links .cur{ color:var(--accent); border-bottom-color:var(--accent) }
+
+/* ---- 5b. Language switch ------------------------------------------------
+   Sits outside .nav-links so it never scrolls away with the section list on a
+   narrow screen, and is fenced off by a hairline so it reads as a switch
+   rather than one more section. */
+.nav-lang{
+  display:flex; align-items:center; gap:0; flex:none;
+  margin-left:8px; padding-left:11px;
+  border-left:1px solid var(--rule);
+}
+.nav-lang a, .nav-lang .cur{
+  font-family:var(--mono);
+  font-size:var(--t-xs); font-weight:500; letter-spacing:.1em;
+  text-transform:uppercase; text-decoration:none;
+  color:var(--ink-3);
+  padding:8px 7px;
+  white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:color .16s, border-color .16s;
+}
+.nav-lang a:hover{ color:var(--ink) }
+.nav-lang .cur{ color:var(--ink); border-bottom-color:var(--rule) }
+.nav-lang .sep{ color:var(--rule); font-family:var(--mono); font-size:var(--t-xs) }
+@media (max-width:560px){
+  .nav-lang{ margin-left:5px; padding-left:7px }
+  .nav-lang a, .nav-lang .cur{ padding:8px 5px }
+}
+
+/* ---- 5c. Theme switch -----------------------------------------------------
+   Fenced off the same way as the language switch. The glyph is set in CSS
+   rather than in text, so one button serves both languages without a word
+   of copy: it always shows what the reader would move to. */
+.nav-theme{
+  flex:none; margin-left:8px; padding:8px 11px;
+  background:none; border:0; border-left:1px solid var(--rule);
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:500;
+  letter-spacing:.1em; line-height:1; color:var(--ink-3);
+  cursor:pointer; white-space:nowrap;
+  transition:color .16s;
+}
+.nav-theme::before{ content:'☾' }
+html[data-theme="dark"] .nav-theme::before{ content:'☀' }
+.nav-theme:hover{ color:var(--ink) }
+.nav-theme:focus-visible{ outline:2px solid var(--accent); outline-offset:2px }
+@media (max-width:560px){
+  .nav-theme{ margin-left:5px; padding:8px 7px }
+}
+
+
+/* ---- 6. Title block — the signature ------------------------------------- */
+/* Every page opens as a sheet in one dossier. The block carries the sheet
+   code, issue, revision and scope, the way a drawing's title block does. */
+.tblock{
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--rule);
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0,1fr));
+  margin-top:44px;
+}
+.tblock-cell{
+  padding:15px 20px 16px;
+  border-left:1px solid var(--rule);
+}
+.tblock-cell:first-child{ border-left:0; padding-left:0 }
+.tblock-k{
+  font-family:var(--mono); font-size:10px; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3);
+  display:block; margin-bottom:5px;
+}
+.tblock-v{
+  font-family:var(--mono); font-size:var(--t-sm); font-weight:600;
+  letter-spacing:.04em; color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.tblock-v.cn{ font-family:var(--body); font-weight:500; letter-spacing:0 }
+
+.hero{ padding:clamp(28px,4vw,52px) 0 clamp(46px,6vw,76px) }
+.hero .h1{ margin:clamp(38px,5vw,58px) 0 30px; max-width:19ch }
+.hero-lede{ max-width:60ch }
+.hero-spec{
+  margin-top:38px; margin-bottom:22px; padding-top:18px;
+  border-top:1px solid var(--rule-2);
+  display:flex; flex-wrap:wrap; gap:10px 30px;
+}
+.hero-spec span{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:500;
+  letter-spacing:.1em; color:var(--ink-3); text-transform:uppercase;
+}
+.hero-spec b{ color:var(--accent); font-weight:600 }
+
+/* ---- 7. Contents -------------------------------------------------------- */
+.toc{ border-top:1px solid var(--rule); padding-top:22px }
+.toc-list{ list-style:none }
+.toc-list a{
+  display:grid;
+  grid-template-columns:56px minmax(0,1fr) auto;
+  align-items:baseline; gap:0 18px;
+  padding:14px 0;
+  border-bottom:1px solid var(--rule-2);
+  text-decoration:none; color:var(--ink);
+  transition:padding-left .2s, background-color .2s;
+}
+.toc-list a:hover{ padding-left:10px; background:var(--wash) }
+.toc-n{ font-family:var(--mono); font-size:var(--t-sm); font-weight:600; color:var(--accent) }
+.toc-t{ font-size:var(--t-base); font-weight:500 }
+.toc-d{ font-family:var(--mono); font-size:var(--t-xs); letter-spacing:.1em;
+        text-transform:uppercase; color:var(--ink-3); text-align:right }
+
+/* ---- 8. Grids & cards --------------------------------------------------- */
+.grid{ display:grid; gap:1px; background:var(--rule); border:1px solid var(--rule); margin:34px 0 }
+.grid-2{ grid-template-columns:repeat(2,minmax(0,1fr)) }
+.grid-3{ grid-template-columns:repeat(3,minmax(0,1fr)) }
+.grid-4{ grid-template-columns:repeat(4,minmax(0,1fr)) }
+.cell{ background:var(--paper); padding:28px 26px 30px }
+.cell .h4{ margin-bottom:8px }
+.cell p{ font-size:var(--t-sm); line-height:1.78; color:var(--ink-2) }
+.cell-code{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:600;
+  letter-spacing:.12em; color:var(--accent); display:block; margin-bottom:12px;
+}
+/* An English gloss under the label: smaller, quieter, never competing. */
+.cell-code small{
+  display:block; margin-top:4px;
+  font-family:var(--mono); font-size:9.5px; font-weight:400;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3);
+}
+
+/* Loose pair: no shared frame, just a rule above each. For two ideas that
+   are siblings rather than table rows. */
+.pair{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:44px; margin:34px 0 }
+.pair > div{ border-top:1px solid var(--ink); padding-top:20px }
+.pair p{ font-size:var(--t-sm); line-height:1.8; color:var(--ink-2); margin-bottom:14px }
+.pair p:last-child{ margin-bottom:0 }
+
+/* ---- 9. Figure plate ---------------------------------------------------- */
+.plate{ margin:40px 0; border:1px solid var(--rule); background:var(--ground) }
+.plate-body{ padding:26px 24px; overflow-x:auto }
+.plate svg{ display:block; width:100%; height:auto; max-width:100% }
+.plate-cap{
+  border-top:1px solid var(--rule);
+  padding:11px 20px;
+  display:flex; justify-content:space-between; align-items:baseline; gap:20px;
+  background:var(--paper);
+}
+.plate-cap b{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:600;
+  letter-spacing:.12em; color:var(--accent);
+}
+.plate-cap span{ font-size:var(--t-sm); color:var(--ink-2) }
+
+
+/* ---- 9b. Data table ----------------------------------------------------- */
+/* Drafting register: rule under the head, hairlines between rows, nothing
+   else. The column that is ours gets the wash so the eye lands there. */
+.tbl-wrap{ overflow-x:auto; margin:34px 0; -webkit-overflow-scrolling:touch }
+.tbl{ width:100%; border-collapse:collapse; font-size:var(--t-sm); min-width:560px }
+.tbl th,.tbl td{ padding:15px 18px; text-align:left; vertical-align:top; line-height:1.7 }
+.tbl thead th{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3);
+  border-bottom:1px solid var(--ink); padding-block:0 11px; white-space:nowrap;
+}
+.tbl tbody td{ border-bottom:1px solid var(--rule-2); color:var(--ink-2) }
+.tbl tbody tr:last-child td{ border-bottom:1px solid var(--rule) }
+.tbl tbody td:first-child{ color:var(--ink); font-weight:600 }
+.tbl th:first-child,.tbl td:first-child{ padding-left:0 }
+.tbl .is-wrong{ color:var(--flag) }
+.tbl .is-true{ color:var(--accent) }
+.tbl .own{ background:var(--wash) }
+.tbl thead .own{ color:var(--accent); border-bottom-color:var(--accent) }
+.tbl tbody .own{ color:var(--ink) }
+
+/* ---- 9c. Ordered stages ------------------------------------------------- */
+/* Numbered because the path really is sequential: L1's output is L2's input. */
+.steps{ margin:34px 0; border-top:1px solid var(--ink) }
+.step{
+  display:grid; grid-template-columns:84px minmax(0,1fr); gap:0 28px;
+  padding:26px 0 28px; border-bottom:1px solid var(--rule-2);
+}
+.step:last-child{ border-bottom:1px solid var(--rule) }
+.step-n{
+  font-family:var(--mono); font-size:var(--t-sm); font-weight:600;
+  letter-spacing:.1em; color:var(--accent); padding-top:3px;
+}
+.step-n small{ display:block; font-size:10px; font-weight:400; color:var(--ink-3);
+               letter-spacing:.1em; margin-top:4px }
+.step p{ font-size:var(--t-sm); line-height:1.8; color:var(--ink-2) }
+.step-out{
+  margin-top:14px; display:inline-block;
+  font-size:var(--t-xs); letter-spacing:.02em; line-height:1.7;
+  color:var(--ink); background:var(--wash);
+  border-left:2px solid var(--accent); padding:7px 14px;
+}
+.step-out b{ font-family:var(--mono); font-weight:600; letter-spacing:.1em;
+             text-transform:uppercase; color:var(--accent); margin-right:8px }
+
+/* ---- 9d. Oversized plate ------------------------------------------------ */
+/* One figure on this site is a full system schematic. It keeps its drawn size
+   and scrolls rather than shrinking its callouts below reading size. */
+.plate-lg .plate-body{ padding-block:30px }
+.plate-hint{
+  font-family:var(--mono); font-size:10px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-3);
+}
+.bleed{ margin-left:calc(-1 * (var(--rail) + var(--gut))) }
+
+/* ---- 9e. Back-link ------------------------------------------------------ */
+.uplink{
+  display:inline-block; margin-top:22px;
+  font-size:var(--t-sm); color:var(--ink-2); text-decoration:none;
+  border-bottom:1px solid var(--rule);
+}
+.uplink:hover{ color:var(--accent); border-bottom-color:var(--accent) }
+
+
+/* ---- 9f. Figure viewer -------------------------------------------------- */
+/* The system schematic is drawn at 1800 units with 9.5-unit callouts: fit to
+   the measure it is an overview, so it opens at drawn size to be read. */
+.plate-zoom{
+  font-family:var(--mono); font-size:10px; font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+  background:none; border:0; border-bottom:1px solid rgba(30,74,56,.35);
+  padding:2px 0; margin-left:16px; cursor:pointer; white-space:nowrap;
+}
+.plate-zoom:hover{ border-bottom-color:var(--accent) }
+
+.lb[hidden]{ display:none }
+.lb{
+  position:fixed; inset:0; z-index:200;
+  background:rgba(21,24,27,.66);
+  display:flex; flex-direction:column;
+  padding:clamp(10px,2.5vw,38px);
+}
+.lb-bar{
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  background:var(--paper); border:1px solid var(--ink); border-bottom:0; padding:11px 16px;
+}
+.lb-title{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--ink-2);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.lb-close{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase;
+  background:none; border:1px solid var(--rule); color:var(--ink);
+  padding:6px 14px; cursor:pointer; white-space:nowrap;
+}
+.lb-close:hover{ border-color:var(--accent); color:var(--accent) }
+.lb-frame{
+  flex:1; min-height:0; background:var(--paper);
+  border:1px solid var(--ink); overflow:auto; padding:22px;
+  -webkit-overflow-scrolling:touch;
+}
+.lb-frame svg{ display:block; width:100%; min-width:1760px; height:auto }
+
+
+/* ---- 9g. Summed statement ---------------------------------------------- */
+/* For the one place where several separate findings resolve into a single
+   result. Washed rather than open so it reads as the sum, not another point. */
+.statement.sum{
+  background:var(--wash);
+  padding:26px 30px;
+  max-width:none;
+  margin-top:30px;
+}
+
+/* ---- 9h. Roster --------------------------------------------------------- */
+/* People are listed the way the rest of the site lists everything: identifier
+   in the margin, substance in the measure. No cards, no portraits. */
+.roster{ border-top:1px solid var(--ink); margin-top:34px }
+.person{
+  display:grid; grid-template-columns:250px minmax(0,1fr); gap:0 var(--gut);
+  padding:34px 0 36px; border-bottom:1px solid var(--rule-2);
+}
+.person:last-child{ border-bottom:1px solid var(--rule) }
+.person > *{ min-width:0 }
+.person-name{
+  font-family:var(--disp); font-size:var(--t-lg); font-weight:600;
+  line-height:1.25; letter-spacing:-.015em; margin-bottom:9px;
+}
+.person-role{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:600;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--accent);
+  display:block;
+}
+.person-cred{
+  font-size:var(--t-sm); color:var(--ink-3); display:block; margin-top:8px;
+  line-height:1.6;
+}
+.person p{ font-size:var(--t-sm); line-height:1.85; color:var(--ink-2); margin-bottom:14px }
+.person p:last-child{ margin-bottom:0 }
+
+
+/* ---- 9i. Scenario cards ------------------------------------------------- */
+/* Six sites, all weighted the same on purpose: the section's whole claim is
+   that this applies to the clean-looking places too, so none is featured. */
+.scn-grid{
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px; background:var(--rule); border:1px solid var(--rule); margin:34px 0;
+}
+.scn{ background:var(--paper); display:flex; flex-direction:column; min-width:0 }
+.scn-media{
+  position:relative; aspect-ratio:4/3; overflow:hidden;
+  background:var(--ground); border-bottom:1px solid var(--rule);
+}
+.scn-media img{
+  position:relative; z-index:1;
+  display:block; width:100%; height:100%; object-fit:cover;
+}
+/* Reserved slot. Crossed box is the drawing convention for a void area, so an
+   unfilled image reads as reserved rather than broken. Vanishes on load. */
+.scn-slot{
+  position:absolute; inset:0; z-index:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+  background-image:
+    linear-gradient(to bottom right, transparent calc(50% - .5px), var(--rule) calc(50% - .5px), var(--rule) calc(50% + .5px), transparent calc(50% + .5px)),
+    linear-gradient(to bottom left,  transparent calc(50% - .5px), var(--rule) calc(50% - .5px), var(--rule) calc(50% + .5px), transparent calc(50% + .5px));
+}
+.scn-slot b,.scn-slot span{
+  font-family:var(--mono); letter-spacing:.14em; text-transform:uppercase;
+  background:var(--ground); padding:3px 10px;
+}
+.scn-slot b{ font-size:10px; font-weight:600; color:var(--ink-3) }
+.scn-slot span{ font-size:10px; font-weight:400; color:var(--ink-3); letter-spacing:.06em; text-transform:none }
+
+.scn-body{ padding:20px 22px 22px; display:flex; flex-direction:column; flex:1 }
+.scn-tag{
+  font-family:var(--mono); font-size:10px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+  display:block; margin-bottom:10px;
+}
+.scn-body .h4{ margin-bottom:9px }
+.scn-body p{ font-size:var(--t-sm); line-height:1.78; color:var(--ink-2) }
+.scn-flag{
+  margin-top:auto; padding-top:16px; border-top:1px solid var(--rule-2);
+  font-family:var(--mono); font-size:10px; letter-spacing:.06em;
+  color:var(--ink-3);
+}
+
+
+/* ---- 10. CTA ------------------------------------------------------------ */
+.cta{
+  display:block; text-decoration:none; color:inherit;
+  border:1px solid var(--ink);
+  padding:34px 36px 32px;
+  margin:44px 0 0;
+  background:var(--paper);
+  transition:background-color .2s, border-color .2s;
+}
+.cta:hover{ background:var(--wash); border-color:var(--accent) }
+.cta .h3{ margin-bottom:12px }
+.cta p{ font-size:var(--t-sm); line-height:1.8; color:var(--ink-2); max-width:62ch }
+.cta-go{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+  margin-top:20px; display:inline-block;
+}
+.cta:hover .cta-go{ text-decoration:underline; text-underline-offset:4px }
+
+/* ---- 11. Sources / notes ------------------------------------------------ */
+.notes{ background:var(--ground); border:1px solid var(--rule); padding:30px 32px }
+.notes ol{ list-style:none; counter-reset:n }
+.notes li{
+  counter-increment:n;
+  position:relative; padding-left:34px;
+  font-size:var(--t-sm); line-height:1.8; color:var(--ink-2);
+  padding-bottom:14px; margin-bottom:14px;
+  border-bottom:1px solid var(--rule-2);
+}
+.notes li:last-child{ border-bottom:0; padding-bottom:0; margin-bottom:0 }
+.notes li::before{
+  content:counter(n,decimal-leading-zero);
+  position:absolute; left:0; top:0;
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:600;
+  color:var(--accent); letter-spacing:.06em;
+}
+
+/* ---- 12. Contact -------------------------------------------------------- */
+.contact-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px;
+                background:var(--rule); border:1px solid var(--rule); margin-top:30px }
+.contact-cell{ background:var(--paper); padding:26px 26px 28px }
+.contact-cell a{ color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(30,74,56,.3) }
+.contact-cell a:hover{ background:var(--wash) }
+
+/* An identifier is something the reader carries away, so it can be lifted in
+   one press. It stays set as the plain address beside it — a button that
+   looked like a button here would out-shout the email next to it. The label
+   is the only moving part, and it says what happened rather than announcing
+   itself beforehand. */
+.copy{
+  font:inherit; color:inherit; background:none; border:0; padding:0;
+  display:inline-flex; align-items:baseline; gap:11px;
+  cursor:pointer; text-align:left; -webkit-user-select:text; user-select:text;
+}
+.copy-v{
+  color:var(--accent);
+  border-bottom:1px solid rgba(30,74,56,.3);
+  transition:border-color .18s, background-color .18s;
+}
+.copy:hover .copy-v{ background:var(--wash); border-bottom-color:var(--accent) }
+.copy-k{
+  font-family:var(--mono); font-size:10px; font-weight:500;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3);
+  white-space:nowrap; transition:color .2s;
+}
+.copy.done .copy-k{ color:var(--accent) }
+.copy:focus-visible{ outline:2px solid var(--accent); outline-offset:4px }
+
+/* ---- 13. Footer -------------------------------------------------------- */
+/* The nav names every page and stays on screen; a second index at the foot
+   only asked the reader to hold two sets of names for one set of pages. */
+.foot{ border-top:1px solid var(--ink); margin-top:var(--band); padding:38px 0 60px }
+.foot-line{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px 30px }
+.foot-line span{ font-family:var(--mono); font-size:var(--t-xs); letter-spacing:.1em;
+                 color:var(--ink-3); text-transform:uppercase }
+
+/* ---- 14. Motion --------------------------------------------------------- */
+.rise{ opacity:0; transform:translateY(14px); transition:opacity .7s ease, transform .7s ease }
+.rise.in{ opacity:1; transform:none }
+
+.tblock{ clip-path:inset(0 100% 0 0); animation:sweep .8s .1s cubic-bezier(.22,1,.36,1) forwards }
+.hero .h1, .hero-lede, .hero-spec{ opacity:0; animation:up .8s cubic-bezier(.22,1,.36,1) forwards }
+.hero .h1{ animation-delay:.34s }
+.hero-lede{ animation-delay:.46s }
+.hero-spec{ animation-delay:.56s }
+
+@keyframes sweep{ to{ clip-path:inset(0 0 0 0) } }
+@keyframes up{ from{ opacity:0; transform:translateY(16px) } to{ opacity:1; transform:none } }
+
+@media (prefers-reduced-motion:reduce){
+  .rise{ opacity:1; transform:none; transition:none }
+  .tblock{ animation:none; clip-path:none }
+  .hero .h1, .hero-lede, .hero-spec{ animation:none; opacity:1 }
+  .toc-list a:hover{ padding-left:0 }
+}
+
+/* ---- 15. Responsive ----------------------------------------------------- */
+@media (max-width:1000px){
+  :root{ --rail:110px; --gut:34px }
+  /* Too narrow to set a note in: it folds back into the column as an indented
+     aside, keeping the same reading order. */
+  .mnote{
+    position:static; width:auto; max-width:62ch;
+    margin:0 0 22px; padding:10px 0 0 16px;
+    border-top:0; border-left:2px solid var(--rule);
+  }
+  .tblock{ grid-template-columns:repeat(2,minmax(0,1fr)) }
+  .tblock-cell:nth-child(3){ border-left:0; padding-left:0 }
+  .tblock-cell:nth-child(-n+2){ border-bottom:1px solid var(--rule) }
+}
+
+@media (max-width:820px){
+  .band{ grid-template-columns:minmax(0,1fr); row-gap:22px }
+  .rail{ padding-top:0 }
+  .rail{ padding-top:0; gap:14px }
+  .grid-3, .grid-4, .scn-grid{ grid-template-columns:repeat(2,minmax(0,1fr)) }
+  .pair{ grid-template-columns:1fr; gap:32px }
+  .contact-grid{ grid-template-columns:1fr }
+  .hero .h1{ max-width:none }
+  .bleed{ margin-left:0 }
+  .step{ grid-template-columns:66px minmax(0,1fr); gap:0 18px }
+  .person{ grid-template-columns:minmax(0,1fr); row-gap:16px; padding:28px 0 30px }
+}
+
+@media (max-width:560px){
+  :root{ --band:52px }
+  .nav-mark span{ display:none }
+  .nav-in{ padding-inline:16px }
+  .tblock-cell{ padding:12px 12px 13px }
+  .tblock-cell:first-child{ padding-left:0 }
+  .tblock-cell:nth-child(3){ padding-left:0 }
+  .grid-3, .grid-4, .grid-2, .scn-grid{ grid-template-columns:1fr }
+  .toc-list a{ grid-template-columns:44px minmax(0,1fr); }
+  .toc-d{ display:none }
+  .cta{ padding:26px 22px }
+  .notes{ padding:24px 20px }
+  .plate-cap{ flex-direction:column; gap:4px }
+
+  /* mobile nav: wrap the tabs instead of a horizontal swipe; 44px tap targets */
+  .nav-in{ flex-wrap:wrap; height:auto; row-gap:6px; padding-block:8px }
+  .nav-links{ flex:1 1 100%; flex-wrap:wrap; overflow:visible;
+              justify-content:flex-start; gap:4px 6px; scrollbar-width:auto }
+  .nav-links a, .nav-links .cur{
+    display:inline-flex; align-items:center; min-height:44px; padding:10px 12px;
+    border-bottom:2px solid transparent;
+  }
+  .nav-links .cur{ border-bottom-color:var(--accent) }
+  .lb-close{ min-height:44px; padding:10px 14px; display:inline-flex; align-items:center }
+
+  /* lightbox: let the wide drawing shrink to phone width instead of panning */
+  .lb-frame{ padding:14px }
+  .lb-frame svg{ min-width:0; width:100% }
+}
+
+/* ---- 16. Print ---------------------------------------------------------- */
+@media print{
+  .nav, .plate-zoom, .lb{ display:none }
+  body{ background:#fff }
+  /* A sheet kept in dark still prints as paper: every token returns to its
+     light value, and the literal colours follow it back. */
+  html[data-theme="dark"]{
+    color-scheme:light;
+    --paper:#FBFAF7; --ground:#F1EEE7; --ground-2:#E7E3D9;
+    --ink:#15181B; --ink-2:#4B5157; --ink-3:#656B71;
+    --rule:#D8D4CB; --rule-2:#EAE6DE;
+    --accent:#1E4A38; --accent-2:#2F6B51; --wash:#EDF0EC;
+    --flag:#A8322D; --flag-wash:#F7EEED;
+  }
+  html[data-theme="dark"] ::selection{ color:#fff }
+  html[data-theme="dark"] .link{ border-bottom-color:rgba(30,74,56,.32) }
+  html[data-theme="dark"] .mnote a{ border-bottom-color:rgba(30,74,56,.28) }
+  html[data-theme="dark"] .xref{ border-bottom-color:rgba(30,74,56,.3) }
+  html[data-theme="dark"] .plate-zoom{ border-bottom-color:rgba(30,74,56,.35) }
+  html[data-theme="dark"] .contact-cell a{ border-bottom-color:rgba(30,74,56,.3) }
+  html[data-theme="dark"] .copy-v{ border-bottom-color:rgba(30,74,56,.3) }
+  .band{ break-inside:avoid; padding-block:28px }
+  .mnote{ position:static; width:auto; margin:0 0 16px; padding-left:14px;
+          border-top:0; border-left:2px solid var(--rule) }
+  .rise{ opacity:1; transform:none }
+  .plate{ break-inside:avoid }
+}
