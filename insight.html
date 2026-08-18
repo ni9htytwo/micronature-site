@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Theme before first paint: a saved choice wins; the English register reads
+   dark by default; otherwise the system preference decides. Runs this early
+   so a reload never flashes the other theme. */
+(function(){var t=null;try{t=localStorage.getItem('mn-theme');}catch(e){}
+if(t!=='dark'&&t!=='light'){var en=(document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en')===0;
+t=en?'dark':((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');}
+document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<title>能力与部署的悖论 — microNature 思考</title>
+<meta name="description" content="从算力、数据和数据获取路径三个方面，说明物理智能落地难在哪里：除了模型参数，更缺的是场景数据与按领域建立的物理模型。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="alternate" hreflang="zh-Hans" href="insight.html">
+<link rel="alternate" hreflang="en" href="en/insight.html">
+<link rel="alternate" hreflang="x-default" href="insight.html">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="站点导航">
+  <div class="nav-in">
+    <a class="nav-mark" href="index.html">microNature<span>物理智能基础设施</span></a>
+    <span class="nav-here" aria-hidden="true"></span>
+    <div class="nav-links">
+      <a href="index.html">架构</a>
+      <a href="environmentaffordance.html">环境可为™</a>
+      <a href="map.html">地图样例</a>
+      <a href="atlas.html">场景图鉴</a>
+      <span class="cur" aria-current="page">思考</span>
+      <a href="about.html">我们</a>
+    </div>
+  <div class="nav-lang">
+    <span class="cur" aria-current="true">中</span>
+    <a href="en/insight.html" hreflang="en" lang="en">EN</a>
+  </div>
+  <button class="nav-theme" type="button" aria-pressed="false"></button>
+  </div>
+</nav>
+
+<main class="doc">
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <div class="tblock">
+      <div class="tblock-cell"><span class="tblock-k">Sheet</span><span class="tblock-v">MN-A1</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Title</span><span class="tblock-v cn">能力与部署的悖论</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Issue</span><span class="tblock-v">2026.08</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Scope</span><span class="tblock-v cn">配套材料</span></div>
+    </div>
+
+    <h1 class="h1">能力与部署的悖论</h1>
+
+    <p class="lede hero-lede">技术和产品的迭代越来越快，实地部署却并没有越来越容易。这个差距会随着模型能力的提升而消失吗？</p>
+
+    <div class="hero-spec">
+      <span>Insights</span>
+      <span>三维度拆解 · <b>算力 / 数据 / 路径</b></span>
+      <span>与 MN-00 配套使用</span>
+    </div>
+
+    <div class="statement">
+      <span class="mono">摘要</span>
+      真实场景的数据和按领域建立的物理模型缺乏供给，这导致能力与落地之间出现结构性差距。这是 microNature 研究和带来改变的领域。
+    </div>
+
+    <div class="col">
+      <p class="p">下面从算力、数据和数据获取路径三个方面展开，也说明 microNature 为什么这样设计。</p>
+    </div>
+
+    <a class="uplink" href="index.html">← 返回主文件 · microNature — 物理智能基础设施</a>
+  </header>
+
+  <!-- ═══ CONTENTS ═══ -->
+  <section class="band" id="toc">
+    <div class="rail"><span class="rail-num">00</span><span class="rail-en">Contents</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <nav class="toc" aria-label="目录">
+        <ol class="toc-list">
+          <li><a href="#a1"><span class="toc-n">A1</span><span class="toc-t">现象 · 三条不同步的曲线</span><span class="toc-d">Phenomenon</span></a></li>
+          <li><a href="#a2"><span class="toc-n">A2</span><span class="toc-t">成因一 · Token 与算力效率</span><span class="toc-d">Compute</span></a></li>
+          <li><a href="#a3"><span class="toc-n">A3</span><span class="toc-t">成因二 · 数据总量很大，效率很低</span><span class="toc-d">Data</span></a></li>
+          <li><a href="#a4"><span class="toc-n">A4</span><span class="toc-t">成因三 · 四条数据路径的物理保真度</span><span class="toc-d">Paths</span></a></li>
+          <li><a href="#a5"><span class="toc-n">A5</span><span class="toc-t">遥操作的成本账</span><span class="toc-d">Cost</span></a></li>
+          <li><a href="#a6"><span class="toc-n">A6</span><span class="toc-t">叠加结论 · 规模定律至今未出现</span><span class="toc-d">Conclusion</span></a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ═══ A1 ═══ -->
+  <section class="band" id="a1">
+    <div class="rail"><span class="rail-num">A1</span><span class="rail-en">Phenomenon</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">现象：三条不同步的曲线</h2>
+      <div class="col">
+        <p class="p">前沿实验室的演示越来越好看，真实场地里的部署成功率却没有跟着上去。两条曲线之间的距离这几年没有收窄，还在拉开。</p>
+      </div>
+
+      <figure class="plate rise" id="figa01">
+        <div class="plate-body"><svg role="img" viewBox="0 0 800 430" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                
+                <!-- axes -->
+                <line x1="70" y1="360" x2="760" y2="360" stroke="var(--ink)" stroke-width="1"/>
+                <line x1="70" y1="360" x2="70" y2="45" stroke="var(--ink)" stroke-width="1"/>
+                <text x="736" y="380" font-size="10" fill="var(--ink-2)">TIME →</text>
+                <text x="30" y="55" font-size="10" fill="var(--ink-2)" transform="rotate(-90,30,90)">CAPABILITY</text>
+                <!-- gap fill -->
+                <path d="M70,350 C250,332 450,240 750,72 L750,296 C520,326 300,344 70,352 Z" fill="rgba(26,26,26,0.06)"/>
+                <!-- demo curve -->
+                <path d="M70,350 C250,332 450,240 750,72" fill="none" stroke="var(--ink)" stroke-width="1.6"/>
+                <!-- deploy curve -->
+                <path d="M70,352 C300,344 520,326 750,296" fill="none" stroke="var(--ink)" stroke-width="1.2" stroke-dasharray="5,4"/>
+                <!-- labels -->
+                <text x="520" y="140" font-size="12" fill="var(--ink)" font-weight="bold">LAB DEMO 能力</text>
+                <text x="520" y="318" font-size="12" fill="var(--ink)">FIELD DEPLOY 能力</text>
+                <text x="430" y="222" font-size="13" fill="var(--accent)" font-weight="bold" letter-spacing="2">THE GAP</text>
+                <text x="408" y="240" font-size="10" fill="var(--ink-2)">数据↑ · Token↑ · 部署≈</text>
+                <!-- today marker -->
+                <line x1="640" y1="60" x2="640" y2="360" stroke="var(--ink-3)" stroke-width="0.8" stroke-dasharray="2,4"/>
+                <text x="648" y="70" font-size="9" fill="var(--ink-3)">TODAY</text>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.A1</b><span>实验室演示能力与现场部署能力，差距在扩大</span></figcaption>
+      </figure>
+
+      <div class="col"><p class="p">把同一段时间拆成三层来看（<a class="xref" href="#figa02">FIG.A2</a>），大致能看出问题卡在哪一层：</p></div>
+
+      <figure class="plate rise" id="figa02">
+        <div class="plate-body"><svg role="img" viewBox="0 0 820 430" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                
+                <!-- axes -->
+                <line x1="70" y1="360" x2="775" y2="360" stroke="var(--ink)" stroke-width="1"/>
+                <line x1="70" y1="360" x2="70" y2="45" stroke="var(--ink)" stroke-width="1"/>
+                <text x="742" y="380" font-size="10" fill="var(--ink-2)">TIME →</text>
+                <text x="30" y="55" font-size="10" fill="var(--ink-2)" transform="rotate(-90,30,90)">READY 程度</text>
+                <!-- hardware curve: fast -->
+                <path d="M70,330 C280,290 480,190 750,80" fill="none" stroke="var(--ink)" stroke-width="1.8"/>
+                <text x="600" y="70" font-size="12" fill="var(--ink)" font-weight="bold">硬件产能与表现</text>
+                <text x="600" y="88" font-size="9.5" fill="var(--ink-2)">季度级迭代 · 密度 470台/万人</text>
+                <!-- model curve: medium -->
+                <path d="M70,340 C300,326 500,290 750,225" fill="none" stroke="var(--ink)" stroke-width="1.3" stroke-dasharray="6,4"/>
+                <text x="612" y="215" font-size="12" fill="var(--ink)">大脑 · 基座模型</text>
+                <text x="612" y="233" font-size="9.5" fill="var(--ink-2)">在进步 · 但没跟上硬件</text>
+                <!-- scene infra curve: flat -->
+                <path d="M70,348 C300,346 520,342 750,334" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-dasharray="2,4"/>
+                <text x="540" y="356" font-size="12" fill="var(--ink)">场景数据 · 领域原生物理建模</text>
+                <text x="540" y="374" font-size="9.5" fill="var(--ink-2)">接近于零 · 几乎未被供给</text>
+                <!-- gap bracket -->
+                <path d="M762,80 L772,80 L772,334 L762,334" fill="none" stroke="var(--ink-3)" stroke-width="1"/>
+                <text x="780" y="200" font-size="10" fill="var(--accent)" font-weight="bold" transform="rotate(90,780,200)">真正的瓶颈在这里</text>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.A2</b><span>三层供给的进度差：硬件快，模型居中，场景基建近乎缺席</span></figcaption>
+      </figure>
+
+      <div class="col">
+                        <aside class="mnote mnote-bars">
+          <span class="mnote-k">制造业机器人密度</span>
+          <span class="bar"><span class="bar-h">中国<b>470 台/万人</b></span><span class="bar-t"><i style="width:100%"></i></span></span>
+          <span class="bar mute"><span class="bar-h">全球平均<b>162 台/万人</b></span><span class="bar-t"><i style="width:34%"></i></span></span>
+          <span class="bar-n">硬件这一端不构成瓶颈。IFR，见<a href="#sources">来源 01</a></span>
+        </aside>
+<p class="p">硬件这一端的进展很扎实：中国制造业机器人密度 470 台 / 万名员工，排在全球第三；2023 年新增安装 27.6 万台，约占全球的 51%（IFR）。产能、成本、可靠性都在按季度往前走。慢下来的是大脑。参数规模并不是主要原因，缺的是场景数据和按领域建立的物理模型：机器最终要干活的那片真实世界，还没有被完整数字化，也没有以物理上准确的形式交给模型。下面三节分别讲这三件事。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ A2 ═══ -->
+  <section class="band" id="a2">
+    <div class="rail"><span class="rail-num">A2</span><span class="rail-en">Compute</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">成因一：Token 与算力消耗高，能力不随之线性增长</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">被折叠掉的</span>
+          接触、力、摩擦、形变、材质：离散化过程中丢掉的，往往正是决定动作能否完成的物理量。
+        </aside>
+        <p class="p">通用机器人的主流路线是「像素 → 语义 → 推断 → 动作」，先把连续的物理世界压成离散的 Token，再交给大模型推断该做什么动作。代价是单个任务的 Token 与算力消耗都很高，而部署能力并没有跟着同比例上升。</p>
+      </div>
+
+      <figure class="plate rise" id="figa03">
+        <div class="plate-body"><svg role="img" viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                
+                <!-- axes -->
+                <line x1="80" y1="330" x2="775" y2="330" stroke="var(--ink)" stroke-width="1"/>
+                <line x1="80" y1="330" x2="80" y2="40" stroke="var(--ink)" stroke-width="1"/>
+                <text x="690" y="350" font-size="10" fill="var(--ink-2)">TOKEN / 算力投入 →</text>
+                <text x="34" y="50" font-size="10" fill="var(--ink-2)" transform="rotate(-90,34,88)">部署能力</text>
+                <!-- input bars (log steps) -->
+                <rect x="140" y="270" width="56" height="60" fill="rgba(26,26,26,0.14)"/>
+                <text x="168" y="348" font-size="9.5" fill="var(--ink-2)" text-anchor="middle">1×</text>
+                <rect x="290" y="222" width="56" height="108" fill="rgba(26,26,26,0.14)"/>
+                <text x="318" y="348" font-size="9.5" fill="var(--ink-2)" text-anchor="middle">10×</text>
+                <rect x="440" y="150" width="56" height="180" fill="rgba(26,26,26,0.14)"/>
+                <text x="468" y="348" font-size="9.5" fill="var(--ink-2)" text-anchor="middle">100×</text>
+                <rect x="590" y="70" width="56" height="260" fill="rgba(26,26,26,0.14)"/>
+                <text x="618" y="348" font-size="9.5" fill="var(--ink-2)" text-anchor="middle">1000×</text>
+                <text x="395" y="374" font-size="10" fill="var(--ink-3)" text-anchor="middle">灰柱 = 投入规模（示意）</text>
+                <!-- capability curve: saturating -->
+                <path d="M120,300 C260,282 420,266 640,252" fill="none" stroke="var(--ink)" stroke-width="1.8"/>
+                <circle cx="168" cy="296" r="3.5" fill="var(--ink)"/>
+                <circle cx="318" cy="284" r="3.5" fill="var(--ink)"/>
+                <circle cx="468" cy="270" r="3.5" fill="var(--ink)"/>
+                <circle cx="618" cy="256" r="3.5" fill="var(--ink)"/>
+                <text x="440" y="236" font-size="12" fill="var(--ink)" font-weight="bold">能力增长 ≈ 线性趋缓</text>
+                <!-- divergence annotation -->
+                <line x1="618" y1="70" x2="618" y2="248" stroke="var(--ink-3)" stroke-width="0.8" stroke-dasharray="2,4"/>
+                <text x="640" y="160" font-size="10.5" fill="var(--ink-2)">投入 ↑1000×</text>
+                <text x="640" y="176" font-size="10.5" fill="var(--ink-2)">能力 ↑有限</text>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.A3</b><span>投入按数量级增长，部署能力趋缓，两者并不同步</span></figcaption>
+      </figure>
+
+      <div class="statement">
+        <span class="mono">含义</span>
+        更大的模型加更多的 Token，不会自动换来部署能力。压缩过程中丢掉的多半是接触、力、摩擦、形变、材质这类信息，而它们恰恰决定一个动作做不做得成。<strong>算力大都花在了还原语义上，物理量反而没有被还原出来。</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ A3 ═══ -->
+  <section class="band" id="a3">
+    <div class="rail"><span class="rail-num">A3</span><span class="rail-en">Data</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">成因二：数据总量很大，数据效率很低</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">数据效率</span>
+          总量不等于有效知识。视频里只有像素之间的相关性，缺少力、接触约束，以及动作与结果的因果对应。
+        </aside>
+        <p class="p">常有人拿视频数据的体量来说明物理智能不缺数据。这里有个口径问题：一小时视频里含有的有效物理知识，可能还比不上一千字文本。视频记录的是像素之间的相关性，不是可以直接拿来执行的物理量，缺少力、接触约束以及动作与结果的对应关系。总量确实很大，能用上的部分很少。</p>
+        <aside class="mnote">
+          <span class="mnote-k">来源 03</span>
+          盖世汽车研究院，见<a href="#sources">数据来源</a>
+        </aside>
+        <p class="p">换成「可用于训练的高质量<span class="term" data-t="embodied">具身数据</span>」这个口径，缺口大致是这样：</p>
+      </div>
+
+      <figure class="plate rise" id="figa04">
+        <div class="plate-body"><svg role="img" viewBox="0 0 820 420" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                
+                <!-- axis -->
+                <line x1="80" y1="340" x2="775" y2="340" stroke="var(--ink)" stroke-width="1"/>
+                <!-- bar 1: 存量 50万小时 (linear scale: 1000万 = 260px → 50万 = 13px) -->
+                <rect x="190" y="327" width="90" height="13" fill="var(--ink)"/>
+                <text x="235" y="316" font-size="12" fill="var(--ink)" font-weight="bold" text-anchor="middle">≈ 50 万小时</text>
+                <text x="235" y="362" font-size="10" fill="var(--ink-2)" text-anchor="middle">高质量具身数据存量</text>
+                <text x="235" y="378" font-size="9.5" fill="var(--ink-3)" text-anchor="middle">行业估算</text>
+                <!-- bar 2: 需求 1000万小时 -->
+                <rect x="480" y="80" width="90" height="260" fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-dasharray="5,4"/>
+                <text x="525" y="66" font-size="12" fill="var(--ink)" font-weight="bold" text-anchor="middle">≈ 1,000 万小时</text>
+                <text x="525" y="362" font-size="10" fill="var(--ink-2)" text-anchor="middle">通用能力所需数据</text>
+                <text x="525" y="378" font-size="9.5" fill="var(--ink-3)" text-anchor="middle">行业估算</text>
+                <!-- gap annotation -->
+                <line x1="300" y1="180" x2="460" y2="180" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3,3"/>
+                <text x="380" y="166" font-size="13" fill="var(--accent)" font-weight="bold" text-anchor="middle">缺口 &gt; 99%</text>
+                <text x="380" y="200" font-size="10" fill="var(--ink-2)" text-anchor="middle">相差约 20 倍</text>
+                <!-- bottom note -->
+                <text x="427" y="406" font-size="10.5" fill="var(--ink-2)" text-anchor="middle">对照：物理语料总量约为语言模型语料的 1/20,000，物理智能没有语言模型当年那份现成的数据底子</text>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.A4</b><span>高质量具身数据的存量与需求，缺口超过 99%</span></figcaption>
+      </figure>
+
+      <div class="statement">
+        <span class="mono">对照：语言模型的起点</span>
+        互联网用三十年攒下了一份现成的高质量文本，任何团队都能拿它起步训练一个大模型。物理智能手上没有这样一份存货。<strong>没有互联网，也就不会有 Transformer；缺少真实物理数据这层底子，物理智能同样很难谈规模化。</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ A4 ═══ -->
+  <section class="band" id="a4">
+    <div class="rail"><span class="rail-num">A4</span><span class="rail-en">Paths</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">成因三：四条数据路径，物理保真度都不够</h2>
+      <div class="col">
+        <p class="p">目前获取具身数据主要有四条路径，逐条看下来，每条在物理保真度上都有各自的短板：</p>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr><th>路径</th><th>做法</th><th>物理保真度问题</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>遥操作</td><td>人类远程操控真机，采集动作轨迹</td><td class="is-wrong">物理上真实，但采集慢、成本高；力、热、接触这些量很难同步记全</td></tr>
+            <tr><td>第一人称视角</td><td>由头戴或机载相机采集</td><td class="is-wrong">缺少全局几何与环境参数，遮挡多，大量物理状态观测不到</td></tr>
+            <tr><td>合成数据</td><td>通用仿真引擎批量生成</td><td class="is-wrong">场景多为模板，物理参数和真实部署现场对不上，<span class="term" data-t="sim2real">仿真到现实的落差</span>主要由此而来</td></tr>
+            <tr><td>视频学习</td><td>从人类 / 网络视频中学习行为先验</td><td class="is-wrong">没有动作标签，也没有物理量，学到的更接近「看起来像」，而不是「物理上做得到」</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <figure class="plate rise" id="figa05">
+        <div class="plate-body"><svg role="img" viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                
+                <!-- axis -->
+                <line x1="80" y1="290" x2="775" y2="290" stroke="var(--ink)" stroke-width="1"/>
+                <text x="34" y="50" font-size="10" fill="var(--ink-2)" transform="rotate(-90,34,88)">物理保真度</text>
+                <!-- threshold line -->
+                <line x1="80" y1="96" x2="775" y2="96" stroke="var(--ink)" stroke-width="1.2" stroke-dasharray="6,4"/>
+                <text x="768" y="86" font-size="10.5" fill="var(--ink)" font-weight="bold" text-anchor="end">部署所需的保真度门槛</text>
+                <!-- bars (relative, qualitative) -->
+                <rect x="150" y="150" width="90" height="140" fill="rgba(26,26,26,0.16)" stroke="var(--ink)" stroke-width="1"/>
+                <text x="195" y="312" font-size="11" fill="var(--ink)" font-weight="bold" text-anchor="middle">遥操作</text>
+                <text x="195" y="330" font-size="9.5" fill="var(--ink-2)" text-anchor="middle">真实但贵 · 量上不去</text>
+                <rect x="320" y="196" width="90" height="94" fill="rgba(26,26,26,0.16)" stroke="var(--ink)" stroke-width="1"/>
+                <text x="365" y="312" font-size="11" fill="var(--ink)" font-weight="bold" text-anchor="middle">Ego 视角</text>
+                <text x="365" y="330" font-size="9.5" fill="var(--ink-2)" text-anchor="middle">物理状态不可观测</text>
+                <rect x="490" y="172" width="90" height="118" fill="rgba(26,26,26,0.16)" stroke="var(--ink)" stroke-width="1"/>
+                <text x="535" y="312" font-size="11" fill="var(--ink)" font-weight="bold" text-anchor="middle"><span class="term" data-t="twin">合成数据</span></text>
+                <text x="535" y="330" font-size="9.5" fill="var(--ink-2)" text-anchor="middle">物理与实景不对齐</text>
+                <rect x="660" y="230" width="90" height="60" fill="rgba(26,26,26,0.16)" stroke="var(--ink)" stroke-width="1"/>
+                <text x="705" y="312" font-size="11" fill="var(--ink)" font-weight="bold" text-anchor="middle">视频学习</text>
+                <text x="705" y="330" font-size="9.5" fill="var(--ink-2)" text-anchor="middle">只有像素相关性</text>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.A5</b><span>四条路径的物理保真度都在门槛以下（相对示意，非测量值）</span></figcaption>
+      </figure>
+
+      <div class="statement">
+        <span class="mono">共性</span>
+        四条路径缺的是同一样东西：<strong>与真实部署现场对齐的物理量。</strong>这更像供给端的空白，而非某一条路径的工程细节问题，真实场景的物理本身还没有被建模，也就无从供给。
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ A5 ═══ -->
+  <section class="band" id="a5">
+    <div class="rail"><span class="rail-num">A5</span><span class="rail-en">Cost</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">遥操作的成本账：靠人海采集为什么走不通</h2>
+      <div class="col">
+                        <aside class="mnote mnote-bars">
+          <span class="mnote-k">单条数据成本</span>
+          <span class="bar"><span class="bar-h">遥操作<b>≈2,000 元/h</b></span><span class="bar-t"><i style="width:100%"></i></span></span>
+          <span class="bar mute"><span class="bar-h">仿真<b>1/20–1/200</b></span><span class="bar-t"><i style="width:5%"></i></span></span>
+          <span class="bar-n">前提是物理对齐。Gartner／盖世，见<a href="#sources">来源 02 / 03</a></span>
+        </aside>
+<p class="p">四条路径（<a class="xref" href="#a4">A4</a>）里物理保真度最高的是<span class="term" data-t="teleop">遥操作</span>，但成本卡得很死：约 2,000 元 / 小时（Gartner）。按 1,000 万小时的需求量算，光采集这一项就要 200 亿元左右，还要配上一支很难规模化的操作团队。这笔账在商业上算不过来。</p>
+      </div>
+
+      <figure class="plate rise" id="figa06">
+        <div class="plate-body"><svg role="img" viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                
+                <!-- axis -->
+                <line x1="80" y1="300" x2="775" y2="300" stroke="var(--ink)" stroke-width="1"/>
+                <text x="34" y="50" font-size="10" fill="var(--ink-2)" transform="rotate(-90,34,88)">单小时数据成本（元）</text>
+                <!-- bar 1: 遥操作 2000 元 → height 220 -->
+                <rect x="200" y="80" width="110" height="220" fill="var(--ink)"/>
+                <text x="255" y="66" font-size="12.5" fill="var(--ink)" font-weight="bold" text-anchor="middle">≈ 2,000 元</text>
+                <text x="255" y="322" font-size="11" fill="var(--ink)" font-weight="bold" text-anchor="middle">遥操作采集</text>
+                <text x="255" y="340" font-size="9.5" fill="var(--ink-2)" text-anchor="middle">Gartner · 人力密集</text>
+                <!-- bar 2: 仿真加速 10–100 元 → height ~11 (10元 at 0.11px/元 scale) -->
+                <rect x="500" y="289" width="110" height="11" fill="var(--ink)"/>
+                <text x="555" y="275" font-size="12.5" fill="var(--ink)" font-weight="bold" text-anchor="middle">≈ 10 – 100 元</text>
+                <text x="555" y="322" font-size="11" fill="var(--ink)" font-weight="bold" text-anchor="middle">领域原生仿真加速</text>
+                <text x="555" y="340" font-size="9.5" fill="var(--ink-2)" text-anchor="middle">单条数据成本降至 1/20 – 1/200</text>
+                <!-- annotation -->
+                <line x1="330" y1="150" x2="480" y2="150" stroke="var(--ink-3)" stroke-width="0.9" stroke-dasharray="3,3"/>
+                <text x="405" y="136" font-size="11.5" fill="var(--accent)" font-weight="bold" text-anchor="middle">成本差 20 – 200 倍</text>
+                <text x="412" y="366" font-size="10" fill="var(--ink-3)" text-anchor="middle">前提：仿真要按领域的物理真实建模，通用模板省不下这笔成本</text>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.A6</b><span>数据获取成本：遥操作与领域原生仿真的对比</span></figcaption>
+      </figure>
+
+      <div class="statement">
+        <span class="mono">前提</span>
+        能把成本降下来的只有仿真，前提是它和部署现场在物理上对得上。<strong>对不上，生成的数据就用不了，省下来的成本也就无从谈起。</strong>领域原生说的正是这件事。
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ A6 ═══ -->
+  <section class="band" id="a6">
+    <div class="rail"><span class="rail-num">A6</span><span class="rail-en">Conclusion</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">叠加起来：机器人的规模定律至今没有出现</h2>
+      <div class="col">
+        <p class="p">前面三节（<a class="xref" href="#a2">A2</a>／<a class="xref" href="#a3">A3</a>／<a class="xref" href="#a4">A4</a>）说的三件事各自都成立，麻烦在于它们同时成立，而且互相叠加：</p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="cell">
+          <span class="cell-code">① Token 与算力</span>
+          <p>单个任务的 Token 与算力消耗高，部署能力没有跟着同比例增长。</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">② 数据效率</span>
+          <p>总量很大，含有的有效物理知识很少，一小时视频可能不及一千字文本。</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">③ 数据准度</span>
+          <p>遥操作、第一人称视角、合成数据、视频学习四条路径，物理保真度都在门槛以下。</p>
+        </div>
+      </div>
+
+      <div class="statement sum">
+        <span class="mono">④ 结果</span>
+        三条叠在一起，机器人身上的<span class="term" data-t="scaling">规模定律</span>到今天也没有出现，差距则以各种形式暴露在现场。
+      </div>
+
+      <a class="cta" href="index.html" target="_blank" rel="noopener">
+        <span class="eyebrow">回应结论</span>
+        <h3 class="h3">补上真实物理世界的那一层基建</h3>
+        <p>差距的来源在供给一侧：场景数据和按领域建立的物理模型都还不够。硬件已经跑在前面，它等的是一层真实物理世界的基建，把部署现场变成机器可以训练、可以验证、可以打分的数字底座，同时把数据获取成本降到原来的 1/20 至 1/200。microNature 的架构就是照着这层基建设计的。</p>
+        <span class="cta-go">查看 microNature 架构 →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ SOURCES ═══ -->
+  <section class="band" id="sources">
+    <div class="rail"><span class="rail-num">附</span><span class="rail-en">Sources</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">数据来源</h2>
+      <div class="notes">
+        <ol>
+          <li>IFR《World Robotics》：中国制造业机器人密度 470 台 / 万名员工（2023），全球第三；全球平均 162 台；2023 年中国新增安装 27.6 万台，约占全球 51%。</li>
+          <li>Gartner 及行业估算：遥操作数据成本约 2,000 元 / 小时；人形机器人高质量数据缺口达万倍量级。</li>
+          <li>盖世汽车研究院：具身高质量数据存量约 50 万小时，通用能力需求约 1,000 万小时，缺口超 99%；物理 AI 数据量约为语言模型语料的 1/20,000；仿真可将单条数据成本降至 1/20 至 1/200。</li>
+          <li>弗若斯特沙利文：中国具身智能解决方案市场规模 2030 年预计约 1,426 亿元。</li>
+        </ol>
+      </div>
+      <p class="small" style="margin-top:18px; color:var(--ink-3)">注：FIG.A3 与 FIG.A5 为结构性示意（趋势与相对关系），非测量值；具体口径以访谈与一手数据为准。</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="doc">
+    <div class="foot-line">
+      <span>microNature — Insights · The Capability–Deployment Paradox</span>
+      <span>配套材料 · 与主文件配套使用</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js" defer></script>
+</body>
+</html>
