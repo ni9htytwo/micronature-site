@@ -31,6 +31,10 @@
   --flag:       #A8322D;
   --flag-wash:  #F7EEED;
 
+  /* Brand lockup. Pine on light paper; the guidelines' one colour for the
+     mark-and-wordmark unit in the nav. */
+  --nav-logo:   #0E3A2A;
+
   /* Type roles */
   --disp: 'Archivo', 'Noto Sans SC', system-ui, sans-serif;
   --body: 'Archivo', 'Noto Sans SC', system-ui, sans-serif;
@@ -78,6 +82,9 @@ html[data-theme="dark"]{
 
   --flag:       #E0736A;
   --flag-wash:  #2A1917;
+
+  /* Signal green survives a dark field where pine would not. */
+  --nav-logo:   #D2F35F;
 }
 
 /* A handful of places carry literal colour instead of a token. They follow
@@ -358,11 +365,15 @@ a{ color:inherit }
   display:flex; align-items:center; justify-content:space-between; gap:24px;
 }
 .nav-mark{
+  display:inline-flex; align-items:center; gap:13px;
   font-family:var(--disp);
   font-size:15px; font-weight:600; letter-spacing:-.02em;
-  text-decoration:none; color:var(--ink);
+  text-decoration:none; color:var(--nav-logo);
   white-space:nowrap;
 }
+/* The pine mark, per logo guidelines v1.0: horizontal lockup, graphic left,
+   28 px hard floor, clear space of half its height kept by the gap. */
+.nav-mark-logo{ height:28px; width:auto; flex:none }
 .nav-mark span{
   font-family:var(--mono); font-size:var(--t-xs); font-weight:400;
   letter-spacing:.12em; color:var(--ink-3); margin-left:12px;
