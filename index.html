@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Theme before first paint: a saved choice wins; the English register reads
+   dark by default; otherwise the system preference decides. Runs this early
+   so a reload never flashes the other theme. */
+(function(){var t=null;try{t=localStorage.getItem('mn-theme');}catch(e){}
+if(t!=='dark'&&t!=='light'){var en=(document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en')===0;
+t=en?'dark':((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');}
+document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<title>microNature — 物理智能基础设施</title>
+<meta name="description" content="microNature 建设物理智能的真实世界基础设施：把真实部署场地变成可训练、可验证、可打分的数字考场，交付环境训练 · 验证 · 部署全流程。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="alternate" hreflang="zh-Hans" href="index.html">
+<link rel="alternate" hreflang="en" href="en/index.html">
+<link rel="alternate" hreflang="x-default" href="index.html">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="站点导航">
+  <div class="nav-in">
+    <a class="nav-mark" href="index.html">microNature<span>物理智能基础设施</span></a>
+    <span class="nav-here" aria-hidden="true"></span>
+    <div class="nav-links">
+      <span class="cur" aria-current="page">架构</span>
+      <a href="environmentaffordance.html">环境可为™</a>
+      <a href="map.html">地图样例</a>
+      <a href="atlas.html">场景图鉴</a>
+      <a href="insight.html">思考</a>
+      <a href="about.html">我们</a>
+    </div>
+  <div class="nav-lang">
+    <span class="cur" aria-current="true">中</span>
+    <a href="en/index.html" hreflang="en" lang="en">EN</a>
+  </div>
+  <button class="nav-theme" type="button" aria-pressed="false"></button>
+  </div>
+</nav>
+
+<main class="doc">
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <div class="tblock">
+      <div class="tblock-cell"><span class="tblock-k">Sheet</span><span class="tblock-v">MN-00</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Title</span><span class="tblock-v cn">架构与主张</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Issue</span><span class="tblock-v">2026.08</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Scope</span><span class="tblock-v">real → sim → real</span></div>
+    </div>
+
+    <h1 class="h1">以无间入有间</h1>
+
+    <p class="lede hero-lede">microNature 为物理智能做真实世界的基建。与其让硬件迁就仿真，我们让物理引擎的发展遵循环境、场景与机器自身的规律。物理层面少一分折损，自然无需机器多一番蛮力。</p>
+
+    <div class="hero-spec">
+      <span>Domain-Native Physical Intelligence Infra</span>
+      <span>场景原生 · <b>100+</b> 特种行业交付</span>
+      <span>自建物理引擎 + 空间智能</span>
+    </div>
+
+    <div class="statement">
+      <span class="mono">Thesis</span>
+      更好的模型并不会自动消除前沿技术与实地部署之间的鸿沟——缩小这个差距，需要的是真实物理世界的基础设施。microNature 应需而生。
+    </div>
+  </header>
+
+  <!-- ═══ CONTENTS ═══ -->
+  <section class="band" id="toc">
+    <div class="rail"><span class="rail-num">00</span><span class="rail-en">Contents</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <nav class="toc" aria-label="目录">
+        <ol class="toc-list">
+          <li><a href="#s1"><span class="toc-n">01</span><span class="toc-t">架构 · microNature Real-Sim-Real</span><span class="toc-d">Architecture</span></a></li>
+          <li><a href="#s2"><span class="toc-n">02</span><span class="toc-t">有何不同 · 领域原生的路径，机器视角的打法</span><span class="toc-d">Difference</span></a></li>
+          <li><a href="#s3"><span class="toc-n">03</span><span class="toc-t">何以见得 · 基于成熟技术，在应用层创新</span><span class="toc-d">Proof</span></a></li>
+          <li><a href="#s4"><span class="toc-n">04</span><span class="toc-t">路径 · 当下收窄差距，未来提供直觉</span><span class="toc-d">Now &amp; Next</span></a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ═══ 01 ARCHITECTURE ═══ -->
+  <section class="band" id="s1">
+    <div class="rail"><span class="rail-num">01</span><span class="rail-en">Architecture</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">microNature · Real-Sim-Real</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">Real–Sim–Real</span>
+          真实场地采集 → 物理原生仿真 → 回到现场部署，部署反馈再回流仿真。
+        </aside>
+        <p class="p">microNature 的业务流程是完整的 <strong>real → sim → real</strong>，可灵活拆解为 real-sim 半链，或交付全链条。核心是：<span class="term" data-t="domain-native">领域原生</span>的物理场景对接所有类型的智能硬件，完成轻量部署环境训练 · 验证 · 部署全流程。</p>
+      </div>
+
+      <figure class="plate rise" id="fig01">
+        <div class="plate-body"><svg role="img" viewBox="0 0 960 790" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                <defs>
+                    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                        <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/>
+                    </marker>
+                </defs>
+                
+
+                <!-- top inputs -->
+                <text x="480" y="34" text-anchor="middle" font-size="10" fill="var(--ink-3)" letter-spacing="2">TASK &amp; BODY INPUT</text>
+                <rect x="250" y="48" width="200" height="58" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="350" y="72" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="bold">LLM TASK</text>
+                <text x="350" y="90" text-anchor="middle" font-size="10" fill="var(--ink-2)">任务编码 · 0.1–1Hz</text>
+                <rect x="510" y="48" width="200" height="58" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="610" y="72" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="bold">ROBOT FILES</text>
+                <text x="610" y="90" text-anchor="middle" font-size="10" fill="var(--ink-2)">本体数字分身 · URDF</text>
+                <line x1="350" y1="106" x2="350" y2="152" stroke="var(--ink)" stroke-width="1.1" marker-end="url(#arr)"/>
+                <line x1="610" y1="106" x2="610" y2="152" stroke="var(--ink)" stroke-width="1.1" marker-end="url(#arr)"/>
+
+                <!-- REAL column -->
+                <rect x="40" y="200" width="225" height="270" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="152" y="232" text-anchor="middle" font-size="14" fill="var(--ink)" font-weight="bold">REAL</text>
+                <text x="152" y="250" text-anchor="middle" font-size="10" fill="var(--ink-2)">真实场地 · 领域原生</text>
+                <line x1="60" y1="264" x2="245" y2="264" stroke="var(--rule)" stroke-width="1"/>
+                <text x="152" y="288" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">视觉 · vision</text>
+                <text x="152" y="310" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">激光 · lidar</text>
+                <text x="152" y="332" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">温湿度 · thermal</text>
+                <text x="152" y="354" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">毫米波 · mmWave</text>
+                <text x="152" y="376" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">触觉 · tactile</text>
+                <text x="152" y="398" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">力控 · force</text>
+                <text x="152" y="440" text-anchor="middle" font-size="9.5" fill="var(--ink-3)" font-style="italic">多模态物理量采集</text>
+
+                <!-- SIM column -->
+                <rect x="335" y="165" width="290" height="340" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.6" stroke-dasharray="1,0"/>
+                <text x="480" y="196" text-anchor="middle" font-size="14" fill="var(--ink)" font-weight="bold" letter-spacing="1">PHYSICS-NATIVE SIM</text>
+                <text x="480" y="214" text-anchor="middle" font-size="10" fill="var(--accent)" letter-spacing="2">microNature</text>
+                <rect x="355" y="232" width="250" height="58" fill="var(--paper)" stroke="var(--ink)" stroke-width="1"/>
+                <text x="480" y="256" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="bold">PHYSICS ENGINE</text>
+                <text x="480" y="274" text-anchor="middle" font-size="9.5" fill="var(--ink-2)">场景原生 · 几何+物理+动力学</text>
+                <rect x="355" y="302" width="250" height="58" fill="var(--paper)" stroke="var(--ink)" stroke-width="1"/>
+                <text x="480" y="326" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="bold">FULL-DOMAIN PERCEPTION</text>
+                <text x="480" y="344" text-anchor="middle" font-size="9.5" fill="var(--ink-2)">全域感知融合 · 物理量运行</text>
+                <rect x="355" y="372" width="250" height="58" fill="var(--wash)" stroke="var(--accent)" stroke-width="1.4"/>
+                <text x="480" y="396" text-anchor="middle" font-size="11" fill="var(--accent)" font-weight="bold">EA · ENVIRONMENT AFFORDANCE</text>
+                <text x="480" y="414" text-anchor="middle" font-size="9.5" fill="var(--ink-2)">可为性标注 · 对抗验证 · 评分</text>
+                <text x="480" y="468" text-anchor="middle" font-size="9.5" fill="var(--ink-3)" font-style="italic">轻量 训练 · 验证</text>
+
+                <!-- DEPLOY column -->
+                <rect x="695" y="200" width="225" height="270" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="807" y="232" text-anchor="middle" font-size="14" fill="var(--ink)" font-weight="bold">DEPLOY</text>
+                <text x="807" y="250" text-anchor="middle" font-size="10" fill="var(--ink-2)">异构智能硬件</text>
+                <line x1="715" y1="264" x2="900" y2="264" stroke="var(--rule)" stroke-width="1"/>
+                <text x="807" y="292" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">四足 · legged</text>
+                <text x="807" y="314" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">轮式 · wheeled</text>
+                <text x="807" y="336" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">无人机 · UAV</text>
+                <text x="807" y="358" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">机械臂 · arm</text>
+                <text x="807" y="380" text-anchor="middle" font-size="10.5" fill="var(--ink-2)">自动驾驶 · AV</text>
+                <text x="807" y="440" text-anchor="middle" font-size="9.5" fill="var(--ink-3)" font-style="italic">考核通过的机器进场</text>
+
+                <!-- horizontal arrows -->
+                <line x1="265" y1="335" x2="327" y2="335" stroke="var(--ink)" stroke-width="1.3" marker-end="url(#arr)"/>
+                <text x="296" y="322" text-anchor="middle" font-size="10" fill="var(--ink)" font-weight="bold">R2S</text>
+                <line x1="625" y1="335" x2="687" y2="335" stroke="var(--ink)" stroke-width="1.3" marker-end="url(#arr)"/>
+                <text x="656" y="322" text-anchor="middle" font-size="10" fill="var(--ink)" font-weight="bold">S2R</text>
+
+                <!-- flywheel -->
+                <rect x="40" y="560" width="880" height="76" fill="var(--wash)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="480" y="592" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="bold" letter-spacing="1">DATA FLYWHEEL</text>
+                <text x="480" y="614" text-anchor="middle" font-size="10" fill="var(--ink-2)">与产业域 co-build · 场景数据 ↔ 验证标准 · 双向积累</text>
+                <path d="M807,470 L807,520 Q807,540 787,540 L500,540 Q480,540 480,552 L480,556" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arr)"/>
+                <path d="M152,470 L152,520 Q152,540 172,540 L460,540 Q480,540 480,552" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="5,4"/>
+                <text x="480" y="532" text-anchor="middle" font-size="9" fill="var(--ink-3)" letter-spacing="1">DEPLOYMENT FEEDBACK</text>
+
+                <!-- plug-in docks -->
+                <text x="480" y="678" text-anchor="middle" font-size="10" fill="var(--ink-3)" letter-spacing="2">PLUG-IN STACKS · 可插拔</text>
+                <rect x="180" y="692" width="270" height="56" fill="var(--paper)" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="315" y="716" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="bold">SENSING STACK</text>
+                <text x="315" y="734" text-anchor="middle" font-size="9.5" fill="var(--ink-2)">任意感知栈 plug in</text>
+                <rect x="510" y="692" width="270" height="56" fill="var(--paper)" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="645" y="716" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="bold">POLICY STACK</text>
+                <text x="645" y="734" text-anchor="middle" font-size="9.5" fill="var(--ink-2)">任意策略栈 plug in</text>
+                <line x1="315" y1="692" x2="315" y2="650" stroke="var(--ink-3)" stroke-width="0.9" stroke-dasharray="2,4"/>
+                <line x1="645" y1="692" x2="645" y2="650" stroke="var(--ink-3)" stroke-width="0.9" stroke-dasharray="2,4"/>
+                <text x="480" y="776" text-anchor="middle" font-size="9.5" fill="var(--ink-3)">microNature — real-sim-real · 完成轻量部署环境训练 · 验证 · 部署全流程</text>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.01</b><span>microNature architecture · real-sim-real</span></figcaption>
+      </figure>
+
+      <div class="col"><p class="p">链条可整，亦可拆，对应三种模块化产品形态：</p></div>
+
+      <div class="grid grid-3">
+        <div class="cell">
+          <span class="cell-code">M1 · REAL→SIM</span>
+          <p>真实场景数字化与物理原生重建。交付可复用的数字考场：三维底图一次建库，多机复用。</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">M2 · EA 验证</span>
+          <p><a class="link" href="environmentaffordance.html" target="_blank" rel="noopener">Environment Affordance™</a> 单独交付。按本体参数做可为性标注与对抗验证，出<a class="link" href="map.html" target="_blank" rel="noopener">评分与样例</a>。</p>
+        </div>
+        <div class="cell">
+          <span class="cell-code">M3 · R2S2R 全链</span>
+          <p>轻量训练 → 验证 → 部署全闭环。与产业域 co-build，部署反馈回流，数据飞轮持续积累。</p>
+        </div>
+      </div>
+
+      <h3 class="h3" style="margin-top:56px">核心组件 <a class="link" href="environmentaffordance.html" target="_blank" rel="noopener">Environment Affordance™</a><br>为各式机器人和智能设备提供预对齐、预演练和准入考场</h3>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">可为性 Affordance</span>
+          环境与机器<b>本体</b>之间的关系属性：这台机器在这片场地能站、能过、能抓，还是必须绕行。换一台本体，答案就不同。
+        </aside>
+        <p class="p">EA（Environment Affordance）是 microNature 架构里独特的组件：<strong>从机器人视角和任务出发，在可复用的物理真实场景中做验证。</strong>不是问「这台通用机器人能做什么」，而是问「这片真实场景里，这台具体的机器，哪些事可为、哪些事不可为」，答案以评分和报告交付。</p>
+      </div>
+
+      <figure class="plate rise" id="fig02">
+        <div class="plate-body"><svg role="img" viewBox="0 0 860 400" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                    <defs>
+                        <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                            <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/>
+                        </marker>
+                    </defs>
+                    
+                    <rect x="40" y="40" width="215" height="82" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+                    <text x="147" y="74" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="bold">REUSABLE REAL SCENE</text>
+                    <text x="147" y="94" text-anchor="middle" font-size="10" fill="var(--ink-2)">可复用物理实景</text>
+                    <rect x="40" y="155" width="215" height="82" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+                    <text x="147" y="189" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="bold">ROBOT BODY</text>
+                    <text x="147" y="209" text-anchor="middle" font-size="10" fill="var(--ink-2)">机器人本体参数</text>
+                    <rect x="40" y="270" width="215" height="82" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.1"/>
+                    <text x="147" y="304" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="bold">ALIGNED TASK</text>
+                    <text x="147" y="324" text-anchor="middle" font-size="10" fill="var(--ink-2)">对齐的任务</text>
+                    <line x1="255" y1="81" x2="348" y2="175" stroke="var(--ink)" stroke-width="1" marker-end="url(#arr2)"/>
+                    <line x1="255" y1="196" x2="348" y2="196" stroke="var(--ink)" stroke-width="1" marker-end="url(#arr2)"/>
+                    <line x1="255" y1="311" x2="348" y2="217" stroke="var(--ink)" stroke-width="1" marker-end="url(#arr2)"/>
+                    <rect x="352" y="130" width="235" height="132" fill="var(--wash)" stroke="var(--accent)" stroke-width="1.6"/>
+                    <text x="469" y="170" text-anchor="middle" font-size="14" fill="var(--accent)" font-weight="bold">EA ENGINE</text>
+                    <text x="469" y="192" text-anchor="middle" font-size="10" fill="var(--ink-2)">机器人视角 · 任务对齐</text>
+                    <text x="469" y="210" text-anchor="middle" font-size="10" fill="var(--ink-2)">可为性计算 · 感知对抗</text>
+                    <text x="469" y="228" text-anchor="middle" font-size="10" fill="var(--ink-2)">闭环评分</text>
+                    <line x1="587" y1="196" x2="668" y2="196" stroke="var(--ink)" stroke-width="1.2" marker-end="url(#arr2)"/>
+                    <rect x="672" y="130" width="150" height="132" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.4"/>
+                    <text x="747" y="168" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="bold">SCORE</text>
+                    <text x="747" y="196" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="bold">REPORT</text>
+                    <text x="747" y="224" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="bold">ADMISSION</text>
+                    <text x="430" y="382" text-anchor="middle" font-size="10" fill="var(--ink-3)" letter-spacing="1">先考试，再进场 — exam before deployment</text>
+                </svg></div>
+        <figcaption class="plate-cap"><b>FIG.02</b><span>Environment Affordance™ validation loop</span></figcaption>
+      </figure>
+
+      <div class="grid grid-4">
+        <div class="cell"><h4 class="h4">成本 ↓</h4><p>不是所有任务都需要通用机器人。用现有硬件完成任务验证，把机器人成本降下来。</p></div>
+        <div class="cell"><h4 class="h4">协同 ↑</h4><p>异构硬件在同一考场用同一套标准验证，提高与现有硬件的协作程度。</p></div>
+        <div class="cell"><h4 class="h4">门槛 ↓</h4><p>企业不需要懂模型，只需要看得懂评分，把使用门槛降到最低。</p></div>
+        <div class="cell"><h4 class="h4">准入 →</h4><p>成为不同领域机器人的准入考场：任何领域的机器，先考后进。</p></div>
+      </div>
+
+      <a class="cta" href="environmentaffordance.html" target="_blank" rel="noopener">
+        <span class="eyebrow">产品 · Product</span>
+        <h3 class="h3">Environment Affordance™ — 部署前的独立验证</h3>
+        <p>按机器人本体参数，把真实场地重新标注成一份可为性地图，把感知容易出错的场景先跑一遍，在部署之前给出可审计、可复现的验证结论。既可单独交付，也是 microNature 全链条的核心组件。</p>
+        <span class="cta-go">查看产品页 →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ 02 WHAT'S DIFFERENT ═══ -->
+  <section class="band" id="s2">
+    <div class="rail"><span class="rail-num">02</span><span class="rail-en">Difference</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">有何不同：领域原生的路径，机器视角的打法</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">Sim2Real Gap</span>
+          仿真里训练好的策略迁到真实场地后的性能落差。落差的根源多在物理不对齐，而非模型不够大。
+        </aside>
+        <p class="p">LLM 的规模定律（<span class="term" data-t="scaling">scaling law</span>）建立在 30 多年互联网数据基建之上；物理智能的规模化部署，同样需要自己的基建——没有真实环境的数据底座，<span class="term" data-t="sim2real">sim2real</span> 的对齐就无从谈起。围绕这个判断，答案分两层：技术路径不同，取舍打法也不同。</p>
+      </div>
+
+      <h3 class="h3" style="margin-top:52px"><span class="eyebrow">特点一 · 技术路径</span>不是硬件适配仿真，而是仿真适配领域的物理真实</h3>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">领域原生 Domain-Native</span>
+          物理模型按具体作业环境建立（矿井、洁净室、露天矿区各不相同），而不是套用一套通用模板。
+        </aside>
+        <p class="p">机器最终要工作的地方，不是合成场景，是客观世界：厂房、矿区、园区、电网、仓库。这里有一个容易被通用方案忽略的事实：从机器和任务的视角出发，不同的作业环境对应不同的物理引擎。矿井巷道的低照度、粉尘与防爆约束，洁净室的洁净度与几何精度，露天矿区的非结构化路面，物理属性、感知模态、运动约束各不相同。把所有场景塞进同一套通用模板，物理就失真了。</p>
+        <p class="p">microNature 的两项核心能力，正是为此而生（任务谱系见 <a class="xref" href="#fig03">FIG.03</a>）：</p>
+      </div>
+
+      <div class="pair">
+        <div>
+          <h4 class="h4">物理引擎 · 场景原生</h4>
+          <p>针对每个领域的作业环境做物理原生建模：几何结构、物理参数、动力学行为一体化。几何结构和物理参数同步建模：物理不是建完几何之后补的，而是从一开始就和场景一起生长。场景原生，意味着仿真的物理行为与真实部署场景对齐。</p>
+        </div>
+        <div>
+          <h4 class="h4">全域感知 · 物理量融合</h4>
+          <p>不同环境依赖不同的物理量采集方式：有的靠视觉，有的靠温湿度，有的靠毫米波，有的靠触觉与力控。microNature 的全域感知算法把这些异构物理量融合进同一套物理引擎中运行：物理量进，物理量出，全程不折叠。</p>
+        </div>
+      </div>
+
+      <div class="statement">
+        <span class="mono">Domain-Native</span>
+        microNature 主打领域原生的物理场景对接所有类型的智能硬件（包括各类机器人）：让仿真按领域的物理真实去承接硬件，而不是反过来要求硬件适应仿真——这是 microNature 与通用仿真平台的主要区别。
+      </div>
+
+      <h3 class="h3" style="margin-top:60px"><span class="eyebrow">特点二 · 取舍打法</span>从机器的视角，按产业的节奏</h3>
+
+      <div class="pair">
+        <div>
+          <h4 class="h4">机器视角：需<span class="term" data-t="liangli">量力而行</span></h4>
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">本体 Embodiment</span>
+          一台机器的物理参数：尺寸、步态、抓取范围、传感器安装高度。可为性判定的全部输入。
+        </aside>
+          <p>并不是所有场景都需要高配通用机器人。从机器自己的视角出发：能完成任务、鲁棒性高，比通用能力更重要。把任务、场景和自身能力对齐，一台减配的、低成本的专用机器，配合对的基建，往往胜过一台昂贵的通用机器。</p>
+          <p>以矿山场景为例：真正需要的是自动驾驶、机器狗、无人机、轮式机器人的异构协同，而不是一台具身机器人包打天下。Environment Affordance™ 从机器的视角做验证，让每一台现有硬件都能被恰当地使用。</p>
+        </div>
+        <div>
+          <h4 class="h4">产业节奏：发展是线性的</h4>
+          <p>一般来说，技术主张先在现有基础上解决高结构化任务，再解决半结构化任务，最后才是通用，这个顺序不可颠倒。</p>
+          <p>当下制造业与工业场景大部分亟需解决的，是结构化与半结构化之间的任务：场景变动低频，物理准确、硬件协同、成本控制是重中之重。基建应该先把这段最大的、最确定的需求承接住。</p>
+        </div>
+      </div>
+
+      <figure class="plate rise" id="fig03">
+        <div class="plate-body"><svg role="img" viewBox="0 0 860 330" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                    <defs>
+                        <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                            <line x1="0" y1="0" x2="0" y2="8" stroke="var(--ink)" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    
+                    <!-- three segments -->
+                    <rect x="60" y="80" width="235" height="74" fill="var(--ink)"/>
+                    <text x="177" y="112" text-anchor="middle" font-size="13" fill="var(--paper)" font-weight="bold">STRUCTURED</text>
+                    <text x="177" y="132" text-anchor="middle" font-size="11" fill="var(--rule)">结构化</text>
+                    <rect x="305" y="80" width="280" height="74" fill="url(#hatch)" stroke="var(--ink)" stroke-width="1.2"/>
+                    <text x="445" y="112" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="bold">SEMI-STRUCTURED</text>
+                    <text x="445" y="132" text-anchor="middle" font-size="11" fill="var(--ink-2)">半结构化</text>
+                    <rect x="595" y="80" width="205" height="74" fill="none" stroke="var(--ink-3)" stroke-width="1" stroke-dasharray="4,4"/>
+                    <text x="697" y="112" text-anchor="middle" font-size="13" fill="var(--ink-3)" font-weight="bold">UNSTRUCTURED</text>
+                    <text x="697" y="132" text-anchor="middle" font-size="11" fill="var(--ink-3)">非结构化 / 通用</text>
+                    <!-- demand bracket -->
+                    <path d="M60,180 L60,192 L585,192 L585,180" fill="none" stroke="var(--accent)" stroke-width="1.4"/>
+                    <text x="322" y="214" text-anchor="middle" font-size="12" fill="var(--accent)" font-weight="bold" letter-spacing="1">当下产业的主要需求在这里</text>
+                    <!-- annotations -->
+                    <text x="177" y="252" text-anchor="middle" font-size="10" fill="var(--ink-2)">已规模化解决</text>
+                    <text x="177" y="268" text-anchor="middle" font-size="10" fill="var(--ink-2)">密度 470台/万人 · IFR 2023</text>
+                    <text x="445" y="252" text-anchor="middle" font-size="10" fill="var(--ink-2)">场景低频变动 · 物理准确</text>
+                    <text x="445" y="268" text-anchor="middle" font-size="10" fill="var(--ink-2)">硬件协同 · 成本控制</text>
+                    <text x="697" y="252" text-anchor="middle" font-size="10" fill="var(--ink-2)">前沿研究 · 数据缺口&gt;99%</text>
+                    <text x="697" y="268" text-anchor="middle" font-size="10" fill="var(--ink-2)">先不急</text>
+                    <!-- order line -->
+                    <text x="430" y="310" text-anchor="middle" font-size="11" fill="var(--ink)" letter-spacing="1">先结构化 → 再半结构化 → 再谈通用</text>
+                </svg></div>
+        <figcaption class="plate-cap"><b>FIG.03</b><span>任务谱系与当下产业需求所在位置</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═══ 03 PROOF ═══ -->
+  <section class="band" id="s3">
+    <div class="rail"><span class="rail-num">03</span><span class="rail-en">Proof</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">基于成熟技术，在应用层创新</h2>
+      <div class="col">
+        <aside class="mnote">
+          <span class="mnote-k">参见</span>
+          团队履历见 <a href="about.html" target="_blank" rel="noopener">MN-02 团队</a>
+        </aside>
+        <p class="p">microNature 是新理念，却基于成熟技术。团队有国内少有的、成建制的物理引擎与空间智能能力，全部经过真实产业交付的验证。</p>
+      </div>
+
+      <figure class="plate rise" id="fig04">
+        <div class="plate-body"><svg role="img" viewBox="0 40 1440 910" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, ui-monospace, monospace">
+                <defs>
+                    <marker id="arrK" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/>
+                    </marker>
+                </defs>
+
+                <rect x="0" y="40" width="1440" height="910" fill="var(--paper)"/>
+
+                <!-- input / output seed axis -->
+                <text x="1006" y="70" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="9" letter-spacing="1.5" fill="var(--ink-3)">INPUT · 十余年产业交付</text>
+                <circle cx="1016" cy="92" r="6" fill="none" stroke="var(--ink)" stroke-width="1.2"/>
+                <line x1="1028" y1="92" x2="1236" y2="92" stroke="var(--ink)" stroke-width="1"/>
+                <circle cx="1248" cy="92" r="6.5" fill="var(--ink)"/>
+                <text x="1180" y="112" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="9" letter-spacing="1.5" fill="var(--ink-3)">OUTPUT · 应用层考场</text>
+                <line x1="1260" y1="92" x2="1330" y2="92" stroke="var(--ink)" stroke-width="1" marker-end="url(#arrK)"/>
+                <text x="1344" y="96" font-size="12" fill="var(--ink-3)">···</text>
+
+                <!-- LEFT: MATURE FOUNDATION cluster -->
+                <text x="300" y="228" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="2.5" fill="var(--ink-2)">MATURE FOUNDATION · 成熟技术</text>
+                <circle cx="300" cy="520" r="262" fill="none" stroke="var(--ink-3)" stroke-width="1.2" stroke-dasharray="4,5"/>
+
+                <circle cx="215" cy="430" r="92" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <circle cx="158" cy="372" r="12" fill="var(--ink)"/>
+                <text x="158" y="376.5" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="var(--paper)">01</text>
+                <text x="215" y="418" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">物理引擎</text>
+                <text x="215" y="438" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">与空间底座</text>
+                <text x="215" y="460" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">GIS · 三维仿真十余年</text>
+                <text x="215" y="475" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">TB 级承载 · 国产 CPU</text>
+
+                <circle cx="385" cy="420" r="92" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <circle cx="328" cy="362" r="12" fill="var(--ink)"/>
+                <text x="328" y="366.5" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="var(--paper)">02</text>
+                <text x="385" y="408" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">EA 算法</text>
+                <text x="385" y="428" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">与对抗策略</text>
+                <text x="385" y="450" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">红蓝对抗 · 感知欺骗场景库</text>
+                <text x="385" y="465" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">地信算法迁移</text>
+
+                <circle cx="205" cy="600" r="92" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <circle cx="148" cy="542" r="12" fill="var(--ink)"/>
+                <text x="148" y="546.5" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="var(--paper)">03</text>
+                <text x="205" y="588" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">感知 · 可视化</text>
+                <text x="205" y="608" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">· 操控</text>
+                <text x="205" y="630" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">异构物理量融合</text>
+                <text x="205" y="645" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">物理量级接口 · 同栈打通</text>
+
+                <circle cx="380" cy="595" r="92" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <circle cx="323" cy="537" r="12" fill="var(--ink)"/>
+                <text x="323" y="541.5" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="var(--paper)">04</text>
+                <text x="380" y="585" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">端侧算力储备</text>
+                <text x="380" y="612" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">FeFET 铁电存算一体</text>
+                <text x="380" y="627" text-anchor="middle" font-size="9.8" fill="var(--ink-2)">端侧推理 · 低能耗</text>
+
+                <!-- single convergence axis -->
+                <circle cx="578" cy="520" r="5.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.6"/>
+                <line x1="588" y1="520" x2="772" y2="520" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M758,506.5 L786,520 L758,533.5" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+                <text x="676" y="478" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" letter-spacing="2" fill="var(--ink-3)">PROVEN → APPLIED</text>
+                <text x="676" y="498" text-anchor="middle" font-size="11.5" fill="var(--ink-2)">千锤百炼 · 在应用层转化</text>
+
+                <!-- RIGHT: APPLICATION INNOVATION -->
+                <text x="1090" y="228" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="2.5" fill="var(--ink-2)">APPLICATION INNOVATION · 应用层</text>
+                <ellipse cx="1090" cy="520" rx="292" ry="242" fill="none" stroke="var(--ink-3)" stroke-width="1.2" stroke-dasharray="4,5"/>
+
+                <line x1="874" y1="414" x2="988" y2="482" stroke="var(--ink)" stroke-width="0.9"/>
+                <circle cx="846" cy="398" r="40" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="846" y="403" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">预对齐</text>
+
+                <line x1="1302" y1="414" x2="1194" y2="482" stroke="var(--ink)" stroke-width="0.9"/>
+                <circle cx="1330" cy="398" r="40" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="1330" y="403" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">预演练</text>
+
+                <line x1="1090" y1="636" x2="1090" y2="712" stroke="var(--ink)" stroke-width="0.9"/>
+                <circle cx="1090" cy="724" r="40" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+                <text x="1090" y="729" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">准入 →</text>
+
+                <circle cx="1090" cy="520" r="116" fill="var(--ink)"/>
+                <text x="1090" y="500" text-anchor="middle" font-size="21" font-weight="700" fill="var(--paper)">Environment</text>
+                <text x="1090" y="528" text-anchor="middle" font-size="21" font-weight="700" fill="var(--paper)">Affordance™</text>
+                <line x1="1032" y1="548" x2="1148" y2="548" stroke="var(--ink-2)" stroke-width="1"/>
+                <text x="1090" y="570" text-anchor="middle" font-size="12" fill="var(--rule)">应用层创新 · 数字考场</text>
+                <text x="1090" y="590" text-anchor="middle" font-size="9.5" fill="var(--ink-3)">新理念 · 可为性标注 · 对抗验证 · 评分</text>
+
+                <!-- BOTTOM: four text blocks -->
+                <line x1="64" y1="842" x2="1376" y2="842" stroke="var(--rule)" stroke-width="1"/>
+
+                <g font-size="11" fill="var(--ink-2)">
+                    <text x="64" y="872" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" letter-spacing="1" fill="var(--ink)">CAP-1 · 空间底座</text>
+                    <text x="64" y="894">多源数据融合大场景建库（倾斜摄影 · 点云 · BIM）</text>
+                    <text x="64" y="911">TB 级三维快速承载 · 国产 CPU 全架构兼容</text>
+                    <text x="64" y="931" font-size="10" font-style="italic" fill="var(--ink-3)">特种工业场景十余年交付记录</text>
+                </g>
+
+                <g font-size="11" fill="var(--ink-2)">
+                    <text x="398" y="872" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" letter-spacing="1" fill="var(--ink)">CAP-2 · 对抗策略</text>
+                    <text x="398" y="894">可为性标注 · 感知欺骗场景库 · 红蓝对抗裁评</text>
+                    <text x="398" y="911">地信算法迁移为机器感知边界验证工具</text>
+                    <text x="398" y="931" font-size="10" font-style="italic" fill="var(--ink-3)">红蓝对抗 · 千锤百炼</text>
+                </g>
+
+                <g font-size="11" fill="var(--ink-2)">
+                    <text x="732" y="872" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" letter-spacing="1" fill="var(--ink)">CAP-3 · 三层同栈</text>
+                    <text x="732" y="894">全域感知融合 · 大规模三维可视化</text>
+                    <text x="732" y="911">物理量级操控接口 · 三层均为顶级配置</text>
+                    <text x="732" y="931" font-size="10" font-style="italic" fill="var(--ink-3)">perception · visualization · manipulation</text>
+                </g>
+
+                <g font-size="11" fill="var(--ink-2)">
+                    <text x="1066" y="872" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" font-weight="700" letter-spacing="1" fill="var(--ink)">CAP-4 · 端侧算力</text>
+                    <text x="1066" y="894">FeFET 铁电存算一体芯片研究</text>
+                    <text x="1066" y="911">实时性与能耗 · 硬件底层路径</text>
+                    <text x="1066" y="931" font-size="10" font-style="italic" fill="var(--ink-3)">compute-in-memory · edge inference</text>
+                </g>
+            </svg></div>
+        <figcaption class="plate-cap"><b>FIG.04</b><span>mature foundation → application innovation</span></figcaption>
+      </figure>
+
+                  <aside class="mnote mnote-bars">
+        <span class="mnote-k">高质量具身数据</span>
+        <span class="bar mute"><span class="bar-h">存量<b>50 万 h</b></span><span class="bar-t"><i style="width:5%"></i></span></span>
+        <span class="bar"><span class="bar-h">通用能力需求<b>1,000 万 h</b></span><span class="bar-t"><i style="width:100%"></i></span></span>
+        <span class="bar-n">缺口 &gt;99%。<a href="#sources">来源 03</a>；gap 扩大见<a href="#sources">来源 05</a></span>
+      </aside>
+<div class="statement">
+        <span class="mono">问题佐证 · 两个硬数字</span>
+        问题本身有多真实，两个数字足以说明：产品的技术魅力与真实环境中的工作能力差距仍在扩大；与此同时，高质量<span class="term" data-t="embodied">具身</span>数据缺口超过 99%，物理智能没有 LLM 当年赖以爆发的现成数据基建。更完整的支撑论证（token 与算力效率、四条数据路径拆解、遥操作成本对比）都在<a class="link" href="insight.html" target="_blank" rel="noopener">思考 · 能力与部署的悖论</a>之中展开。
+      </div>
+
+      <a class="cta" href="about.html" target="_blank" rel="noopener">
+        <span class="eyebrow">Sheet MN-02 · Team</span>
+        <h3 class="h3">查看完整团队</h3>
+        <p>城市更新、农业科技、认知神经科技、存算一体、光交换……查看团队背景与研究领域。</p>
+        <span class="cta-go">了解我们 →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ 04 NOW & NEXT ═══ -->
+  <section class="band" id="s4">
+    <div class="rail"><span class="rail-num">04</span><span class="rail-en">Now &amp; Next</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">当下收窄差距，未来提供直觉</h2>
+
+      <div class="pair">
+        <div>
+          <h4 class="h4">NOW</h4>
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">数据飞轮</span>
+          场地数据产出验证标准，验证结果又反哺场地数据；部署得越多，两端积累越快。
+        </aside>
+          <p>microNature 现在做的，是补上 demo 与部署之间缺失的那一层基础设施。gap 的根源是真实物理基建的缺失，我们不追更大的模型。在此过程中构建壁垒：场景数据持续积累，验证标准逐步确立。</p>
+        </div>
+        <div>
+          <h4 class="h4">NEXT</h4>
+          <p>未来所做的是提供领域与任务所必需的直觉给机器，从供给端提供 physical intelligence。机器进入一个陌生的真实场景，不再需要从零认识世界，直觉已经由 infra 预先供给。</p>
+        </div>
+      </div>
+
+      <aside class="mnote mnote-term">
+        <span class="mnote-k">任务环境语义模型</span>
+        Task-environment ontology：把「场地能提供什么」与「任务需要什么」统一编码，机器接入即可被分派与评分。
+      </aside>
+      <div class="statement">
+        <span class="mono">Platform Vision</span>
+        microNature 要成为可以接入所有机器人智能体的平台，即，一个任务环境语义模型（task-environment ontology）：平台自动分配任务、机器人自适应执行，不同的感知栈与策略栈皆可接入；平台向每一个智能体提供直觉、任务与评分。接入的机器人清楚自己的可为与不可为，这是物理直觉供给的完整形态。
+      </div>
+
+      <div class="statement">
+        <span class="mono">为什么是必经之路</span>
+        产业不会跳过基建直接抵达通用。把真实物理世界的训练、验证、部署基建做扎实，下一阶段的准入标准就会出现。
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SOURCES ═══ -->
+  <section class="band" id="sources">
+    <div class="rail"><span class="rail-num">附</span><span class="rail-en">Sources</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">数据来源</h2>
+      <div class="notes">
+        <ol>
+          <li>IFR《World Robotics》：中国制造业机器人密度 470 台 / 万名员工（2023），全球第三；全球平均 162 台；2023 年中国新增安装 27.6 万台，约占全球 51%。</li>
+          <li>Gartner 及行业估算：人形机器人高质量数据缺口达万倍量级；遥操作数据成本约 2,000 元 / 小时。</li>
+          <li>盖世汽车研究院：具身高质量数据存量约 50 万小时，通用能力需求约 1,000 万小时，缺口超 99%；物理 AI 数据量约为 LLM 语料的 1/20,000；仿真可将单条数据成本降至 1/20 至 1/200。</li>
+          <li>弗若斯特沙利文：中国具身智能解决方案市场规模 2030 年预计约 1,426 亿元。</li>
+          <li>思考 · 能力与部署的悖论：token 与算力消耗高而能力不线性增长；数据总量天量但数据效率极低（小时级视频的有效物理知识可能不及千词文本）；遥操作、ego 视角、合成数据、视频学习四条主流数据路径的物理保真度均不足；叠加之下，机器人的规模定律（scaling law）至今未出现。</li>
+          <li>思考 · 数据成本对比：遥操作数据成本约 2,000 元 / 小时（Gartner），仿真可将单条数据成本降至 1/20 至 1/200；物理语料约为 LLM 语料的 1/20,000。</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="doc">
+    <div class="foot-line">
+      <span>microNature — Physical Intelligence Infrastructure</span>
+      <span>领域原生的物理智能基础设施</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js" defer></script>
+
+</body>
+</html>
