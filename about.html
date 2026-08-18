@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Theme before first paint: a saved choice wins; the English register reads
+   dark by default; otherwise the system preference decides. Runs this early
+   so a reload never flashes the other theme. */
+(function(){var t=null;try{t=localStorage.getItem('mn-theme');}catch(e){}
+if(t!=='dark'&&t!=='light'){var en=(document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en')===0;
+t=en?'dark':((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');}
+document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<title>我们 — microNature · 物理智能基础设施</title>
+<meta name="description" content="microNature 的成员与联系方式：覆盖商业判断、设计哲学、空间仿真到硬件极限的成建制队伍，全部经过真实产业交付。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="alternate" hreflang="zh-Hans" href="about.html">
+<link rel="alternate" hreflang="en" href="en/about.html">
+<link rel="alternate" hreflang="x-default" href="about.html">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="站点导航">
+  <div class="nav-in">
+    <a class="nav-mark" href="index.html">microNature<span>物理智能基础设施</span></a>
+    <span class="nav-here" aria-hidden="true"></span>
+    <div class="nav-links">
+      <a href="index.html">架构</a>
+      <a href="environmentaffordance.html">环境可为™</a>
+      <a href="map.html">地图样例</a>
+      <a href="atlas.html">场景图鉴</a>
+      <a href="insight.html">思考</a>
+      <span class="cur" aria-current="page">我们</span>
+    </div>
+  <div class="nav-lang">
+    <span class="cur" aria-current="true">中</span>
+    <a href="en/about.html" hreflang="en" lang="en">EN</a>
+  </div>
+  <button class="nav-theme" type="button" aria-pressed="false"></button>
+  </div>
+</nav>
+
+<main class="doc">
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <div class="tblock">
+      <div class="tblock-cell"><span class="tblock-k">Sheet</span><span class="tblock-v">MN-02</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Title</span><span class="tblock-v cn">我们</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Issue</span><span class="tblock-v">2026.08</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Scope</span><span class="tblock-v cn">商业 · 设计 · 仿真 · 硬件</span></div>
+    </div>
+
+    <h1 class="h1">我们是一个<del>超人</del>、<del>天才</del>，在擅长领域、性格偏好和来时路恰好互补的团队</h1>
+
+
+    <div class="hero-spec">
+      <span>产业 · 设计 · 技术 · 科研</span>
+    </div>
+
+        <p class="p">microNature 是新理念，却基于成熟技术。团队从商业与战略出发理解产业需求，以「环境可为」的设计哲学定义工程方法，凭十年以上的 GIS 与特种环境仿真一线经验完成交付，并由芯片与网络方向的科学家和顾问为硬件与云边演进提供参照。</p>
+  </header>
+
+  <!-- ═══ 00 MICRONATURE & EA ═══ -->
+  <section class="band" id="about-mn">
+    <div class="rail"><span class="rail-num">00</span><span class="rail-en">microNature</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">关于 microNature 与 Environment Affordance™</h2>
+      <div class="col">
+        <p class="p">microNature 是「物理智能基础设施」——为物理智能做真实世界的基建。与其让硬件迁就仿真，我们让物理引擎的发展遵循环境、场景与机器自身的规律，把真实部署场地变成可训练、可验证、可打分的数字考场。</p>
+        <p class="p">我们的业务流程是完整的 <strong>real → sim → real</strong>：真实场地采集 → 物理原生仿真 → 回到现场部署，部署反馈再回流仿真。基于此，我们交付环境训练 · 验证 · 部署全流程，也支持拆成单链单独交付。</p>
+      </div>
+
+      <div class="statement">
+        <span class="mono">核心组件 · Environment Affordance™</span>
+        从机器人视角和具体任务出发，在可复用的物理真实场景中做验证：把真实场地按机器的本体参数重新标注成一份可为性地图，把感知系统容易出错的场景先跑一遍，在部署之前给出可审计、可复现的验证结论。既可单独交付，也是 microNature 全链条的核心组件。
+      </div>
+
+      <div class="col">
+        <p class="p">与通用仿真平台不同，Environment Affordance™ 不是卖工具或引擎，而是作为<strong>独立验证机构</strong>交付验证结论本身：按客户真实部署场地数据直接转化，私有化本地部署、全国产化合规，场地数据、标注结果和测试报告全程留在客户自己的服务器与内网。更完整的说明见 <a class="link" href="environmentaffordance.html">产品 · Environment Affordance™</a>。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 01 MEMBERS ═══ -->
+  <section class="band" id="team">
+    <div class="rail"><span class="rail-num">01</span><span class="rail-en">Members</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">成员</h2>
+
+      <div class="roster">
+
+        <div class="person">
+          <div>
+            <div class="person-name">吕鹏辉</div>
+            <span class="person-role">联合创始人 · Co-founder</span>
+          </div>
+          <div>
+            <p>先后涉足北方华创、NBA 中国、农业科技、城市更新，现在和团队一起做物理智能基础设施，给机器装上物理直觉。</p>
+          </div>
+        </div>
+
+        <div class="person">
+          <div>
+            <div class="person-name">Manda</div>
+            <span class="person-role">联合创始人 · Co-founder</span>
+          </div>
+          <div>
+            <p>跨越战略咨询（工业制造业数字化转型、消费品 AIoT）、国家地理、认知神经学与非侵入式脑机等多个领域；从设计哲学出发，提出「环境可为」的概念和工程化方法，让环境对机器而言可理解、可行动。</p>
+          </div>
+        </div>
+
+        <div class="person">
+          <div>
+            <div class="person-name">王毅</div>
+            <span class="person-role">技术专家 · Principal Engineer</span>
+          </div>
+          <div>
+            <p>GIS 空间地信与特种工业环境仿真的一线经验超过十年；曾主导「十四五」国家重点研发计划项目，对特种场景的交付节奏和技术债务有完整判断。团队的技术定海神针。</p>
+          </div>
+        </div>
+
+        <div class="person">
+          <div>
+            <div class="person-name">玉虓</div>
+            <span class="person-role">科学家 · Scientist</span>
+            <span class="person-cred">清华大学硕士 · 东京大学博士<br>西安电子科技大学教授<br>前之江实验室<br>智能芯片与器件研究中心副主任</span>
+          </div>
+          <div>
+            <p>玉虓在集成电路与智能芯片领域拥有世界级的研究积累：博士期间在东京大学成功制备全球最薄锗基晶体管，成果发表于芯片器件领域顶级会议 IEDM，并获当年最佳学生论文奖；在西安电子科技大学及之江实验室主导存算一体及铁电芯片研发。</p>
+            <p>microNature 在规模化部署中，将持续逼近算力与感知硬件的物理极限。玉虓为 microNature 的技术方向提供专业判断，其在存算一体与前沿感知芯片领域的积累，为公司的硬件路线提供了重要参照。</p>
+          </div>
+        </div>
+
+        <div class="person">
+          <div>
+            <div class="person-name">闫付龙</div>
+            <span class="person-role">顾问 · Advisor</span>
+            <span class="person-cred">北京邮电大学副教授</span>
+          </div>
+          <div>
+            <p>近十年专注光交换网络领域研究。矿山、能源等私有化部署场景对数据吞吐和内部网络带宽的要求正快速逼近传统电交换的极限，他的研究为平台未来在云边协同方向的演进提供技术参照。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 02 CONTACT ═══ -->
+  <section class="band" id="contact">
+    <div class="rail"><span class="rail-num">02</span><span class="rail-en">Contact</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">联系方式</h2>
+      <div class="contact-grid">
+        <div class="contact-cell">
+          <span class="eyebrow">邮箱 · Email</span>
+          <p class="small"><a href="mailto:sunnta.spatial@gmail.com">sunnta.spatial@gmail.com</a></p>
+        </div>
+        <div class="contact-cell">
+          <span class="eyebrow">微信 · WeChat</span>
+          <p class="small"><button class="copy" type="button" data-copy="Stephen_Lyu" aria-label="复制微信号 Stephen_Lyu"><span class="copy-v">Stephen_Lyu</span><span class="copy-k" role="status">点按复制</span></button></p>
+        </div>
+      </div>
+      <div class="col">
+        <p class="p" style="margin-top:26px">无论是探讨合作、加入我们，还是只想聊聊物理智能的下一步，都欢迎从一片真实的场地开始。邀请您和我们聊聊所在的行业、正在负责的场地类型，以及您的问题与洞见，我们很乐意倾听、分享观察，也可以提供有针对性的报告样例。</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="doc">
+    <div class="foot-line">
+      <span>microNature — Physical Intelligence Infrastructure</span>
+      <span>领域原生的物理智能基础设施</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js" defer></script>
+</body>
+</html>
