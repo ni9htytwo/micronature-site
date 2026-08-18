@@ -1,0 +1,389 @@
+/* ==========================================================================
+   microNature — Blueprint register
+   Loads AFTER mn.css. Same tokens, different bearing: this page is a drawing
+   sheet, not a report. Denser type, mono-dominant labels, a drawn sheet frame
+   instead of an editorial margin, a title block instead of a footer.
+
+   The page script is untouched and still refers to the original variable
+   names, so §0 aliases them onto the design system.
+   ========================================================================== */
+
+/* ---- 0. Compatibility aliases (do not remove — the script emits these) --- */
+:root{
+  --sheet:  var(--paper);
+  --desk:   var(--ground);
+  --ink2:   var(--ink-2);
+  --ink3:   var(--ink-3);
+  --rule2:  var(--rule-2);
+  --alarm:  var(--flag);
+  --ok:     var(--accent);
+  --draft:  var(--mono);
+  /* Fourth verdict state. Green / red / grey come from the system; a
+     conditional pass needs its own value, muted to sit with them. */
+  --cond:   #8A6A12;
+}
+
+/* Dark theme: the only token this register owns. Everything else is aliased
+   from site.css and follows the theme on its own. */
+html[data-theme="dark"]{ --cond:#D0A63A }
+
+/* The pressed body button sits on the accent; in dark the accent is a light
+   green, so its secondary line needs dark ink instead of white. */
+html[data-theme="dark"] .bbtn[aria-pressed="true"] .n{ color:rgba(15,22,19,.76) }
+
+/* ---- 1. Register shift -------------------------------------------------- */
+/* One step tighter than Editorial throughout: a drawing sheet is read closer
+   than an essay. The scale itself is unchanged. */
+body.blueprint{
+  --t-base: 15px;
+  background:var(--ground);
+  line-height:1.8;
+}
+
+/* ---- 2. The sheet ------------------------------------------------------- */
+.sheet{
+  position:relative;
+  max-width:1240px;
+  margin:clamp(16px,2.4vw,34px) auto clamp(28px,4vw,58px);
+  background:var(--paper);
+  border:1px solid var(--ink);
+  padding:clamp(30px,3.6vw,54px) clamp(18px,3.2vw,54px);
+}
+/* Inner offset rule — the drafting sheet border. Replaces the drop shadow. */
+.sheet::before{
+  content:''; position:absolute; inset:7px;
+  border:1px solid var(--rule-2);
+  pointer-events:none; z-index:0;
+}
+.sheet > *{ position:relative; z-index:1 }
+
+.stamp{
+  position:absolute; top:-1px; right:clamp(20px,4vw,58px); z-index:2;
+  background:var(--ink); color:var(--paper);
+  font-family:var(--mono); font-size:10px; font-weight:500;
+  letter-spacing:.18em; text-transform:uppercase; padding:6px 14px;
+}
+
+/* ---- 3. Crumbs ---------------------------------------------------------- */
+.crumbs{ display:flex; flex-wrap:wrap; gap:8px 26px; margin-bottom:30px }
+.crumb{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:500;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-2); text-decoration:none;
+  border-bottom:1px solid var(--rule); padding-bottom:3px;
+  transition:color .16s, border-color .16s;
+}
+.crumb:hover{ color:var(--accent); border-bottom-color:var(--accent) }
+.crumb.parent{ color:var(--ink-3) }
+
+/* ---- 4. Sheet head ------------------------------------------------------ */
+header.hd{ margin-bottom:38px }
+header.hd h1{
+  font-family:var(--disp); font-size:var(--t-2xl); font-weight:400;
+  line-height:1.06; letter-spacing:-.03em; margin-bottom:18px;
+}
+header.hd .sub{
+  font-size:var(--t-md); font-weight:400; line-height:1.7;
+  color:var(--ink-2); max-width:62ch;
+}
+
+/* The meta strip is this sheet's title block — same language as .tblock on
+   the other four sheets, and the script keeps its DWG field live. */
+.meta{
+  display:grid; grid-template-columns:repeat(5,minmax(0,1fr));
+  margin-top:34px;
+  border-top:1px solid var(--ink); border-bottom:1px solid var(--rule);
+}
+.meta div{ padding:14px 16px 15px; border-left:1px solid var(--rule); min-width:0 }
+.meta div:first-child{ border-left:0; padding-left:0 }
+.meta .k{
+  font-family:var(--mono); font-size:10px; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3);
+  display:block; margin-bottom:5px;
+}
+.meta .v{
+  font-size:var(--t-sm); font-weight:500; line-height:1.5;
+  display:block; word-break:keep-all;
+}
+
+/* ---- 5. Sections -------------------------------------------------------- */
+.sec{ margin:0 0 clamp(38px,4.6vw,58px); scroll-margin-top:calc(var(--nav-h) + 150px) }
+.sec-no{
+  font-family:var(--mono); font-size:var(--t-xs); font-weight:500;
+  letter-spacing:.15em; text-transform:uppercase; color:var(--ink-3);
+  display:block; margin-bottom:11px;
+}
+.sec-no b{ color:var(--accent); font-weight:600 }
+
+h2.t{
+  font-family:var(--disp); font-size:var(--t-lg); font-weight:500;
+  line-height:1.28; letter-spacing:-.018em; margin-bottom:14px;
+  text-wrap:balance;
+}
+h3.t{
+  font-family:var(--disp); font-size:var(--t-md); font-weight:600;
+  line-height:1.4; letter-spacing:-.01em; margin:36px 0 12px;
+}
+p.p{
+  font-size:var(--t-base); font-weight:400; line-height:1.86;
+  color:var(--ink-2); margin-bottom:15px; max-width:74ch;
+}
+p.p strong{ font-weight:600; color:var(--ink) }
+.lead{ font-size:var(--t-md); font-weight:400; color:var(--ink-2); max-width:70ch }
+hr.r{ border:0; border-top:1px solid var(--rule); margin:0 0 clamp(34px,4vw,46px) }
+
+p.p code,.tag{
+  font-family:var(--mono); font-size:.86em;
+  background:var(--wash); padding:1px 5px; border:1px solid var(--rule-2);
+}
+
+/* ---- 6. Tables ---------------------------------------------------------- */
+.scroll-x{ overflow-x:auto; -webkit-overflow-scrolling:touch }
+table.t{ width:100%; border-collapse:collapse; margin:20px 0 8px; font-size:var(--t-sm) }
+table.t th{
+  font-family:var(--mono); font-size:10px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3);
+  text-align:left; padding:0 10px 10px; border-bottom:1px solid var(--ink);
+  vertical-align:bottom; white-space:nowrap;
+}
+table.t td{
+  padding:11px 10px; border-bottom:1px solid var(--rule-2);
+  vertical-align:top; line-height:1.68; color:var(--ink-2);
+}
+table.t tbody tr:last-child td{ border-bottom:1px solid var(--rule) }
+table.t tr:hover td{ background:var(--wash) }
+table.t td.num{
+  font-family:var(--mono); font-weight:600; text-align:center;
+  width:34px; font-size:13px; color:var(--ink);
+}
+table.t td.nm{ font-weight:600; color:var(--ink) }
+table.t td.mono,table.t .m{ font-family:var(--mono); font-size:11.5px }
+table.t td.nw{ white-space:nowrap }
+table.t td.hit{ background:var(--wash) }
+table.t tr:hover td.hit{ background:var(--wash) }
+
+.cap{
+  font-family:var(--mono); font-size:10px; letter-spacing:.04em;
+  color:var(--ink-3); margin-top:9px; line-height:1.75;
+}
+.cap b{ color:var(--ink-2); font-weight:600 }
+
+/* Provenance code. M1 measured reads solid, M5 unverified reads flagged. */
+.src{
+  font-family:var(--mono); font-size:9px; color:var(--ink-3);
+  border:1px solid var(--rule); padding:0 3px; margin-left:4px;
+  vertical-align:1px; letter-spacing:.03em; cursor:help; white-space:nowrap;
+}
+.src.M1{ border-color:var(--ink); color:var(--ink) }
+.src.M5{ border-color:var(--flag); color:var(--flag) }
+
+/* ---- 7. Verdicts -------------------------------------------------------- */
+.v{ font-family:var(--mono); font-size:12px; font-weight:600; white-space:nowrap }
+.v .g{ display:inline-block; width:15px }
+.v-pass{ color:var(--accent) }
+.v-cond{ color:var(--cond) }
+.v-fail{ color:var(--flag) }
+.v-na{ color:var(--ink-3) }
+.meta .v{ font-family:var(--body); font-size:var(--t-sm); font-weight:500 }
+
+/* ---- 8. Control bar ----------------------------------------------------- */
+/* The live field of the title block: what is bound to this sheet right now. */
+.ctrl{
+  position:sticky; top:var(--nav-h); z-index:40;
+  background:var(--paper);
+  border-top:1px solid var(--ink); border-bottom:1px solid var(--ink);
+  margin:0 0 26px;
+}
+.ctrl-row{ display:flex; flex-wrap:wrap; align-items:stretch; border-bottom:1px solid var(--rule-2) }
+.ctrl-row:last-child{ border-bottom:0 }
+.ctrl-lab{
+  font-family:var(--mono); font-size:9px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3);
+  padding:9px 14px; width:124px; flex-shrink:0;
+  border-right:1px solid var(--rule-2); line-height:1.5;
+}
+.ctrl-lab b{ display:block; color:var(--ink); font-weight:600; font-size:10px; letter-spacing:.1em }
+
+/* Four options, one of them on. The ring and the dot do the telling: three
+   empty rings beside one filled one already say the other three can be had. */
+.bodies{ display:flex; flex:1; flex-wrap:wrap }
+.bbtn{
+  flex:1 1 150px; border:0; border-right:1px solid var(--rule-2);
+  background:transparent; cursor:pointer; padding:8px 14px; text-align:left;
+  font-family:inherit; color:var(--ink); transition:background-color .14s;
+  display:flex; align-items:flex-start; gap:8px;
+}
+.bbtn .mk{
+  font-family:var(--mono); font-size:11px; line-height:1.45;
+  color:var(--ink-3); flex-shrink:0;
+}
+.bbtn .mk::before{ content:'○' }
+.bbtn .bt{ min-width:0 }
+.bbtn:last-child{ border-right:0 }
+.bbtn:hover{ background:var(--wash) }
+.bbtn .m{ display:block; font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:.04em }
+.bbtn .n{ display:block; font-size:11.5px; font-weight:400; color:var(--ink-2); margin-top:1px }
+.bbtn[aria-pressed="true"]{ background:var(--accent); color:var(--paper) }
+.bbtn[aria-pressed="true"] .mk{ color:var(--paper) }
+.bbtn[aria-pressed="true"] .mk::before{ content:'●' }
+.bbtn[aria-pressed="true"] .n{ color:rgba(255,255,255,.76) }
+.bbtn:focus-visible{ outline:2px solid var(--accent); outline-offset:-3px }
+
+.layers{ display:flex; flex-wrap:wrap; flex:1 }
+.lchk{
+  display:flex; align-items:center; gap:6px; padding:7px 12px;
+  border-right:1px solid var(--rule-2);
+  font-family:var(--mono); font-size:10px; letter-spacing:.03em;
+  cursor:pointer; user-select:none; color:var(--ink-3);
+}
+.lchk:hover{ background:var(--wash) }
+.lchk input{ accent-color:var(--accent); width:12px; height:12px; cursor:pointer }
+.lchk input:checked+span{ color:var(--ink) }
+
+.readout{ flex:1; display:flex; flex-wrap:wrap }
+.ro{
+  padding:7px 14px; border-right:1px solid var(--rule-2);
+  font-family:var(--mono); font-size:9.5px; line-height:1.5; color:var(--ink-3);
+}
+.ro b{
+  display:block; font-size:8.5px; letter-spacing:.12em; color:var(--ink-3);
+  text-transform:uppercase; font-weight:500;
+}
+.ro em{ font-style:normal; color:var(--ink); font-weight:600; display:block; font-size:11px; line-height:1.35 }
+.ro.chg em{ color:var(--accent) }
+
+/* ---- 9. Figures --------------------------------------------------------- */
+.fig{ margin:24px 0 8px }
+.fig svg{ display:block; width:100%; height:auto; background:var(--paper) }
+.fig-b{ border:1px solid var(--rule); background:var(--paper); overflow:hidden }
+
+/* ---- 10. Legend --------------------------------------------------------- */
+.lg{ display:grid; grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); gap:18px 32px; margin:18px 0 4px }
+.lg-i{ display:flex; gap:12px; align-items:flex-start }
+.lg-i svg{ flex-shrink:0; margin-top:2px; border:1px solid var(--rule) }
+.lg-i h5{ font-size:var(--t-sm); font-weight:600; margin-bottom:3px; color:var(--ink) }
+.lg-i h5 span{
+  font-family:var(--mono); font-size:8.5px; color:var(--ink-3);
+  letter-spacing:.1em; margin-left:6px; font-weight:400; text-transform:uppercase;
+}
+.lg-i p{ font-size:11.5px; color:var(--ink-2); line-height:1.66 }
+
+/* ---- 11. Notes ---------------------------------------------------------- */
+.note{ border:1px solid var(--rule); border-left:2px solid var(--ink); padding:22px 26px; margin:24px 0; background:var(--ground) }
+.note.warn{ border-left-color:var(--flag) }
+.note .h{
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:10px;
+}
+.note p{ font-size:var(--t-sm); line-height:1.85; color:var(--ink-2) }
+.note p+p{ margin-top:10px }
+.note ol,.note ul{ margin:6px 0 0 18px; font-size:var(--t-sm); line-height:1.82; color:var(--ink-2) }
+.note li{ margin-bottom:7px }
+.note li:last-child{ margin-bottom:0 }
+.note strong{ color:var(--ink); font-weight:600 }
+
+/* ---- 12. Comparison triptych -------------------------------------------- */
+.cmp{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); border:1px solid var(--rule); margin:22px 0 }
+.cmp>div{ padding:18px 20px; border-left:1px solid var(--rule); min-width:0 }
+.cmp>div:first-child{ border-left:0 }
+.cmp .em{
+  font-family:var(--mono); font-size:10px; letter-spacing:.1em;
+  color:var(--ink-3); text-transform:uppercase; display:block; margin-bottom:8px;
+}
+.cmp .vd{ font-size:15px; font-weight:600; margin-bottom:7px; font-family:var(--mono) }
+.cmp p{ font-size:12px; color:var(--ink-2); line-height:1.75 }
+
+/* ---- 13. Stat strip ----------------------------------------------------- */
+.stats{ display:flex; flex-wrap:wrap; border:1px solid var(--rule); margin:20px 0 }
+.stats>div{ flex:1 1 120px; padding:14px 16px; border-left:1px solid var(--rule-2); min-width:0 }
+.stats>div:first-child{ border-left:0 }
+.stats .k{
+  font-family:var(--mono); font-size:8.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-3); display:block; margin-bottom:4px;
+}
+.stats .n{ font-family:var(--mono); font-size:21px; font-weight:600; line-height:1.1; color:var(--ink) }
+.stats .u{ font-size:10.5px; color:var(--ink-3); font-weight:400; margin-left:3px }
+
+/* ---- 14. Title block ---------------------------------------------------- */
+/* Drafting convention: the sheet signs itself at the bottom. */
+footer.ft{
+  border:1px solid var(--rule); border-top:1px solid var(--ink);
+  margin:clamp(38px,5vw,64px) 0 0;
+  padding:0;
+  display:grid; grid-template-columns:1.35fr 1fr 1fr;
+}
+.ft-b{
+  padding:20px 24px 22px;
+  font-family:var(--disp); font-size:var(--t-md); font-weight:600;
+  letter-spacing:-.01em; align-self:center;
+}
+.ft-b em{ font-style:normal; color:var(--accent) }
+.ft-r{
+  padding:20px 22px 22px; border-left:1px solid var(--rule);
+  font-size:11px; color:var(--ink-3); line-height:1.7;
+}
+.ft-r a{ color:var(--ink-2); text-decoration:none; border-bottom:1px solid var(--rule) }
+.ft-r a:hover{ color:var(--accent); border-bottom-color:var(--accent) }
+
+/* The sheet closes with the same file-set strip as every other page; only the
+   spacing is refitted to sit inside the drafting border. */
+.sheet .foot{ margin-top:clamp(38px,5vw,64px); padding:26px 0 0 }
+.foot-sheet{
+  margin-top:18px; padding-top:15px; border-top:1px solid var(--rule-2);
+  display:flex; flex-wrap:wrap; gap:5px 26px;
+  font-size:11px; line-height:1.7; color:var(--ink-3);
+}
+.foot-sheet .mono{ color:var(--ink) }
+
+
+/* ---- 15. Responsive ----------------------------------------------------- */
+@media (max-width:1000px){
+  .meta{ grid-template-columns:repeat(3,minmax(0,1fr)) }
+  .meta div:nth-child(4){ border-left:0; padding-left:0 }
+  .meta div:nth-child(-n+3){ border-bottom:1px solid var(--rule-2) }
+  footer.ft{ grid-template-columns:1fr 1fr }
+  .ft-b{ grid-column:1 / -1; border-bottom:1px solid var(--rule) }
+  .ft-r{ border-left:0 }
+}
+@media (max-width:820px){
+  /* Switching bodies is the whole point of this sheet, so the control bar
+     stays reachable and the site nav yields instead of stacking two bars.
+     Layers and readout scroll sideways rather than stacking into a wall. */
+  .nav{ position:static }
+  .ctrl{ top:0 }
+  .ctrl-lab{ width:62px; padding:8px 10px; font-size:8.5px; letter-spacing:.1em }
+  .ctrl-lab b{ font-size:9px }
+  .bbtn{ flex:1 1 45%; padding:7px 11px }
+  .layers,.readout{ flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch }
+  .layers::-webkit-scrollbar,.readout::-webkit-scrollbar{ height:0 }
+  .lchk,.ro{ flex:0 0 auto; white-space:nowrap }
+  .sec{ scroll-margin-top:190px }
+  .cmp>div{ border-left:0; border-top:1px solid var(--rule) }
+  .cmp>div:first-child{ border-top:0 }
+  .scroll-x table{ min-width:760px }
+}
+@media (max-width:560px){
+  .sheet{ margin-inline:0; border-left:0; border-right:0 }
+  .sheet::before{ display:none }
+  .meta{ grid-template-columns:repeat(2,minmax(0,1fr)) }
+  .meta div{ border-left:1px solid var(--rule); padding:12px }
+  .meta div:nth-child(odd){ border-left:0; padding-left:0 }
+  header.hd h1{ font-size:30px }
+  footer.ft{ grid-template-columns:1fr }
+  .ft-r{ border-left:0; border-top:1px solid var(--rule) }
+  .stamp{ right:12px }
+}
+
+/* ---- 16. Print ---------------------------------------------------------- */
+@media print{
+  body.blueprint{ background:#fff }
+  html[data-theme="dark"]{ --cond:#8A6A12 }
+  html[data-theme="dark"] .bbtn[aria-pressed="true"] .n{ color:rgba(255,255,255,.76) }
+  .nav,.crumbs,.layers{ display:none }
+  .sheet{ border:1px solid #000; margin:0; max-width:none }
+  .sheet::before{ display:none }
+  .ctrl{ position:static; break-inside:avoid }
+  .bbtn{ display:none }
+  .bbtn[aria-pressed="true"]{ display:block }
+  .fig,table.t,.note,.cmp,.sec{ break-inside:avoid }
+}
