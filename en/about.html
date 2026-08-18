@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Theme before first paint: a saved choice wins; the English-language version
+   defaults to dark; otherwise the system preference decides. Runs this early
+   so a reload never flashes the other theme. */
+(function(){var t=null;try{t=localStorage.getItem('mn-theme');}catch(e){}
+if(t!=='dark'&&t!=='light'){var en=(document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en')===0;
+t=en?'dark':((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');}
+document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<title>About — microNature · Physical Intelligence Infrastructure</title>
+<meta name="description" content="The people behind microNature and how to reach us. One team spanning commercial judgement, design philosophy, spatial simulation and the limits of hardware — all of it proven in real industrial delivery.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="alternate" hreflang="zh-Hans" href="../about.html">
+<link rel="alternate" hreflang="en" href="about.html">
+<link rel="alternate" hreflang="x-default" href="../about.html">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Site navigation">
+  <div class="nav-in">
+    <a class="nav-mark" href="index.html">microNature<span>Physical Intelligence Infrastructure</span></a>
+    <span class="nav-here" aria-hidden="true"></span>
+    <div class="nav-links">
+      <a href="index.html">Architecture</a>
+      <a href="environmentaffordance.html">Affordance™</a>
+      <a href="map.html">Map</a>
+      <a href="atlas.html">Atlas</a>
+      <a href="insight.html">Insight</a>
+      <span class="cur" aria-current="page">About</span>
+    </div>
+  <div class="nav-lang">
+    <a href="../about.html" hreflang="zh-Hans" lang="zh-CN">中</a>
+    <span class="cur" aria-current="true">EN</span>
+  </div>
+  <button class="nav-theme" type="button" aria-pressed="false"></button>
+  </div>
+</nav>
+
+<main class="doc">
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <div class="tblock">
+      <div class="tblock-cell"><span class="tblock-k">Sheet</span><span class="tblock-v">MN-02</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Title</span><span class="tblock-v cn">About</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Issue</span><span class="tblock-v">2026.08</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Scope</span><span class="tblock-v cn">Business · design · simulation · hardware</span></div>
+    </div>
+
+    <h1 class="h1"><del>Superheroes.</del> <del>Geniuses.</del> Just People Whose Strengths and Personalities Happen to Complement Each Other.</h1>
+
+
+    <div class="hero-spec">
+      <span>Industry · design · engineering · research</span>
+    </div>
+
+        <p class="p">microNature is a new idea built on mature technology. We read industrial demand through a commercial and strategic lens, build our engineering method on the design philosophy of environment affordance, and ground it all in over a decade of front-line experience in GIS and special-environment simulation.</p>
+  </header>
+
+  <!-- ═══ 00 MICRONATURE & EA ═══ -->
+  <section class="band" id="about-mn">
+    <div class="rail"><span class="rail-num">00</span><span class="rail-en">microNature</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">About microNature and Environment Affordance™</h2>
+      <div class="col">
+        <p class="p">microNature is <strong>physical intelligence infrastructure</strong> — the real-world groundwork physical intelligence runs on. Instead of bending hardware to fit a simulator, we work with the environment and the robot's own embodiment exactly as they physically are — never simplifying one to fit the other — turning the deployment site into a digital proving ground you can train on, validate against, and score.</p>
+        <p class="p">Our process runs the full <strong>real → sim → real</strong> loop: capture on the real site, physics-native simulation, then back to the site for deployment — with deployment feedback flowing back into simulation. We deliver training, validation and deployment end to end, or any single stage on its own.</p>
+      </div>
+
+      <div class="statement">
+        <span class="mono">Core component · Environment Affordance™</span>
+        Validation starts from the robot's point of view and a specific task, inside a reusable, physically real scene. We re-annotate your real site as the Affordance Map against your platform specs, prioritize the scenes most likely to mislead perception systems, and issue an <strong>auditable, reproducible verdict</strong> before deployment begins. Available on its own, Environment Affordance™ is also the core component of microNature.
+      </div>
+
+      <div class="col">
+        <p class="p">Unlike a general-purpose simulator, Environment Affordance™ doesn't sell you a tool or an engine — it acts as an <strong>independent verifier</strong> and delivers the verdict itself, generated directly from your own site data and run privately on local machines, fully compliant with domestic regulations. Your site data, annotation results and test reports stay on your servers and inside your network from start to finish. Read more in <a class="link" href="environmentaffordance.html">Product · Environment Affordance™</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 01 MEMBERS ═══ -->
+  <section class="band" id="team">
+    <div class="rail"><span class="rail-num">01</span><span class="rail-en">Members</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">Members</h2>
+
+      <div class="roster">
+
+        <div class="person">
+          <div>
+            <div class="person-name">Stephen</div>
+            <span class="person-role">Co-founder</span>
+          </div>
+          <div>
+            <p>Stephen has worked his way through industries that rarely meet: NAURA, NBA China, agricultural technology and urban regeneration. At microNature he is building physical intelligence infrastructure with the team — the work of giving robots physical intuition.</p>
+            <p>Away from work, Stephen dives and hikes — at home underwater or on a trail.</p>
+          </div>
+        </div>
+
+        <div class="person">
+          <div>
+            <div class="person-name">Manda</div>
+            <span class="person-role">Co-founder</span>
+          </div>
+          <div>
+            <p>Part strategist, part design philosopher, Manda's path has run through strategy consulting — digital transformation in industrial manufacturing and consumer AIoT — as well as National Geographic, cognitive neuroscience. She originated the concept of Environment Affordance and the engineering method through which it's realized: the idea of an environment that becomes legible to a robot, something it can read and act on.</p>
+            <p>She stargazes and seeks out ancient sites — habits that feed the same instinct for the long view. Across enough centuries, boom and bust are simply ordinary, and there is very little humanity cannot eventually make peace with.</p>
+          </div>
+        </div>
+
+        <div class="person">
+          <div>
+            <div class="person-name">Dylan</div>
+            <span class="person-role">Principal Engineer</span>
+          </div>
+          <div>
+            <p>Dylan has spent more than ten years on the front line of GIS, geospatial work and simulation of specialized industrial environments. He led a National Key R&D Programme project under the 14th Five-Year Plan, and knows the delivery pace and the technical debt of specialized settings inside out. He is the technical backbone of the team.</p>
+          </div>
+        </div>
+
+        <div class="person">
+          <div>
+            <div class="person-name">Yu Xiao</div>
+            <span class="person-role">Scientist</span>
+            <span class="person-cred">MSc, Tsinghua University · PhD, University of Tokyo<br>Professor, Xidian University<br>Formerly Zhejiang Lab<br>Deputy Director, Research Centre for Intelligent Chips and Devices</span>
+          </div>
+          <div>
+            <p>Yu Xiao's research in integrated circuits and intelligent chips is world-class. During his doctorate at the University of Tokyo he fabricated the thinnest germanium-based transistor reported at the time, and took it to IEDM, the leading conference in chip devices, where it won Best Student Paper that year. At Xidian University and Zhejiang Lab he led development of compute-in-memory and ferroelectric chips.</p>
+            <p>As microNature's deployments scale, they will keep pushing towards the physical limits of compute and sensing hardware. That is where Yu Xiao comes in: professional judgement on technical direction, with his work in compute-in-memory and frontier sensing chips as the key reference for our hardware path.</p>
+          </div>
+        </div>
+
+        <div class="person">
+          <div>
+            <div class="person-name">Yan Fulong</div>
+            <span class="person-role">Advisor</span>
+            <span class="person-cred">Associate Professor, Beijing University of Posts and Telecommunications</span>
+          </div>
+          <div>
+            <p>Yan Fulong has spent close to ten years researching optical switching networks. Private deployments in mining and energy are pushing data throughput and internal network bandwidth towards the limits of conventional electrical switching — and his work is our reference for where cloud-edge coordination goes next.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 02 CONTACT ═══ -->
+  <section class="band" id="contact">
+    <div class="rail"><span class="rail-num">02</span><span class="rail-en">Contact</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">Contact</h2>
+      <div class="contact-grid">
+        <div class="contact-cell">
+          <span class="eyebrow">Email</span>
+          <p class="small"><a href="mailto:sunnta.spatial@gmail.com">sunnta.spatial@gmail.com</a></p>
+        </div>
+        <div class="contact-cell">
+          <span class="eyebrow">WeChat</span>
+          <p class="small"><button class="copy" type="button" data-copy="Stephen_Lyu" aria-label="Copy WeChat ID Stephen_Lyu"><span class="copy-v">Stephen_Lyu</span><span class="copy-k" role="status">tap to copy</span></button></p>
+        </div>
+      </div>
+      <div class="col">
+        <p class="p" style="margin-top:26px">Whether you're exploring a partnership or just curious where physical intelligence is headed — we'd love to start with a real site. Tell us about your industry, the kind of site you look after, and whatever questions or observations you're carrying. We'll listen, share how we'd read it, and where it makes sense, put together a sample report shaped around your case.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="doc">
+    <div class="foot-line">
+      <span>microNature — Physical Intelligence Infrastructure</span>
+      <span>Domain-native infrastructure for physical intelligence</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../site.js" defer></script>
+</body>
+</html>
