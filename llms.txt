@@ -1,0 +1,27 @@
+# microNature
+
+> microNature builds the real-world infrastructure for physical intelligence: turning actual deployment sites into trainable, validatable, scorable digital proving grounds (Environment Affordance™), and supplying the scene data and domain-native physics models that embodied AI is missing. Bilingual site (English + 中文).
+
+Canonical site: https://micronature.pages.dev/
+Contact: see the About page. All articles are original writing by the microNature team.
+
+## Company & product
+- [Home](https://micronature.pages.dev/en/): microNature builds the real-world infrastructure for physical intelligence. The site a robot will actually work on becomes a digital proving ground it can be trained on, validated against and scored in, delivered across training, validation and deployment. — 中文: https://micronature.pages.dev/
+- [About / 我们](https://micronature.pages.dev/en/about): The people behind microNature and how to reach us. One team spanning commercial judgement, design philosophy, spatial simulation and the limits of hardware — all of it proven in real industrial delivery. — 中文: https://micronature.pages.dev/about
+- [Environment Affordance™](https://micronature.pages.dev/en/environmentaffordance): Environment Affordance™ annotates a real site as an affordance map against a robot's body parameters, builds sensor-deception scenes for red-team testing, and delivers annotation files, a standardised validation report and a scenario library. Deployed privately, compatible with every domestic CPU architecture. — 中文: https://micronature.pages.dev/environmentaffordance
+- [Affordance Map (sample deliverable)](https://micronature.pages.dev/en/map): An Environment Affordance™ sample deliverable. One example PV and storage plant of 520 × 340 m, 15 annotated elements × 4 platforms = 60 verdicts. Switch platform and the whole drawing recomputes live, reusing the L2 base map and recomputing the L3 annotation alone. — 中文: https://micronature.pages.dev/map
+- [Sensor Deception Library (sample deliverable)](https://micronature.pages.dev/en/atlas): A sample Environment Affordance™ deliverable. Eight classes of sensor deception scene, each shown as three drawings stacked on the same site. In DS-04 the cable trench takes live parameter changes, so you can see which setting flips the verdict. — 中文: https://micronature.pages.dev/atlas
+- [Insight — blog index / 思考](https://micronature.pages.dev/en/insight): Observations and opinions on how physical intelligence actually gets deployed. — 中文: https://micronature.pages.dev/insight
+
+## Blog · Insight (思考)
+Observations and opinions on how physical intelligence actually gets deployed. Each piece stands alone.
+
+- [Raising Machines in the Deep: Why Trial and Error Is the Costliest Thing at Sea](https://micronature.pages.dev/en/insight/02-raising-machines-in-the-deep): Autonomous underwater vehicles keep getting better at everything on a spec sheet — until they have to touch something. Cost, validation and environment, and the two bottlenecks they separate. (by Manda, 2026-09-13)
+  - 中文版: [试错这么贵，谁来托举深海自主化](https://micronature.pages.dev/insight/02-who-underwrites-deep-sea-autonomy)
+- [The Capability–Deployment Paradox](https://micronature.pages.dev/en/insight/01-capability-deployment-paradox): Where the difficulty in deploying physical intelligence actually sits, read through compute, data, and the paths by which data is acquired. (by Stephen, 2026-08)
+  - 中文版: [能力与部署的悖论](https://micronature.pages.dev/insight/01-capability-deployment-paradox)
+
+## Machine-readable files
+- [sitemap.xml](https://micronature.pages.dev/sitemap.xml): every public URL with hreflang alternates.
+- [llms-full.txt](https://micronature.pages.dev/llms-full.txt): full text of the Insight articles inline.
+- [feed](https://micronature.pages.dev/insight): blog index (HTML).
