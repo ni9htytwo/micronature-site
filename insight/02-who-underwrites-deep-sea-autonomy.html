@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Theme before first paint: a saved choice wins; the English register reads
+   dark by default; otherwise the system preference decides. Runs this early
+   so a reload never flashes the other theme. */
+(function(){var t=null;try{t=localStorage.getItem('mn-theme');}catch(e){}
+if(t!=='dark'&&t!=='light'){var en=(document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en')===0;
+t=en?'dark':((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');}
+document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<title>试错这么贵，谁来托举深海自主化 — microNature 思考</title>
+<meta name="description" content="深海机器人越来越聪明，现场表现却没有同步变好。从成本、验证与环境三个变量入手，把常被混为一谈的“能力瓶颈”与“验证瓶颈”拆开来看，并说明 microNature 如何让代价高昂的试错更早、更便宜地发生。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="alternate" hreflang="zh-Hans" href="02-who-underwrites-deep-sea-autonomy.html">
+<link rel="alternate" hreflang="x-default" href="02-who-underwrites-deep-sea-autonomy.html">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="站点导航">
+  <div class="nav-in">
+    <a class="nav-mark" href="../index.html"><svg class="nav-mark-logo" viewBox="0 0 1200 676.829" aria-hidden="true"><g transform="scale(756.283448) translate(0.79335,1.00000)"><path d="M0.79335 -0.60876 A1.00000 1.00000 0 0 0 -0.79335 -0.60876 L-0.13692 -0.10506 L-0.60199 -0.62158 L-0.55525 -0.66367 L-0.09017 -0.14715 L-0.33925 -0.79603 L-0.28053 -0.81857 L-0.03145 -0.16969 L-0.03145 -0.86473 L0.03145 -0.86473 L0.03145 -0.16969 L0.28053 -0.81857 L0.33925 -0.79603 L0.09017 -0.14715 L0.55525 -0.66367 L0.60199 -0.62158 L0.13692 -0.10506 Z" fill="currentColor"/></g></svg>microNature<span>物理智能基础设施</span></a>
+    <span class="nav-here" aria-hidden="true"></span>
+    <div class="nav-links">
+      <a href="../index.html">架构</a>
+      <a href="../environmentaffordance.html">环境可为™</a>
+      <a href="../map.html">地图样例</a>
+      <a href="../atlas.html">场景图鉴</a>
+      <a href="../insight.html" class="cur" aria-current="page">思考</a>
+      <a href="../about.html">我们</a>
+    </div>
+  <div class="nav-lang">
+    <span class="cur" aria-current="true">中</span>
+    <a href="../en/insight.html" hreflang="en" lang="en">EN</a>
+  </div>
+  <button class="nav-theme" type="button" aria-pressed="false"></button>
+  </div>
+</nav>
+
+<main class="doc">
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <div class="tblock">
+      <div class="tblock-cell"><span class="tblock-k">Sheet</span><span class="tblock-v">MN-A2</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Title</span><span class="tblock-v cn">试错这么贵，谁来托举深海自主化</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Issue</span><span class="tblock-v">2026.09</span></div>
+      <div class="tblock-cell"><span class="tblock-k">Author</span><span class="tblock-v">Manda</span></div>
+    </div>
+
+    <h1 class="h1">试错这么贵，谁来托举深海自主化</h1>
+
+    <p class="lede hero-lede">深海机器人的自主化里有一个容易被忽略的问题：机器越来越聪明，现场表现却没有同步变好。本文从成本、验证与环境三个变量入手，把常被混为一谈的“能力瓶颈”与“验证瓶颈”拆开来看。这也正是 microNature 着力解答的问题——如何让真实世界里代价高昂的试错，更早、更便宜地发生。</p>
+
+    <div class="hero-spec">
+      <span>Insights</span>
+      <span>三个变量 · <b>成本 / 验证 / 环境</b></span>
+      <span>MN-A2 · 2026.09</span>
+    </div>
+
+    <div class="statement">
+      <span class="mono">摘要</span>
+      海底的试错贵到几乎无法“再来一次”，失败因此暴露得更晚、修正更难确认。把一部分验证从海上移到岸上、让环境成为可反复调用的资产，未必让机器更聪明，却能让更多问题在昂贵的海试之前就被发现和解决。
+    </div>
+
+    <div class="col">
+      <p class="p">从技术演进中寻找启示，与对深海自主化前景作出判断，是两回事。消费端和工业端机器人的进步，容易使人形成一种乐观预期：机器越聪明，工作表现就应该越好。扫地机器人大概最容易让人感受到这一点。早些年，它的清扫过程堪比随机游走，碰到桌腿就扭转自己，反复撞墙才会回头。后来，它有了激光雷达，知道自己在哪里，清楚哪些地方已经扫过，也清楚接下来应该去哪里。这一两年，随着路径规划、传感器、计算能力和控制算法不断进步，扫地机器人对自己所在的世界似乎有了某种理解，终于不再到处乱撞。</p>
+      <p class="p">但到了水下，这件事却没那么顺理成章。近几年，AUV（自主水下机器人）在规划与控制、感知、导航、通信和人工智能等方面一直在进步；但如果任务不是“看看就好”，而是要求机器人真正与环境发生物理接触，比如对接、抓取、插拔，或者拧一个阀门，机器就不太灵了。截至目前，很多任务依然更依赖 ROV（遥控水下机器人）和人工介入。技术实力的确快速提升了，但机器在深海里的自主工作能力，却没有快速提高，这是为什么？</p>
+      <p class="p">本文想从三个变量入手：成本、验证与环境。其一，深海作业的成本结构不同于陆地，试错机会极为昂贵；其二，观测型自主与干预型自主对真实世界经验的依赖程度不同；其三，环境一旦能够被记录、保存和重新调用，就不再只是机器被动适应的场所，而可能成为开发过程中的一项资产。三者合起来，或许能够解释一个看似矛盾的现象：机器越来越聪明，但在深海里，聪明不等于好用。</p>
+    </div>
+
+    <a class="uplink" href="../insight.html">← 返回思考 · microNature Blog</a>
+  </header>
+
+  <!-- ═══ CONTENTS ═══ -->
+  <section class="band" id="toc">
+    <div class="rail"><span class="rail-num">00</span><span class="rail-en">Contents</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <nav class="toc" aria-label="目录">
+        <ol class="toc-list">
+          <li><a href="#s1"><span class="toc-n">01</span><span class="toc-t">成本敏感度 · 深海作业最昂贵的是再试一次</span><span class="toc-d">Cost</span></a></li>
+          <li><a href="#s2"><span class="toc-n">02</span><span class="toc-t">观测型自主与干预型自主 · 经验依赖的差异</span><span class="toc-d">Experience</span></a></li>
+          <li><a href="#s3"><span class="toc-n">03</span><span class="toc-t">能力瓶颈与验证瓶颈 · 两种解释</span><span class="toc-d">Bottlenecks</span></a></li>
+          <li><a href="#s4"><span class="toc-n">04</span><span class="toc-t">从失败中寻找证据 · 归因的困难</span><span class="toc-d">Attribution</span></a></li>
+          <li><a href="#s5"><span class="toc-n">05</span><span class="toc-t">验证的内化 · 把海试从“学习”转向“确认”</span><span class="toc-d">Internalization</span></a></li>
+          <li><a href="#s6"><span class="toc-n">06</span><span class="toc-t">验证前移的限度 · 保真度、可迁移性与因果性</span><span class="toc-d">Limits</span></a></li>
+          <li><a href="#s7"><span class="toc-n">07</span><span class="toc-t">验证环境正在成为基础设施</span><span class="toc-d">Infrastructure</span></a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ═══ 01 ═══ -->
+  <section class="band" id="s1">
+    <div class="rail"><span class="rail-num">01</span><span class="rail-en">Cost</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">成本敏感度：深海作业最昂贵的是再试一次</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">船天 · Full vessel day</span>
+          母船出海一天的全部成本：船、人、动员与支持系统持续计费，无论机器在工作，还是在等待天气或作业窗口。
+        </aside>
+        <p class="p">先从成本说起。深海作业有一个特殊的计价单位，叫“船天”（full vessel day）。一艘母船出海后，无论机器人是在工作，还是因为天气、故障、作业窗口而等待，船、人和整套支持系统的成本都在持续累积，字面意思上的花钱如流水。据 Offshore Engineer 援引 Fearnley Offshore Supply 的市场数据，2025 年上半年，一些用于深水作业、配备大型主动升沉补偿起重机的作业船，日租金竟达到 6–8 万美元。按此计算，一次数周的作业，仅租金就可能达到百万美元级。</p>
+        <p class="p">若是衡量机器人的价格，这是一个制造业视角；相对应的，计算一项任务需要多少个船天，就是机会成本视角。母船、随船人员、动员与撤场、海上等待、工程支持、专用工具、再次调遣，都在成本中。机器本身自然价格不菲，但要把它送到现场、并维持到工作真正完成，这样的系统性成本远高于设备成本。</p>
+        <p class="p">一台普通的设备自设计完成后，就可以开始生产、交付、使用；而对一个仍在成长的自主系统来说，它却需要不断经历修改、测试、失败、分析、再修改的部署循环。有点麻烦，但接下来的事才称得上复杂。在陆地上，软件迭代完可以马上测试，控制参数变了可以当天再试，机械结构调整之后也可以很快重新验证，循环可以非常快。到了海上，每改变任意一环，都可能重新牵涉船、人、天气窗口和作业安排。</p>
+        <p class="p">正因为预算有限、贵的东西自然做得少，复杂带来的高成本是动态叠加的：它会进一步拉长开发周期，延缓失败暴露，拖慢修正之后的反馈。这个类比或许粗糙，但它能说明一件事：人类抚养小孩，钱和资源从不嫌多，这一点我们都清楚；但比经济兜底更珍贵的，是精神层面的托举，让小孩放心大胆尝试、体验，让他知道失败后可以重来。培育硅基也有点类似，对一个还在不断学习、需要尽快成熟、能够可靠工作的自主系统来说，设备和算力固然重要，但更珍贵的，是失败以后回到真实环境里再试一次的机会。</p>
+        <p class="p">偏偏水下最不适合“再来一次”。通信带宽有限，光学条件又容易受到浑浊度、距离和光照影响。GPS 无法直接在水下使用，高精度定位因此需要依赖其他定位手段，而这些手段自身又受到声学传播、能见度和环境条件的影响。诸如此类，对于以观测为主的任务已是不小的麻烦；要是碰上机械臂准确接近、对准并施力这样的干预任务，所有的困难又会被放大。但这里有一个问题：如果深海里试错本来就这么贵，观测型自主又是怎么绕开这个瓶颈、率先发展起来的？答案或许在于，“被放大”多少、能否承受，取决于任务对“当下真实经验”的依赖程度。这就引出了第二个变量。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 02 ═══ -->
+  <section class="band" id="s2">
+    <div class="rail"><span class="rail-num">02</span><span class="rail-en">Experience</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">观测型自主与干预型自主：经验依赖的差异</h2>
+      <div class="col">
+        <p class="p">遇到以“看”为目的的任务，AUV 可按照预设航线或一定程度的自主决策完成大范围的数据采集，不需要人时刻盯着。若涉及“上手操作”的任务，机器人需要靠近一个目标、准确对准接口、施加合适的力量，甚至在接触以后根据目标和自身状态的变化继续调整。除了要了解“眼前是什么”，机器人还必须知道“我这样拧一下，会发生什么，拧坏了怎么办”。</p>
+        <p class="p">“看”和“操作”的差别，背后有控制复杂度的因素，但根本在于两者对真实世界经验的依赖程度不同。以巡检任务为代表的“看”结束后，记录可以被带回陆地。当下可保存、事后可复盘，且在后期算法训练和任务分析中能让我们反复使用。操作任务的关键判断不能只靠事后复盘完成，尽管接触后的力反馈、轨迹记录可以带回陆地做离线分析，但那一刻具体该如何调整、如何避免损坏，必须在当下的物理交互中直接给出方案。</p>
+        <p class="p">而那个当下——充满了底质、海流、定位误差、目标的运动，以及接触之后产生的摩擦和阻力等诸多因素——让实际结果偏离预期。真实环境会不断暴露预期与实际之间的偏差；对于涉及物理接触的任务，其中一部分偏差会被藏匿在完全脱离真实环境的条件里，很难被发现。这就是为什么，“操作”比“看”更依赖一个如呼吸般不断循环的再来一次。</p>
+        <p class="p">如此一来，“机器越聪明，就越能干；既然不能干，那是因为它不够聪明么”这个问题（这里暂且把组织管理、供应链成熟度、监管与保险成本等外部因素放到一边，只看工程技术和验证条件），至少有两种解释。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 03 ═══ -->
+  <section class="band" id="s3">
+    <div class="rail"><span class="rail-num">03</span><span class="rail-en">Bottlenecks</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">能力瓶颈与验证瓶颈：两种解释</h2>
+      <div class="col">
+        <p class="p">第一种解释是压力给到机器：它们不够好。也许它们的感知、规划、控制或执行硬件，本身就还不足以可靠地完成这类干预。如果是机器自身的问题，我们可以继续提高感知、规划、控制和硬件能力。这就是“智能瓶颈”（intelligence bottleneck）。需要留意的是，这里的“智能”并不特指某一个 AI 模型，而是完成自主干预所需要的整套系统能力。</p>
+        <p class="p">但之前的成本拆解让我们发现另一种解释：机器也许没有足够的机会知道自己“不知道什么”，也就没有学习的机会。深海干预所面对的环境状态、几何关系和接触条件，组合起来为数众多，且不乏罕见而复杂的情形，开发阶段无法一一覆盖。正如前面的成本分析所显示的，海上试错的高成本会传导为迭代的高成本；对于自主干预，这意味着失败暴露得更晚，同类条件更难重新制造，修正之后也更难确认是否有效。我们把它叫做“验证瓶颈”（validation bottleneck）。</p>
+        <p class="p">尽管两种解释并不互斥，但它们会引导不同的工程投入。当增加感知、控制或执行能力以后，现场表现得到持续改善，证据更支持前者；当同类工况能够被更频繁地复现、测试，失败率和人工介入随之下降，则后者权重更大。</p>
+      </div>
+
+      <div class="statement">
+        <span class="mono">分野</span>
+        同一句“机器还不够能干”，可能指向两处完全不同的短板：一处在机器自身的能力，一处在它有没有机会知道自己“不知道什么”。投向哪里，取决于证据落在哪一边。
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 04 ═══ -->
+  <section class="band" id="s4">
+    <div class="rail"><span class="rail-num">04</span><span class="rail-en">Attribution</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">从失败中寻找证据：归因的困难</h2>
+      <div class="col">
+        <p class="p">左右权重的证据从哪里来？失败是一个不错的入口，它至少留下了事情从哪里开始偏离预期的痕迹。回看一批真实的水下干预记录，第一个问题并不是“这是不是验证不足”，而是一次失败究竟是怎么发生的：机器有没有看错目标，定位和状态估计有没有漂移，动作规划本身是否合理，控制是不是在接触之后开始失稳，末端执行器是否能力不足；也有一些失败，只在某种此前很少测试的底质、几何关系、姿态或者接触条件下出现。把这些原因尽可能分开，是判断两种瓶颈的第一步，毕竟“机器弄错了”这句话没什么价值。</p>
+        <p class="p">能够区分这两种解释的证据，要等到把当时的环境重新制造出来以后才会出现：相似的工况被反复复现，系统在其中一次次测试、修改、再测试，同一类失败是否随之减少，这时才看得出来。这里的差别细腻，却重要。“以前没测过，所以失败了”只是猜测；“以前覆盖不足，在增加有针对性的验证之后，同类失败持续下降”，才算是支持验证瓶颈的证据。反过来，一种工况已被频繁复现、测试，同类失败却没有明显下降，那么“验得不够”就不能继续充当主要解释，权重就该回到智能瓶颈一侧。</p>
+        <p class="p">现实不会如此简单。机器能力在提高，验证条件也在改善，一次失败往往同时夹杂感知、控制和环境的不确定性，很难找到纯粹的实验条件，归因之争难有结果，且工程投入也等不了这个结果。与其在归因上求一个纯粹结论，不如转向可检验的问题：改变哪一变量，最能稳定地改变现场结果。</p>
+        <p class="p">要回答这个问题，有一个现实前提：失败要被保留下来。我们至少需要知道机器当时看到了什么，如何判断自己的位置和状态，采取了什么动作，接触之后发生了什么，以及偏差能否在相似条件下重现。日志可以保存结果，却未必能重新制造导致结果的条件；只能被描述、无法被稳定复现的失败，对它的归因与猜测无异。想知道验证是不是瓶颈，首先得有更好的验证条件，让失败后重来变得容易。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 05 ═══ -->
+  <section class="band" id="s5">
+    <div class="rail"><span class="rail-num">05</span><span class="rail-en">Internalization</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">验证的内化：把海试从“学习”转向“确认”</h2>
+      <div class="col">
+        <aside class="mnote mnote-term">
+          <span class="mnote-k">环境重建 · Environment reconstruction</span>
+          把任务发生时、所有可能影响机器行为的环境条件保留下来——那个“瞬息全宇宙”的切片，可反复调用与重算。
+        </aside>
+        <p class="p">海上作业的具体任务一直在变：今天巡检海缆，明天接近结构物，后天可能是抓取、对接或者阀门操作；但底质、地形、海流、浊度、结构物和接触条件，并不会因为一次任务结束就不存在了。将部分验证移到岸上是一个好办法，也就是环境重建（environment reconstruction）。和记录结果与成败相比，环境重建可以保留任务发生时、所有可能影响机器行为的环境条件，即那个“瞬息全宇宙”的切片。</p>
+        <p class="p">比如：9 月 2 日天气晴，一台机器人在海底执行插接时失败了。接口附近的倾角、松软底质和特定的接近姿态共同造成了本体位置变化，机械臂末端没有准确对准。日志可以带回岸上，但时间已逝、那一刻的几何关系和接触条件已经过去了；控制策略即使很快修改，也无法立即确认迭代结果。如果这些条件能够被重新制造出来，机器人就可以一次次回到相似的困难里，分别改变倾角、底质、姿态或者接近路线，看错误从哪里出现，又在什么地方消失。</p>
+        <p class="p">若能重现这一切，失败就成为了一个可拆可装的时空剖面。那条“设计、制造、出海、尝试、失败、修改、再出海”的链条可以被撬开，先在岸上复现、修改、再验证，最后带着少数悬而未决的问题去真实的世界确认。从更长的时段看，这可以称为“验证的内化”：把原本只能在昂贵海上周期中完成的学习、失败和修正，部分内化到岸上开发流程中。</p>
+        <p class="p">技术不会停止进步，机器依然会更聪明。不过，技术能力在产生新价值的同时，也会给整个作业系统增加新的复杂性；而新价值往往容易被新增的复杂性吸收掉，留给现场的是一种“聪明，但不能用、不好用”的体验，创造的勇气和判断，正是在这种反复中慢慢消磨。microNature 想要做的事情，是缩短这个阵痛期：让一部分原本只能在昂贵海上周期里完成的失败发现、复现和验证，更早、更便宜地发生，让复杂变得可识别，让投身其中的人，撑得到“智能”迎来“好用”的那一天。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 06 ═══ -->
+  <section class="band" id="s6">
+    <div class="rail"><span class="rail-num">06</span><span class="rail-en">Limits</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">验证前移的限度：保真度、可迁移性与因果性</h2>
+      <div class="col">
+        <p class="p">把海上的失败搬到岸上，不意味着问题就解决了。我们重建出来的世界，究竟是不是那个真正影响机器行为的世界？像 ≠ 条件相同。就算重建得足够真，岸上的结果又能否带到海上依然成立？毕竟，不同海域、季节和局部环境仍会改变水下的感知与交互，岸上表现与真实海域表现之间，需要建立稳定、可测量的对应关系。</p>
+        <p class="p">最后，就算验证变多了，现场表现的改善，真的来自验证吗？反复测试可以让失败暴露更早，但传感器、定位、控制、机械结构或执行器本身，并不会因为多测几次就自动变好。总之，验证的内化能否真正改变“聪明但不好用”的局面，还需要建立在这样的三重检验之上。</p>
+      </div>
+
+      <div class="statement">
+        <span class="mono">前提</span>
+        把验证成本打下来，是为了让机器虚拟地去适应真实世界，而不是适应一个虚假的世界。保真度、可迁移性与因果性，是三重绕不开的检验。
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 07 ═══ -->
+  <section class="band" id="s7">
+    <div class="rail"><span class="rail-num">07</span><span class="rail-en">Infrastructure</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">验证环境正在成为基础设施</h2>
+      <div class="col">
+        <p class="p">再看一眼开头那台扫地机器人。它今天能够比较稳定地清扫一个家庭，不能只归功于传感器、定位、控制、计算和机械结构的同时进步；但它学会了给家建“图”，意味着它能够给这些能力一个相对稳定的落脚点，即便做错也可以轻松再试。家是它的工作场所，也是可以低成本无限重来的世界。深海自主化所需要的“培育”与“托举”，说到底也正是这样一个世界。</p>
+        <p class="p">环境若能被表达，并在虚拟环境与真实系统之间建立持续的数据连接，就可以进入算法测试和验证流程。环境的意义就会大于场所，成为基础设施，化作托举之力。</p>
+        <p class="p">相对于机器自主化的漫长进程，上述分析也仅仅是窥豹一斑，每一个技术领域在一定程度上都是一种例外。也许某天，人类按下重试键，深山、深海、甚至深空里的失败不再难以承受。到那时，机器够不够厉害，反而是没那么要紧的事。</p>
+      </div>
+
+      <a class="cta" href="../environmentaffordance.html" target="_blank" rel="noopener">
+        <span class="eyebrow">延伸</span>
+        <h3 class="h3">当环境能被表达，它就成了基础设施</h3>
+        <p>如果一片海域能够被记录、保存并重新调用，在虚拟环境与真实系统之间建立持续的数据连接，它就不再只是机器要去适应的场所，而成为开发与验证的底座。microNature 的“环境可为™”正是沿着这条路径，把部署现场变成机器可以训练、可以验证、可以打分的数字基础。</p>
+        <span class="cta-go">查看 环境可为™ →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ REFERENCES ═══ -->
+  <section class="band" id="refs">
+    <div class="rail"><span class="rail-num">附</span><span class="rail-en">References</span><span class="rail-tick"></span></div>
+    <div class="col-wide">
+      <h2 class="h2">参考来源</h2>
+      <div class="notes">
+        <ol>
+          <li>Ma, D., Li, Y., Ma, T., &amp; Pascoal, A. M. (2025). The state of the art in key technologies for autonomous underwater vehicles: A review. <i>Engineering</i>. <a class="link" href="https://doi.org/10.1016/j.eng.2025.08.002" target="_blank" rel="noopener">DOI ↗</a></li>
+          <li>Ridao, P., Carreras, M., Ribas, D., Sanz, P. J., &amp; Oliver, G. (2015). Intervention AUVs: The next challenge. <i>Annual Reviews in Control, 40</i>, 227–241. <a class="link" href="https://doi.org/10.1016/j.arcontrol.2015.09.015" target="_blank" rel="noopener">DOI ↗</a></li>
+          <li>Morgan, E., Carlucho, I., Ard, W., &amp; Barbalata, C. (2022). Autonomous underwater manipulation: Current trends in dynamics, control, planning, perception, and future directions. <i>Current Robotics Reports, 3</i>, 187–198. <a class="link" href="https://doi.org/10.1007/s43154-022-00089-2" target="_blank" rel="noopener">DOI ↗</a></li>
+          <li>Nauert, F., &amp; Kampmann, P. (2023). Inspection and maintenance of industrial infrastructure with autonomous underwater robots. <i>Frontiers in Robotics and AI, 10</i>, 1240276. <a class="link" href="https://doi.org/10.3389/frobt.2023.1240276" target="_blank" rel="noopener">DOI ↗</a></li>
+          <li>Birk, A. (2022). A survey of underwater human-robot interaction (U-HRI). <i>Current Robotics Reports, 3</i>, 199–211. <a class="link" href="https://doi.org/10.1007/s43154-022-00092-7" target="_blank" rel="noopener">DOI ↗</a></li>
+          <li>Skjong, J. (2025). Long-term outlook for subsea vessel market remains robust. <i>Offshore Engineer</i>. <a class="link" href="https://www.maritimemagazines.com/offshore-engineer/202511/long-term-outlook-for-subsea-vessel-market-remains-robust/" target="_blank" rel="noopener">全文 ↗</a></li>
+          <li>Global Underwater Hub. (2024, November 21). Influential forum reports early success in tackling subsea challenges. <a class="link" href="https://www.globalunderwaterhub.com/media-centre/news-feed/article/?title=Influential+Forum+Reports+Early+Success+in+Tackling+Subsea+Challenges" target="_blank" rel="noopener">全文 ↗</a></li>
+          <li>Offshore Renewable Energy Catapult. (2025, May 1). Certifying offshore robotics: Building a performance-based framework to accelerate adoption. <a class="link" href="https://cms.ore.catapult.org.uk/wp-content/uploads/2025/11/OLTER-Certifying-Offshore-Robotics-Building-a-Performance-Based-Framework-to-Accelerate-Adoption-May-2025.pdf" target="_blank" rel="noopener">全文 PDF ↗</a></li>
+          <li>Sørensen, F. F., Mai, C., von Benzon, M., Liniger, J., &amp; Pedersen, S. (2025). The localization problem for underwater vehicles: An overview of operational solutions. <i>Ocean Engineering, 330</i>, 121173. <a class="link" href="https://doi.org/10.1016/j.oceaneng.2025.121173" target="_blank" rel="noopener">DOI ↗</a></li>
+          <li>Rosette, M., Kolano, H., Holm, C., Hollinger, G. A., Marburg, A., Pickett, M., &amp; Davidson, J. R. (2024). WAVE: An open-source underwater arm-vehicle emulator. In <i>2024 IEEE International Conference on Robotics and Automation (ICRA)</i>. <a class="link" href="https://doi.org/10.1109/ICRA57147.2024.10611358" target="_blank" rel="noopener">DOI ↗</a></li>
+          <li>Yu, L., &amp; Qiao, L. (2026). Six-dimensional digital twin system for autonomous underwater vehicles: Conceptualization and twin experiments. <i>Journal of Field Robotics, 43</i>(6), 3727–3740. <a class="link" href="https://doi.org/10.1002/rob.70220" target="_blank" rel="noopener">DOI ↗</a></li>
+          <li>Song, J., Ma, H., Bagoren, O., Sethuraman, A. V., Zhang, Y., &amp; Skinner, K. A. (2025). OceanSim: A GPU-accelerated underwater robot perception simulation framework. In <i>2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)</i>. <a class="link" href="https://doi.org/10.1109/IROS60139.2025.11246878" target="_blank" rel="noopener">DOI ↗</a></li>
+        </ol>
+      </div>
+      <p class="small" style="margin-top:18px; color:var(--ink-3)">注：本文为观点性分析，引用数据与结论以上列公开来源为准；市场租金等数字为报道口径，具体以一手合同与访谈为准。</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="doc">
+    <div class="foot-line">
+      <span>microNature — 思考 · 试错这么贵，谁来托举深海自主化</span>
+      <span>Manda · 2026.09.12</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../site.js" defer></script>
+</body>
+</html>
