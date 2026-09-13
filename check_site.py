@@ -13,6 +13,13 @@ ZH = ["index.html", "about.html", "environmentaffordance.html",
       "insight.html", "atlas.html", "map.html"]
 EN = ["en/" + f for f in ZH]
 ASSETS = ["site.css", "site.js", "atlas.js", "demo.css", "atlas.css", "atlas-base.css"]
+# Blog articles live one level down (中) and two levels down (英). The Insight
+# list pages themselves stay in ZH/EN above. Article 2 has no English version
+# yet, so only its Chinese page is listed here.
+BLOG_ZH = ["insight/01-capability-deployment-paradox.html",
+           "insight/02-who-underwrites-deep-sea-autonomy.html"]
+BLOG_EN = ["en/insight/01-capability-deployment-paradox.html"]
+BLOG = BLOG_ZH + BLOG_EN
 
 VOID = {"meta", "link", "br", "img", "hr", "input", "line", "rect", "circle",
         "path", "use", "source", "ellipse", "polygon", "polyline", "stop",
@@ -24,14 +31,14 @@ def bad(msg):
     fails.append(msg); print("  FAIL  " + msg)
 
 print("== 1. 文件齐全 ==")
-for f in ZH + EN + ASSETS:
+for f in ZH + EN + ASSETS + BLOG:
     if os.path.exists(os.path.join(ROOT, f)):
         print("   ok   " + f)
     else:
         bad("缺少文件 " + f)
 
 print("\n== 2. 链接可解析 ==")
-for f in ZH + EN:
+for f in ZH + EN + BLOG:
     p = os.path.join(ROOT, f)
     if not os.path.exists(p):
         continue
@@ -61,7 +68,7 @@ class P(HTMLParser):
             self.err += 1
             while self.st and self.st.pop() != t:
                 pass
-for f in ZH + EN:
+for f in ZH + EN + BLOG:
     p = os.path.join(ROOT, f)
     if not os.path.exists(p):
         continue
@@ -72,7 +79,7 @@ for f in ZH + EN:
         print("   ok   " + f)
 
 print("\n== 4. 英文页无残留中文（语言开关上的「中」字除外）==")
-for f in EN:
+for f in EN + BLOG_EN:
     p = os.path.join(ROOT, f)
     if not os.path.exists(p):
         continue
