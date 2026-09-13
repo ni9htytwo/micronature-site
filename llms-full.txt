@@ -1,0 +1,481 @@
+# microNature — full content (llms-full.txt)
+
+> Full readable text of the microNature Insight blog, inline, so an LLM can quote or reason over it without fetching each page. For the site index see llms.txt. Canonical site: https://micronature.pages.dev/
+
+
+========================================================================
+## Raising Machines in the Deep: Why Trial and Error Is the Costliest Thing at Sea
+========================================================================
+URL: https://micronature.pages.dev/en/insight/02-raising-machines-in-the-deep
+Language: en | Author: Manda | Published: 2026-09-13
+Keywords: deep-sea robotics, AUV, ROV, embodied AI, simulation and validation, environment affordance, physical intelligence
+
+Why trial and error is the costliest thing at sea. Machines keep getting smarter, and in the deep sea, smart still isn't the same as usable.
+
+In brief Deep-sea work prices every second attempt in full vessel days, so failure is expensive and rare. Telling the capability bottleneck apart from the validation bottleneck decides where engineering effort goes — and whether the environment stays a place a machine must adapt to, or becomes an asset it can be raised on.
+
+Robot vacuums used to move almost at random — bump a table leg, spin, ram a wall, and only then turn back the other way. Then came lidar. Suddenly the machine knew where it was, which patches of floor it had already covered, and where to go next. Over the past year or two, as path planning, sensors, compute, and control algorithms have all kept improving, something in these machines seems to have shifted: they no longer bump around. They seem, in some rough sense, to understand the space they're in.
+
+It's a small story, but it does a lot of quiet persuading. Watch a machine go from bumping into furniture to gliding around it, and it's tempting to draw a general rule: the smarter a machine gets, the better it should perform. But learning a lesson from how technology has evolved, and predicting where it's headed next, are two different exercises — and the deep sea is where that difference stops being academic.
+
+Autonomous underwater vehicles (AUVs) have spent the last several years getting better at almost everything that shows up on a specifications sheet: planning, control, perception, navigation, communication, onboard intelligence. But ask one to do more than look — dock against something, grasp it, plug something in, turn a valve — and its confidence collapses. Much of this work still runs through remotely operated vehicles (ROVs), with a human hand on the controls the whole time. Capability has clearly gone up. The ability to work autonomously in the deep sea has not kept pace. Why not?
+
+This piece works through three variables that might explain the gap: cost, validation, and environment. Deep-sea work runs on a cost structure with no real equivalent on land, one where a second attempt is rarely cheap. Autonomy built around watching depends on real-world experience in a different way than autonomy built around touching does. And an environment, once it can be recorded, stored, and called back up on demand, stops being just a place a machine has to adapt to — it can become an asset in the development process itself. Put together, the three may explain something that looks, at first, like a contradiction: machines keep getting smarter, and in the deep sea, smart still isn't the same as usable.
+
+
+## The Real Expense Is Trying Again
+
+
+Full vessel day The whole cost of a support vessel for one day: ship, crew, mobilization and support systems billing continuously, whether the robot is working or waiting out weather.
+
+A support vessel idling in bad weather costs exactly as much as one hauling a robot up and down all day. Deep-sea operations are priced around this fact, in a unit built for it: the "full vessel day." Once a mothership is out at sea, the meter runs whether the robot is working, waiting out weather, or sitting broken — the ship, the crew, and the entire support system burn money continuously, and quite literally.
+
+According to Offshore Engineer, citing market data from Fearnley Offshore Supply, deepwater vessels fitted with large active heave-compensated cranes were renting for $60,000 to $80,000 a day in the first half of 2025. A single operation running several weeks can rack up rental costs alone into seven figures.
+
+Pricing a robot is a manufacturing question. Counting how many vessel-days a task requires is a question of opportunity cost — one that folds in the ship, the crew, mobilization and demobilization, weather delays, engineering support, specialized tooling, every redeployment. The robot itself is expensive, but getting it to the site and keeping it there until the job is actually done costs far more than the hardware ever will.
+
+An ordinary product, once designed, moves to production, delivery, use. An autonomous system that is still growing up needs something else entirely: a repeating loop of modify, test, fail, analyze, modify again. On land, that loop moves fast — a software change gets tested the same day, a control parameter gets re-verified within hours. At sea, every link in that chain drags in a ship, a crew, a weather window, a schedule. Budgets are finite, so the expensive thing gets done less often — and the cost compounds as it goes: development stretches out, failures surface later than they should, and the feedback loop after every fix slows to a crawl.
+
+Anyone who has raised a child knows money and resources are rarely the limiting factor. What matters more than a financial safety net is something closer to standing encouragement — permission to try boldly, to experiment, to know that failing doesn't mean it's over. Raising something built of silicon isn't so different. For an autonomous system still learning, still needing to mature quickly into something reliable, hardware and compute matter — but what's scarcer, and more valuable, is the chance to go back into the real world and try again after a failure.
+
+Underwater is about the worst place to offer that chance. Communication bandwidth is limited, and optical conditions are easily disrupted by turbidity, distance, and light. GPS doesn't work underwater at all, so precise positioning has to rely on other methods — methods that are themselves vulnerable to acoustic propagation, visibility, and ambient conditions. That's already a serious constraint for tasks built around observation. For an intervention task — a robotic arm approaching, aligning, applying force, turning a valve — every one of those constraints gets amplified.
+
+Which raises a puzzle. If trial and error underwater is this expensive, how did observation-based autonomy manage to advance as far as it has, seemingly around this very bottleneck? The answer may come down to how much amplification a task can absorb — and that depends on how much the task depends on real, in-the-moment experience. That's the second variable.
+
+
+## Looking Is Not the Same as Touching
+
+
+Point an AUV down a pre-set survey line and it can gather data across a wide area with barely any human supervision. That's what "looking" means in deep-sea work. Ask it to reach out, align an end-effector against a target, apply the right amount of force, and keep adjusting once contact has been made, and the job changes entirely. It's no longer enough to know what's in front of the robot; it has to know what happens if it turns this, and what happens if turning it goes wrong.
+
+The gap between looking and touching is partly a matter of control complexity. But underneath that, it comes down to how much each task depends on real-world experience gathered in the moment.
+
+An inspection run can be brought home intact. The footage is saved, reviewed later, fed into training data, revisited as many times as needed. An intervention task doesn't get that luxury. Force feedback and trajectory logs can still be analyzed onshore after the fact, but the decision that actually mattered — how much to adjust, how to avoid damaging the target — had to be made in the instant of contact itself, not afterward.
+
+That instant is crowded: seabed sediment, current, positioning drift, a target that may be moving, the friction and resistance that only appear once contact is made. All of it pulls the outcome away from what was planned. Real environments are very good at exposing the gap between expectation and reality — and for tasks involving physical contact, part of that gap hides entirely inside conditions that can't be reproduced anywhere else. This is why intervention depends, in a way observation never has to, on a cycle of trying again that runs as continuously as breathing.
+
+
+## Two Explanations, Not One
+
+
+"Smarter machines should perform better. If they aren't performing better, they must not be smart enough yet." It's a reasonable-sounding chain of logic. Set aside, for a moment, the usual outside factors — organizational maturity, supply chains, regulation, insurance costs — and look only at the engineering and the conditions under which it gets tested. Even then, the logic admits at least two different explanations.
+
+The first puts the pressure squarely on the machine: it simply isn't good enough yet. Perhaps its perception, planning, control, or the hardware doing the actual work still can't reliably carry out this kind of intervention. If that's the real problem, the fix is more of the same — better perception, better planning, better control, better hardware. Call this the intelligence bottleneck. By "intelligence" here, we don't mean any single AI model, but the entire system of capabilities that autonomous intervention actually requires.
+
+The cost breakdown in the previous section points toward a second explanation. Maybe the machine hasn't failed because it's incapable — maybe it has simply never had enough chances to discover what it doesn't know. The states, geometries, and contact conditions a deep-sea intervention might encounter combine into more possibilities than any development program can cover, many of them rare and strange. And as the earlier analysis showed, the expense of trial and error at sea becomes the expense of iteration itself: failures surface later than they should, the same conditions are hard to recreate on demand, and it's harder to confirm whether a fix actually worked. Call this the validation bottleneck.
+
+The two explanations aren't mutually exclusive, but they pull engineering effort in different directions. If more perception, control, or hardware capability keeps producing steady gains in the field, that's evidence for the first. If the same conditions can be reproduced and tested more often, and failure rates and the need for human intervention fall as a result, the weight shifts to the second.
+
+The fork The same sentence — "the machine still can't do the job" — can point at two very different shortfalls: one in the machine's own capability, one in how rarely it gets to find out what it doesn't know. Where the effort goes depends on which one the evidence supports.
+
+
+## What a Failure Actually Proves
+
+
+Go back through a batch of real underwater intervention records, and the first question worth asking isn't whether validation was insufficient. It's simpler than that: what actually happened, step by step, in the moment things went wrong. Did the robot misread its target? Did localization or state estimation drift off course? Was the motion plan itself flawed, or did control lose stability the instant contact was made? Was the end-effector simply not strong enough for the job? Some failures, meanwhile, only ever show up under a substrate, a geometry, a posture, or a contact condition that had rarely — if ever — been tested before.
+
+Separating these causes as cleanly as possible is the necessary first step. "The machine got it wrong" isn't an explanation; it's just a restatement of the problem.
+
+The evidence that actually distinguishes an intelligence bottleneck from a validation bottleneck only shows up once the original conditions can be recreated: the same difficult situation, tested and modified and tested again, and watched to see whether the same category of failure declines. The distinction here is subtle but it matters. "It failed because this had never been tested before" is a guess. "Coverage was thin, targeted testing was added, and the same failures kept dropping" is evidence. Run the reverse case — a condition tested repeatedly with no decline in failure — and "insufficient validation" stops being a credible explanation; the weight shifts back to the machine itself.
+
+Reality rarely offers this cleanly. Machine capability keeps improving at the same time validation conditions do, and a single failure usually tangles perception, control, and environmental uncertainty together — a pure experimental condition is hard to find, and engineering budgets can't wait around for attribution to resolve itself. Rather than chasing a clean answer to "which bottleneck is it," the more useful question is which variable, changed, most reliably changes what happens in the field.
+
+Answering that question has one hard precondition: the failure has to survive. What did the robot see at the time? How did it judge its own position and state? What action did it take, what happened after contact, and can the deviation be reproduced under similar conditions again? A log can preserve the outcome without preserving the conditions that produced it — and a failure that can only be described, never reliably reproduced, is no better than a guess when it comes to explaining it. Before anyone can find out whether validation is really the bottleneck, the conditions for validation have to get better first — good enough that failing and trying again stops being rare.
+
+
+## Bringing the Learning Ashore
+
+
+Environment reconstruction Preserving the full set of conditions present at the moment a task happened — an instant sliced out of the whole world — so it can be recalled and re-run on demand.
+
+The actual job keeps changing. Today it's inspecting a cable, tomorrow approaching a structure, the day after maybe grasping, docking, or turning a valve. But the seabed, the current, the turbidity, the structures and the contact conditions don't disappear just because one task ends — they're still there for the next one. Moving part of the validation process onshore is one way to make use of that fact. Call it environment reconstruction.
+
+Where a log preserves outcomes and pass/fail results, environment reconstruction preserves something closer to the full set of conditions present at the moment a task happened — an instant sliced out of the whole world, everything in it intact.
+
+Take an example: on a clear day, a robot fails a docking attempt on the seafloor. A slight incline near the interface, a soft patch of sediment, and the specific angle of approach combine to shift the robot's body out of position, just enough that the end-effector never quite aligns. The log makes it home. The moment doesn't. Even a fast fix to the control strategy can't be confirmed as working — not until the same geometry and the same contact conditions exist again, and by then they're long gone. But if that incline, that sediment, that approach angle could all be recreated, the robot could return to the same hard moment as many times as it needed to — varying the incline, the substrate, the posture, the approach path one at a time — and watch exactly where the error shows up, and where it stops.
+
+Reconstructed this way, a failure becomes something that can be taken apart and put back together — a cross-section of space and time, reusable on demand. The old chain — design, build, go to sea, try, fail, revise, go to sea again — can be pried open partway: reproduce it onshore, revise it onshore, verify it onshore, and carry only the handful of genuinely unresolved questions back out to sea for final confirmation. Over a long enough timescale, this amounts to an internalization of validation — moving part of the learning, failing, and correcting that once could only happen inside an expensive offshore cycle into the ordinary rhythm of onshore development.
+
+Technology won't stop advancing, and machines will keep getting smarter. But every gain in capability adds new complexity to the system around it, and that new complexity has a way of quietly absorbing the value the capability just created — leaving the field with something that feels smart but doesn't quite work, isn't quite usable. It's in that gap, repeated often enough, that the nerve to keep building things gets worn down. What microNature is trying to do is shorten that gap: let some of the failure-finding, reproduction, and validation that used to be locked inside an expensive offshore cycle happen sooner, and more cheaply, onshore — make the complexity legible, and give the people doing this work enough runway to still be standing on the day "smart" finally becomes "usable."
+
+
+## How Real Does the Simulation Need to Be?
+
+
+Moving a failure from the sea onto land doesn't automatically solve anything. The first question is whether the reconstructed world is actually the one shaping the robot's behavior — resembling it isn't the same as matching it. Even granting a faithful reconstruction, the second question follows close behind: does a result that holds onshore still hold once the robot is back at sea? Different sea areas, different seasons, and local conditions all still reshape underwater perception and interaction, so a stable, measurable link has to be built between onshore performance and performance in the actual water.
+
+And a third question, easy to skip past: even once validation increases, does the improvement in field performance actually come from the validation? Repeated testing can expose a failure earlier than it would otherwise appear, but it doesn't, on its own, make a sensor, a positioning system, a control loop, or an actuator better — running the same test more times doesn't improve the hardware underneath it.
+
+Whether internalizing validation can genuinely fix the "smart but unusable" problem rests on all three of these holding up: fidelity, transferability, and a real causal link between more testing and better outcomes.
+
+The point Driving validation costs down is meant to let a machine adapt to the world virtually — not to adapt to a world that only resembles the real one on paper. Fidelity, transferability, and causality are the three checks it has to pass.
+
+
+## When Environment Becomes Infrastructure
+
+
+The gap between what a machine can do in a lab and what it can reliably deliver in the field isn't unique to the deep sea — the same gap shows up on land too. What's specific to the deep sea is only the price of crossing it, pushed up to a level that's impossible to ignore. That's reason enough to ask the question again: how much of this gap is really about the machine not being smart enough yet?
+
+Bringing that price down is half a matter of machines continuing to improve, and half a matter of the environment — that same instant sliced out of the whole world, discussed in the last few sections. Environment, most of the time, means whatever the robot has to passively adapt to: the current is there, the seabed is there, the structures and obstacles are there, and the robot's job is to sense them, understand them, and get the work done. But once an environment can be recorded, preserved, and called back up on demand, it stops being just a place the robot adapts to and starts entering the development process itself — early enough that failures can be reproduced, options compared, fixes tested again and again before anything goes back in the water. Algorithms, sensors, control, and hardware still decide what a machine is capable of. Environment decides what path those capabilities have to travel down before they turn into something that actually works in the field.
+
+Go back, one more time, to the robot vacuum this piece opened with. It can now clean an ordinary home fairly reliably — and that's not just down to better sensors, better localization, better control, more compute, better mechanics happening all at once. It's down to something else: it learned to build a map of the house. That map gives all those other capabilities somewhere stable to stand, a place where getting something wrong is cheap to try again. Home is its workplace, and also a world it gets to redo, at almost no cost, as many times as it needs. This is exactly the kind of world deep-sea autonomy still needs someone to raise it in.
+
+Once an environment can be represented, and a live data connection kept running between the virtual version and the real system, it can enter the ordinary loop of testing and validating algorithms. At that point, environment stops being just a setting and starts being infrastructure — a quiet, structural form of support.
+
+Set against the long arc of machine autonomy, everything above is a glimpse through a keyhole — every technical field is, in its own way, an exception to whatever rule seems to apply. Maybe one day, someone will simply hit retry, and failure in the deep mountains, the deep sea, even deep space, will stop being something that has to be endured. By then, how capable the machine is won't be the thing that matters most.
+
+
+## References
+
+
+Ma, D., Li, Y., Ma, T., & Pascoal, A. M. (2025). The state of the art in key technologies for autonomous underwater vehicles: A review. Engineering. DOI ↗
+
+Ridao, P., Carreras, M., Ribas, D., Sanz, P. J., & Oliver, G. (2015). Intervention AUVs: The next challenge. Annual Reviews in Control, 40, 227–241. DOI ↗
+
+Morgan, E., Carlucho, I., Ard, W., & Barbalata, C. (2022). Autonomous underwater manipulation: Current trends in dynamics, control, planning, perception, and future directions. Current Robotics Reports, 3, 187–198. DOI ↗
+
+Nauert, F., & Kampmann, P. (2023). Inspection and maintenance of industrial infrastructure with autonomous underwater robots. Frontiers in Robotics and AI, 10, 1240276. DOI ↗
+
+Birk, A. (2022). A survey of underwater human-robot interaction (U-HRI). Current Robotics Reports, 3, 199–211. DOI ↗
+
+Skjong, J. (2025). Long-term outlook for subsea vessel market remains robust. Offshore Engineer. Link ↗
+
+Global Underwater Hub. (2024, November 21). Influential forum reports early success in tackling subsea challenges. Link ↗
+
+Offshore Renewable Energy Catapult. (2025, May 1). Certifying offshore robotics: Building a performance-based framework to accelerate adoption. Link (PDF) ↗
+
+Sørensen, F. F., Mai, C., von Benzon, M., Liniger, J., & Pedersen, S. (2025). The localization problem for underwater vehicles: An overview of operational solutions. Ocean Engineering, 330, 121173. DOI ↗
+
+Rosette, M., Kolano, H., Holm, C., Hollinger, G. A., Marburg, A., Pickett, M., & Davidson, J. R. (2024). WAVE: An open-source underwater arm-vehicle emulator. In 2024 IEEE International Conference on Robotics and Automation (ICRA). DOI ↗
+
+Yu, L., & Qiao, L. (2026). Six-dimensional digital twin system for autonomous underwater vehicles: Conceptualization and twin experiments. Journal of Field Robotics, 43(6), 3727–3740. DOI ↗
+
+Song, J., Ma, H., Bagoren, O., Sethuraman, A. V., Zhang, Y., & Skinner, K. A. (2025). OceanSim: A GPU-accelerated underwater robot perception simulation framework. In 2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS). DOI ↗
+
+Note: this is an argumentative essay; figures and claims follow the public sources listed above. Market rates such as vessel-day rental are reported figures, subject to contract and interview data.
+
+
+========================================================================
+## 试错这么贵，谁来托举深海自主化
+========================================================================
+URL: https://micronature.pages.dev/insight/02-who-underwrites-deep-sea-autonomy
+Language: zh-Hans | Author: Manda | Published: 2026-09-12
+Keywords: 深海机器人, AUV, ROV, 具身智能, 仿真与验证, 环境可为, 物理智能
+
+深海机器人的自主化里有一个容易被忽略的问题：机器越来越聪明，现场表现却没有同步变好。本文从成本、验证与环境三个变量入手，把常被混为一谈的“能力瓶颈”与“验证瓶颈”拆开来看。这也正是 microNature 着力解答的问题——如何让真实世界里代价高昂的试错，更早、更便宜地发生。
+
+摘要 海底的试错贵到几乎无法“再来一次”，失败因此暴露得更晚、修正更难确认。把一部分验证从海上移到岸上、让环境成为可反复调用的资产，未必让机器更聪明，却能让更多问题在昂贵的海试之前就被发现和解决。
+
+从技术演进中寻找启示，与对深海自主化前景作出判断，是两回事。消费端和工业端机器人的进步，容易使人形成一种乐观预期：机器越聪明，工作表现就应该越好。扫地机器人大概最容易让人感受到这一点。早些年，它的清扫过程堪比随机游走，碰到桌腿就扭转自己，反复撞墙才会回头。后来，它有了激光雷达，知道自己在哪里，清楚哪些地方已经扫过，也清楚接下来应该去哪里。这一两年，随着路径规划、传感器、计算能力和控制算法不断进步，扫地机器人对自己所在的世界似乎有了某种理解，终于不再到处乱撞。
+
+但到了水下，这件事却没那么顺理成章。近几年，AUV（自主水下机器人）在规划与控制、感知、导航、通信和人工智能等方面一直在进步；但如果任务不是“看看就好”，而是要求机器人真正与环境发生物理接触，比如对接、抓取、插拔，或者拧一个阀门，机器就不太灵了。截至目前，很多任务依然更依赖 ROV（遥控水下机器人）和人工介入。技术实力的确快速提升了，但机器在深海里的自主工作能力，却没有快速提高，这是为什么？
+
+本文想从三个变量入手：成本、验证与环境。其一，深海作业的成本结构不同于陆地，试错机会极为昂贵；其二，观测型自主与干预型自主对真实世界经验的依赖程度不同；其三，环境一旦能够被记录、保存和重新调用，就不再只是机器被动适应的场所，而可能成为开发过程中的一项资产。三者合起来，或许能够解释一个看似矛盾的现象：机器越来越聪明，但在深海里，聪明不等于好用。
+
+
+## 成本敏感度：深海作业最昂贵的是再试一次
+
+
+船天 · Full vessel day 母船出海一天的全部成本：船、人、动员与支持系统持续计费，无论机器在工作，还是在等待天气或作业窗口。
+
+先从成本说起。深海作业有一个特殊的计价单位，叫“船天”（full vessel day）。一艘母船出海后，无论机器人是在工作，还是因为天气、故障、作业窗口而等待，船、人和整套支持系统的成本都在持续累积，字面意思上的花钱如流水。据 Offshore Engineer 援引 Fearnley Offshore Supply 的市场数据，2025 年上半年，一些用于深水作业、配备大型主动升沉补偿起重机的作业船，日租金竟达到 6–8 万美元。按此计算，一次数周的作业，仅租金就可能达到百万美元级。
+
+若是衡量机器人的价格，这是一个制造业视角；相对应的，计算一项任务需要多少个船天，就是机会成本视角。母船、随船人员、动员与撤场、海上等待、工程支持、专用工具、再次调遣，都在成本中。机器本身自然价格不菲，但要把它送到现场、并维持到工作真正完成，这样的系统性成本远高于设备成本。
+
+一台普通的设备自设计完成后，就可以开始生产、交付、使用；而对一个仍在成长的自主系统来说，它却需要不断经历修改、测试、失败、分析、再修改的部署循环。有点麻烦，但接下来的事才称得上复杂。在陆地上，软件迭代完可以马上测试，控制参数变了可以当天再试，机械结构调整之后也可以很快重新验证，循环可以非常快。到了海上，每改变任意一环，都可能重新牵涉船、人、天气窗口和作业安排。
+
+正因为预算有限、贵的东西自然做得少，复杂带来的高成本是动态叠加的：它会进一步拉长开发周期，延缓失败暴露，拖慢修正之后的反馈。这个类比或许粗糙，但它能说明一件事：人类抚养小孩，钱和资源从不嫌多，这一点我们都清楚；但比经济兜底更珍贵的，是精神层面的托举，让小孩放心大胆尝试、体验，让他知道失败后可以重来。培育硅基也有点类似，对一个还在不断学习、需要尽快成熟、能够可靠工作的自主系统来说，设备和算力固然重要，但更珍贵的，是失败以后回到真实环境里再试一次的机会。
+
+偏偏水下最不适合“再来一次”。通信带宽有限，光学条件又容易受到浑浊度、距离和光照影响。GPS 无法直接在水下使用，高精度定位因此需要依赖其他定位手段，而这些手段自身又受到声学传播、能见度和环境条件的影响。诸如此类，对于以观测为主的任务已是不小的麻烦；要是碰上机械臂准确接近、对准并施力这样的干预任务，所有的困难又会被放大。但这里有一个问题：如果深海里试错本来就这么贵，观测型自主又是怎么绕开这个瓶颈、率先发展起来的？答案或许在于，“被放大”多少、能否承受，取决于任务对“当下真实经验”的依赖程度。这就引出了第二个变量。
+
+
+## 观测型自主与干预型自主：经验依赖的差异
+
+
+遇到以“看”为目的的任务，AUV 可按照预设航线或一定程度的自主决策完成大范围的数据采集，不需要人时刻盯着。若涉及“上手操作”的任务，机器人需要靠近一个目标、准确对准接口、施加合适的力量，甚至在接触以后根据目标和自身状态的变化继续调整。除了要了解“眼前是什么”，机器人还必须知道“我这样拧一下，会发生什么，拧坏了怎么办”。
+
+“看”和“操作”的差别，背后有控制复杂度的因素，但根本在于两者对真实世界经验的依赖程度不同。以巡检任务为代表的“看”结束后，记录可以被带回陆地。当下可保存、事后可复盘，且在后期算法训练和任务分析中能让我们反复使用。操作任务的关键判断不能只靠事后复盘完成，尽管接触后的力反馈、轨迹记录可以带回陆地做离线分析，但那一刻具体该如何调整、如何避免损坏，必须在当下的物理交互中直接给出方案。
+
+而那个当下——充满了底质、海流、定位误差、目标的运动，以及接触之后产生的摩擦和阻力等诸多因素——让实际结果偏离预期。真实环境会不断暴露预期与实际之间的偏差；对于涉及物理接触的任务，其中一部分偏差会被藏匿在完全脱离真实环境的条件里，很难被发现。这就是为什么，“操作”比“看”更依赖一个如呼吸般不断循环的再来一次。
+
+如此一来，“机器越聪明，就越能干；既然不能干，那是因为它不够聪明么”这个问题（这里暂且把组织管理、供应链成熟度、监管与保险成本等外部因素放到一边，只看工程技术和验证条件），至少有两种解释。
+
+
+## 能力瓶颈与验证瓶颈：两种解释
+
+
+第一种解释是压力给到机器：它们不够好。也许它们的感知、规划、控制或执行硬件，本身就还不足以可靠地完成这类干预。如果是机器自身的问题，我们可以继续提高感知、规划、控制和硬件能力。这就是“智能瓶颈”（intelligence bottleneck）。需要留意的是，这里的“智能”并不特指某一个 AI 模型，而是完成自主干预所需要的整套系统能力。
+
+但之前的成本拆解让我们发现另一种解释：机器也许没有足够的机会知道自己“不知道什么”，也就没有学习的机会。深海干预所面对的环境状态、几何关系和接触条件，组合起来为数众多，且不乏罕见而复杂的情形，开发阶段无法一一覆盖。正如前面的成本分析所显示的，海上试错的高成本会传导为迭代的高成本；对于自主干预，这意味着失败暴露得更晚，同类条件更难重新制造，修正之后也更难确认是否有效。我们把它叫做“验证瓶颈”（validation bottleneck）。
+
+尽管两种解释并不互斥，但它们会引导不同的工程投入。当增加感知、控制或执行能力以后，现场表现得到持续改善，证据更支持前者；当同类工况能够被更频繁地复现、测试，失败率和人工介入随之下降，则后者权重更大。
+
+分野 同一句“机器还不够能干”，可能指向两处完全不同的短板：一处在机器自身的能力，一处在它有没有机会知道自己“不知道什么”。投向哪里，取决于证据落在哪一边。
+
+
+## 从失败中寻找证据：归因的困难
+
+
+左右权重的证据从哪里来？失败是一个不错的入口，它至少留下了事情从哪里开始偏离预期的痕迹。回看一批真实的水下干预记录，第一个问题并不是“这是不是验证不足”，而是一次失败究竟是怎么发生的：机器有没有看错目标，定位和状态估计有没有漂移，动作规划本身是否合理，控制是不是在接触之后开始失稳，末端执行器是否能力不足；也有一些失败，只在某种此前很少测试的底质、几何关系、姿态或者接触条件下出现。把这些原因尽可能分开，是判断两种瓶颈的第一步，毕竟“机器弄错了”这句话没什么价值。
+
+能够区分这两种解释的证据，要等到把当时的环境重新制造出来以后才会出现：相似的工况被反复复现，系统在其中一次次测试、修改、再测试，同一类失败是否随之减少，这时才看得出来。这里的差别细腻，却重要。“以前没测过，所以失败了”只是猜测；“以前覆盖不足，在增加有针对性的验证之后，同类失败持续下降”，才算是支持验证瓶颈的证据。反过来，一种工况已被频繁复现、测试，同类失败却没有明显下降，那么“验得不够”就不能继续充当主要解释，权重就该回到智能瓶颈一侧。
+
+现实不会如此简单。机器能力在提高，验证条件也在改善，一次失败往往同时夹杂感知、控制和环境的不确定性，很难找到纯粹的实验条件，归因之争难有结果，且工程投入也等不了这个结果。与其在归因上求一个纯粹结论，不如转向可检验的问题：改变哪一变量，最能稳定地改变现场结果。
+
+要回答这个问题，有一个现实前提：失败要被保留下来。我们至少需要知道机器当时看到了什么，如何判断自己的位置和状态，采取了什么动作，接触之后发生了什么，以及偏差能否在相似条件下重现。日志可以保存结果，却未必能重新制造导致结果的条件；只能被描述、无法被稳定复现的失败，对它的归因与猜测无异。想知道验证是不是瓶颈，首先得有更好的验证条件，让失败后重来变得容易。
+
+
+## 验证的内化：把海试从“学习”转向“确认”
+
+
+环境重建 · Environment reconstruction 把任务发生时、所有可能影响机器行为的环境条件保留下来——那个“瞬息全宇宙”的切片，可反复调用与重算。
+
+海上作业的具体任务一直在变：今天巡检海缆，明天接近结构物，后天可能是抓取、对接或者阀门操作；但底质、地形、海流、浊度、结构物和接触条件，并不会因为一次任务结束就不存在了。将部分验证移到岸上是一个好办法，也就是环境重建（environment reconstruction）。和记录结果与成败相比，环境重建可以保留任务发生时、所有可能影响机器行为的环境条件，即那个“瞬息全宇宙”的切片。
+
+比如：9 月 2 日天气晴，一台机器人在海底执行插接时失败了。接口附近的倾角、松软底质和特定的接近姿态共同造成了本体位置变化，机械臂末端没有准确对准。日志可以带回岸上，但时间已逝、那一刻的几何关系和接触条件已经过去了；控制策略即使很快修改，也无法立即确认迭代结果。如果这些条件能够被重新制造出来，机器人就可以一次次回到相似的困难里，分别改变倾角、底质、姿态或者接近路线，看错误从哪里出现，又在什么地方消失。
+
+若能重现这一切，失败就成为了一个可拆可装的时空剖面。那条“设计、制造、出海、尝试、失败、修改、再出海”的链条可以被撬开，先在岸上复现、修改、再验证，最后带着少数悬而未决的问题去真实的世界确认。从更长的时段看，这可以称为“验证的内化”：把原本只能在昂贵海上周期中完成的学习、失败和修正，部分内化到岸上开发流程中。
+
+技术不会停止进步，机器依然会更聪明。不过，技术能力在产生新价值的同时，也会给整个作业系统增加新的复杂性；而新价值往往容易被新增的复杂性吸收掉，留给现场的是一种“聪明，但不能用、不好用”的体验，创造的勇气和判断，正是在这种反复中慢慢消磨。microNature 想要做的事情，是缩短这个阵痛期：让一部分原本只能在昂贵海上周期里完成的失败发现、复现和验证，更早、更便宜地发生，让复杂变得可识别，让投身其中的人，撑得到“智能”迎来“好用”的那一天。
+
+
+## 验证前移的限度：保真度、可迁移性与因果性
+
+
+把海上的失败搬到岸上，不意味着问题就解决了。我们重建出来的世界，究竟是不是那个真正影响机器行为的世界？像 ≠ 条件相同。就算重建得足够真，岸上的结果又能否带到海上依然成立？毕竟，不同海域、季节和局部环境仍会改变水下的感知与交互，岸上表现与真实海域表现之间，需要建立稳定、可测量的对应关系。
+
+最后，就算验证变多了，现场表现的改善，真的来自验证吗？反复测试可以让失败暴露更早，但传感器、定位、控制、机械结构或执行器本身，并不会因为多测几次就自动变好。总之，验证的内化能否真正改变“聪明但不好用”的局面，还需要建立在这样的三重检验之上。
+
+前提 把验证成本打下来，是为了让机器虚拟地去适应真实世界，而不是适应一个虚假的世界。保真度、可迁移性与因果性，是三重绕不开的检验。
+
+
+## 验证环境正在成为基础设施
+
+
+再看一眼开头那台扫地机器人。它今天能够比较稳定地清扫一个家庭，不能只归功于传感器、定位、控制、计算和机械结构的同时进步；但它学会了给家建“图”，意味着它能够给这些能力一个相对稳定的落脚点，即便做错也可以轻松再试。家是它的工作场所，也是可以低成本无限重来的世界。深海自主化所需要的“培育”与“托举”，说到底也正是这样一个世界。
+
+环境若能被表达，并在虚拟环境与真实系统之间建立持续的数据连接，就可以进入算法测试和验证流程。环境的意义就会大于场所，成为基础设施，化作托举之力。
+
+相对于机器自主化的漫长进程，上述分析也仅仅是窥豹一斑，每一个技术领域在一定程度上都是一种例外。也许某天，人类按下重试键，深山、深海、甚至深空里的失败不再难以承受。到那时，机器够不够厉害，反而是没那么要紧的事。
+
+
+## 参考来源
+
+
+Ma, D., Li, Y., Ma, T., & Pascoal, A. M. (2025). The state of the art in key technologies for autonomous underwater vehicles: A review. Engineering. DOI ↗
+
+Ridao, P., Carreras, M., Ribas, D., Sanz, P. J., & Oliver, G. (2015). Intervention AUVs: The next challenge. Annual Reviews in Control, 40, 227–241. DOI ↗
+
+Morgan, E., Carlucho, I., Ard, W., & Barbalata, C. (2022). Autonomous underwater manipulation: Current trends in dynamics, control, planning, perception, and future directions. Current Robotics Reports, 3, 187–198. DOI ↗
+
+Nauert, F., & Kampmann, P. (2023). Inspection and maintenance of industrial infrastructure with autonomous underwater robots. Frontiers in Robotics and AI, 10, 1240276. DOI ↗
+
+Birk, A. (2022). A survey of underwater human-robot interaction (U-HRI). Current Robotics Reports, 3, 199–211. DOI ↗
+
+Skjong, J. (2025). Long-term outlook for subsea vessel market remains robust. Offshore Engineer. 全文 ↗
+
+Global Underwater Hub. (2024, November 21). Influential forum reports early success in tackling subsea challenges. 全文 ↗
+
+Offshore Renewable Energy Catapult. (2025, May 1). Certifying offshore robotics: Building a performance-based framework to accelerate adoption. 全文 PDF ↗
+
+Sørensen, F. F., Mai, C., von Benzon, M., Liniger, J., & Pedersen, S. (2025). The localization problem for underwater vehicles: An overview of operational solutions. Ocean Engineering, 330, 121173. DOI ↗
+
+Rosette, M., Kolano, H., Holm, C., Hollinger, G. A., Marburg, A., Pickett, M., & Davidson, J. R. (2024). WAVE: An open-source underwater arm-vehicle emulator. In 2024 IEEE International Conference on Robotics and Automation (ICRA). DOI ↗
+
+Yu, L., & Qiao, L. (2026). Six-dimensional digital twin system for autonomous underwater vehicles: Conceptualization and twin experiments. Journal of Field Robotics, 43(6), 3727–3740. DOI ↗
+
+Song, J., Ma, H., Bagoren, O., Sethuraman, A. V., Zhang, Y., & Skinner, K. A. (2025). OceanSim: A GPU-accelerated underwater robot perception simulation framework. In 2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS). DOI ↗
+
+注：本文为观点性分析，引用数据与结论以上列公开来源为准；市场租金等数字为报道口径，具体以一手合同与访谈为准。
+
+
+========================================================================
+## The Capability–Deployment Paradox
+========================================================================
+URL: https://micronature.pages.dev/en/insight/01-capability-deployment-paradox
+Language: en | Author: Stephen | Published: 2026-08
+Keywords: embodied data, sim-to-real, scaling law, teleoperation, physical intelligence
+
+Products ship faster every year. Getting them to work on a real site has not got any easier. Will that gap close on its own once the models get better?
+
+In brief Two things are in short supply: data from real scenes, and physics models built for a specific domain. That shortage is what opens the gap between what a system can do in a demo and what it can do on site. It is the problem microNature works on.
+
+What follows works through three angles, compute, data, and how that data gets collected, and along the way explains why we built microNature the way we did.
+
+
+## The Demo Is Improving. The Deployment Is Not
+
+
+Demos out of the frontier labs look better every year. Success rates on real sites have not followed. Over the past few years the two curves have not converged at all. They are still pulling apart.
+
+Split the same span of time into three layers (FIG.A2) and it gets fairly clear which layer the problem is stuck in.
+
+Robot density in manufacturing China470 per 10,000 world average162 per 10,000 Not the bottleneck. IFR, see source 01
+
+Hardware is doing fine. Robot density in Chinese manufacturing stands at 470 units per 10,000 employees, third in the world, and new installations in 2023 came to 276,000 units, about 51 per cent of the global total (IFR). Capacity, cost and reliability all move forward quarter by quarter. The bottleneck has shifted to the brain, and not for want of parameters. What is missing is scene data and physics models built for a specific domain. Nobody has fully digitised the patch of real world a robot will actually work in, and nobody has handed it to the model in a physically accurate form. The next three sections take those in turn.
+
+
+## Cause One: Tokens and Compute Go Up, Capability Does Not Follow
+
+
+What gets folded away Contact, force, friction, deformation, material. Discretisation throws away exactly the quantities that decide whether a motion works.
+
+The mainstream route for a general-purpose robot runs pixels → semantics → inference → action. You compress a continuous physical world into discrete tokens, then ask a large model to work out what to do. A single task burns a lot of tokens and a lot of compute, and what you get back on site does not rise anywhere near in proportion.
+
+What this means A bigger model and more tokens do not turn into deployment capability by themselves. Compression mostly throws away contact, force, friction, deformation and material, and those are precisely what decide whether a motion can be completed. The compute goes into recovering meaning. The physics never gets recovered at all.
+
+
+## Cause Two: Plenty of Data, Almost None of It Useful
+
+
+Data efficiency Volume is not the same as usable knowledge. Video gives you correlation between pixels and nothing about force, contact constraints, or what an action actually caused.
+
+People point at the size of video datasets as evidence that physical intelligence is not short of data. That is the wrong measure. An hour of video may hold less usable physical knowledge than a thousand words of text. Video records correlation between pixels, not a physical quantity anything can act on. No force, no contact constraint, no link between an action and its outcome. The total really is enormous. The usable fraction is tiny.
+
+source 03 Gasgoo Auto Research Institute, see Sources
+
+Measured instead as high-quality embodied data fit for training, the shortfall comes out roughly like this.
+
+Where language models started The internet spent thirty years accumulating high-quality text that any team could pick up and start training on. Physical intelligence has no such stockpile. No internet, no Transformer. Without a foundation of real physical data, scaling physical intelligence is just as far off.
+
+
+## Cause Three: Four Ways to Get Data, None of Them Faithful to the Physics
+
+
+Four paths supply embodied data today. Each one falls short on physical fidelity, and each falls short differently.
+
+What they share All four are missing the same thing: Physical quantities aligned to the real deployment site. That is a gap in supply, not an engineering detail inside any one of them. Nobody has modelled the physics of a real scene, so there is nothing there to supply.
+
+
+## The Teleoperation Maths, and Why Throwing People at It Does Not Work
+
+
+Cost per data item Teleoperation≈CNY 2,000/h Simulation1/20–1/200 Only if the physics lines up. Gartner and Gasgoo, see sources 02 / 03
+
+Of the four paths (A4), the one with the highest physical fidelity is teleoperation, and its cost will not move. Roughly CNY 2,000 an hour (Gartner). Against a requirement of 10 million hours, collection alone runs to about CNY 20 billion, before you have hired the operators, and that team is very hard to scale. As a business the numbers do not add up.
+
+The condition Only simulation brings that cost down, and only when its physics matches the real site. When it does not, the data is unusable and the saving never arrives. That is what domain-native means.
+
+
+## Put the Three Together: Robots Still Have No Scaling Law
+
+
+The three sections above (A2 / A3 / A4) are each true on their own. The trouble is they are true at the same time, and they compound.
+
+A single task burns a lot of tokens and a lot of compute, and capability on site has not grown in proportion.
+
+The total is enormous, the usable physical knowledge inside it is tiny, and an hour of video may not beat a thousand words of text.
+
+Teleoperation, ego-centric video, synthetic data, video learning. All four sit below the fidelity threshold.
+
+④ Result Stack all three and the scaling law that arrived for language still has not arrived for robots. The gap keeps showing up on site, in one form after another.
+
+
+## Sources
+
+
+IFR, World Robotics. Robot density in Chinese manufacturing reached 470 units per 10,000 employees in 2023, third worldwide, against a global average of 162. New installations in China in 2023 came to 276,000 units, roughly 51 per cent of the world total.
+
+Gartner and industry estimates. Teleoperation data costs roughly CNY 2,000 per hour. The shortfall in high-quality data for humanoid robots runs to four orders of magnitude.
+
+Gasgoo Auto Research Institute. High-quality embodied data in existence stands at about 500,000 hours against roughly 10 million hours needed for general capability, a shortfall above 99 per cent. The volume of physical AI data is about 1/20,000 of the corpus available to language models. Simulation can bring the cost of a single data item down to between 1/20 and 1/200.
+
+Frost & Sullivan. The market for embodied intelligence solutions in China is projected at roughly CNY 142.6 billion by 2030.
+
+Note: FIG.A3 and FIG.A5 illustrate trend and relative position. They are not measurements, and specific figures follow interviews and first-hand data.
+
+
+========================================================================
+## 能力与部署的悖论
+========================================================================
+URL: https://micronature.pages.dev/insight/01-capability-deployment-paradox
+Language: zh-Hans | Author: Stephen | Published: 2026-08
+Keywords: 具身数据, Sim-to-Real, 规模定律, 遥操作, 物理智能
+
+技术和产品的迭代越来越快，实地部署却并没有越来越容易。这个差距会随着模型能力的提升而消失吗？
+
+摘要 真实场景的数据和按领域建立的物理模型缺乏供给，这导致能力与落地之间出现结构性差距。这是 microNature 研究和带来改变的领域。
+
+下面从算力、数据和数据获取路径三个方面展开，也说明 microNature 为什么这样设计。
+
+
+## 现象：三条不同步的曲线
+
+
+前沿实验室的演示越来越好看，真实场地里的部署成功率却没有跟着上去。两条曲线之间的距离这几年没有收窄，还在拉开。
+
+把同一段时间拆成三层来看（FIG.A2），大致能看出问题卡在哪一层：
+
+制造业机器人密度 中国470 台/万人 全球平均162 台/万人 硬件这一端不构成瓶颈。IFR，见来源 01
+
+硬件这一端的进展很扎实：中国制造业机器人密度 470 台 / 万名员工，排在全球第三；2023 年新增安装 27.6 万台，约占全球的 51%（IFR）。产能、成本、可靠性都在按季度往前走。慢下来的是大脑。参数规模并不是主要原因，缺的是场景数据和按领域建立的物理模型：机器最终要干活的那片真实世界，还没有被完整数字化，也没有以物理上准确的形式交给模型。下面三节分别讲这三件事。
+
+
+## 成因一：Token 与算力消耗高，能力不随之线性增长
+
+
+被折叠掉的 接触、力、摩擦、形变、材质：离散化过程中丢掉的，往往正是决定动作能否完成的物理量。
+
+通用机器人的主流路线是「像素 → 语义 → 推断 → 动作」，先把连续的物理世界压成离散的 Token，再交给大模型推断该做什么动作。代价是单个任务的 Token 与算力消耗都很高，而部署能力并没有跟着同比例上升。
+
+含义 更大的模型加更多的 Token，不会自动换来部署能力。压缩过程中丢掉的多半是接触、力、摩擦、形变、材质这类信息，而它们恰恰决定一个动作做不做得成。算力大都花在了还原语义上，物理量反而没有被还原出来。
+
+
+## 成因二：数据总量很大，数据效率很低
+
+
+数据效率 总量不等于有效知识。视频里只有像素之间的相关性，缺少力、接触约束，以及动作与结果的因果对应。
+
+常有人拿视频数据的体量来说明物理智能不缺数据。这里有个口径问题：一小时视频里含有的有效物理知识，可能还比不上一千字文本。视频记录的是像素之间的相关性，不是可以直接拿来执行的物理量，缺少力、接触约束以及动作与结果的对应关系。总量确实很大，能用上的部分很少。
+
+来源 03 盖世汽车研究院，见数据来源
+
+换成「可用于训练的高质量具身数据」这个口径，缺口大致是这样：
+
+对照：语言模型的起点 互联网用三十年攒下了一份现成的高质量文本，任何团队都能拿它起步训练一个大模型。物理智能手上没有这样一份存货。没有互联网，也就不会有 Transformer；缺少真实物理数据这层底子，物理智能同样很难谈规模化。
+
+
+## 成因三：四条数据路径，物理保真度都不够
+
+
+目前获取具身数据主要有四条路径，逐条看下来，每条在物理保真度上都有各自的短板：
+
+共性 四条路径缺的是同一样东西：与真实部署现场对齐的物理量。这更像供给端的空白，而非某一条路径的工程细节问题，真实场景的物理本身还没有被建模，也就无从供给。
+
+
+## 遥操作的成本账：靠人海采集为什么走不通
+
+
+单条数据成本 遥操作≈2,000 元/h 仿真1/20–1/200 前提是物理对齐。Gartner／盖世，见来源 02 / 03
+
+四条路径（A4）里物理保真度最高的是遥操作，但成本卡得很死：约 2,000 元 / 小时（Gartner）。按 1,000 万小时的需求量算，光采集这一项就要 200 亿元左右，还要配上一支很难规模化的操作团队。这笔账在商业上算不过来。
+
+前提 能把成本降下来的只有仿真，前提是它和部署现场在物理上对得上。对不上，生成的数据就用不了，省下来的成本也就无从谈起。领域原生说的正是这件事。
+
+
+## 叠加起来：机器人的规模定律至今没有出现
+
+
+前面三节（A2／A3／A4）说的三件事各自都成立，麻烦在于它们同时成立，而且互相叠加：
+
+单个任务的 Token 与算力消耗高，部署能力没有跟着同比例增长。
+
+总量很大，含有的有效物理知识很少，一小时视频可能不及一千字文本。
+
+遥操作、第一人称视角、合成数据、视频学习四条路径，物理保真度都在门槛以下。
+
+④ 结果 三条叠在一起，机器人身上的规模定律到今天也没有出现，差距则以各种形式暴露在现场。
+
+
+## 数据来源
+
+
+IFR《World Robotics》：中国制造业机器人密度 470 台 / 万名员工（2023），全球第三；全球平均 162 台；2023 年中国新增安装 27.6 万台，约占全球 51%。
+
+Gartner 及行业估算：遥操作数据成本约 2,000 元 / 小时；人形机器人高质量数据缺口达万倍量级。
+
+盖世汽车研究院：具身高质量数据存量约 50 万小时，通用能力需求约 1,000 万小时，缺口超 99%；物理 AI 数据量约为语言模型语料的 1/20,000；仿真可将单条数据成本降至 1/20 至 1/200。
+
+弗若斯特沙利文：中国具身智能解决方案市场规模 2030 年预计约 1,426 亿元。
+
+注：FIG.A3 与 FIG.A5 为结构性示意（趋势与相对关系），非测量值；具体口径以访谈与一手数据为准。
