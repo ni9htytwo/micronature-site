@@ -464,15 +464,19 @@ html[data-theme="dark"] .nav-theme::before{ content:'☀' }
 @media (max-width:560px){
   .nav-theme{ margin-left:5px; padding:8px 7px }
 }
-/* Tablet and below: six section tabs no longer fit beside the masthead and the
-   two switches in one row. .nav-links scrolls horizontally with a hidden
+/* Tablet (561–900px): six section tabs no longer fit beside the masthead and
+   the two switches in one row. .nav-links scrolls horizontally with a hidden
    scrollbar, so the overflow silently clips the last tab (About) with no way to
-   reveal it. Wrap the tabs onto their own row instead — the same treatment the
-   phone layout uses — so every tab stays visible. Applies to both languages:
-   the English tabs need it up to ~880px, the wider CJK tabs a little below. */
-@media (max-width:900px){
-  .nav-in{ flex-wrap:wrap; height:auto; row-gap:6px; padding-block:8px }
-  .nav-links{ flex:1 1 100%; flex-wrap:wrap; overflow:visible;
+   reveal it. Keep the masthead + language/theme switches on the top row and
+   drop the tabs to a full-width second row, so every tab stays visible. Both
+   languages need this: the English tabs up to ~880px, the wider CJK tabs a
+   little below. (Phones ≤560px already wrap via the mobile block further down.) */
+@media (min-width:561px) and (max-width:900px){
+  .nav-in{ flex-wrap:wrap; height:auto; row-gap:8px; padding-block:10px }
+  .nav-mark{ order:1 }
+  .nav-lang{ order:2; margin-left:auto }
+  .nav-theme{ order:3 }
+  .nav-links{ order:4; flex:1 1 100%; flex-wrap:wrap; overflow:visible;
               justify-content:flex-start; gap:4px 6px; scrollbar-width:auto }
   .nav-links a, .nav-links .cur{
     display:inline-flex; align-items:center; min-height:44px; padding:10px 12px;
