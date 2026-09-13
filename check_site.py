@@ -14,12 +14,19 @@ ZH = ["index.html", "about.html", "environmentaffordance.html",
 EN = ["en/" + f for f in ZH]
 ASSETS = ["site.css", "site.js", "atlas.js", "demo.css", "atlas.css", "atlas-base.css"]
 # Blog articles live one level down (中) and two levels down (英). The Insight
-# list pages themselves stay in ZH/EN above. Article 2 has no English version
-# yet, so only its Chinese page is listed here.
+# list pages themselves stay in ZH/EN above. Both articles are now bilingual.
 BLOG_ZH = ["insight/01-capability-deployment-paradox.html",
            "insight/02-who-underwrites-deep-sea-autonomy.html"]
-BLOG_EN = ["en/insight/01-capability-deployment-paradox.html"]
+BLOG_EN = ["en/insight/01-capability-deployment-paradox.html",
+           "en/insight/02-raising-machines-in-the-deep.html"]
 BLOG = BLOG_ZH + BLOG_EN
+# Site-wide machine-readable files (crawler + LLM/AI-agent infrastructure) and
+# the branded Open Graph cards referenced by the blog pages.
+INFRA = ["robots.txt", "sitemap.xml", "llms.txt", "llms-full.txt"]
+OG = ["og/blog-zh.png", "og/blog-en.png",
+      "og/insight-01-zh.png", "og/insight-01-en.png",
+      "og/insight-02-zh.png", "og/insight-02-en.png"]
+SITE = "https://micronature.pages.dev"
 
 VOID = {"meta", "link", "br", "img", "hr", "input", "line", "rect", "circle",
         "path", "use", "source", "ellipse", "polygon", "polyline", "stop",
@@ -31,7 +38,7 @@ def bad(msg):
     fails.append(msg); print("  FAIL  " + msg)
 
 print("== 1. 文件齐全 ==")
-for f in ZH + EN + ASSETS + BLOG:
+for f in ZH + EN + ASSETS + BLOG + INFRA + OG:
     if os.path.exists(os.path.join(ROOT, f)):
         print("   ok   " + f)
     else:
@@ -114,6 +121,52 @@ for f in ZH:
             bad(path + " hreflang 异常，共 %d 行" % n)
         else:
             print("   ok   " + path)
+
+print("\n== 7. 机器可读文件自洽（sitemap / llms / og:image 指向真实文件）==")
+def url_to_local(u):
+    """Map a canonical clean URL back to a local file path."""
+    if u.startswith(SITE):
+        u = u[len(SITE):]
+    u = u.split("?")[0].split("#")[0].rstrip(".")
+    if u in ("", "/"):
+        return "index.html"
+    u = u.lstrip("/")
+    if u.endswith("/"):
+        return u + "index.html"
+    for ext in (".html", ".xml", ".txt", ".png"):
+        if u.endswith(ext):
+            return u
+    return u + ".html"
+
+problems = 0
+sm_path = os.path.join(ROOT, "sitemap.xml")
+sm = open(sm_path, encoding="utf-8").read() if os.path.exists(sm_path) else ""
+sm_urls = re.findall(r'<loc>([^<]+)</loc>', sm)
+sm_urls += re.findall(r'hreflang="[^"]+"\s+href="([^"]+)"', sm)
+for u in sm_urls:
+    loc = url_to_local(u)
+    if not os.path.exists(os.path.join(ROOT, loc)):
+        bad("sitemap 指向不存在的文件 " + u + " -> " + loc); problems += 1
+for lf in ("llms.txt", "llms-full.txt"):
+    p = os.path.join(ROOT, lf)
+    if not os.path.exists(p):
+        continue
+    for u in set(re.findall(re.escape(SITE) + r'/[^\s)】」，。]*',
+                            open(p, encoding="utf-8").read())):
+        loc = url_to_local(u)
+        if not os.path.exists(os.path.join(ROOT, loc)):
+            bad(lf + " 指向不存在的文件 " + u + " -> " + loc); problems += 1
+for f in BLOG + ["insight.html", "en/insight.html"]:
+    p = os.path.join(ROOT, f)
+    if not os.path.exists(p):
+        continue
+    for u in re.findall(r'property="og:image"\s+content="([^"]+)"',
+                        open(p, encoding="utf-8").read()):
+        loc = url_to_local(u)
+        if not os.path.exists(os.path.join(ROOT, loc)):
+            bad(f + " og:image 指向不存在的文件 " + u + " -> " + loc); problems += 1
+if not problems:
+    print("   ok   sitemap %d 个 <loc> · llms/og:image 引用全部落地" % len(re.findall(r'<loc>', sm)))
 
 print("\n" + ("全部通过，可以上传。" if not fails else "共 %d 项未通过，见上。" % len(fails)))
 sys.exit(1 if fails else 0)
